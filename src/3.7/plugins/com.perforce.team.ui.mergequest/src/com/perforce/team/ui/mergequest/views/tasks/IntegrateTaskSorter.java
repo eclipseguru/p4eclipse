@@ -21,7 +21,7 @@ public class IntegrateTaskSorter extends DiffSorter {
 
     /**
      * Create new sorter
-     * 
+     *
      * @param provider
      */
     public IntegrateTaskSorter(ILabelProvider provider) {
@@ -82,8 +82,8 @@ public class IntegrateTaskSorter extends DiffSorter {
         if (name2 == null) {
             name2 = "";//$NON-NLS-1$
         }
-        @SuppressWarnings("unchecked")
-        Comparator<String> comparator = getComparator();
+
+        Comparator<? super String> comparator = getComparator();
         return comparator.compare(name1, name2);
     }
 
