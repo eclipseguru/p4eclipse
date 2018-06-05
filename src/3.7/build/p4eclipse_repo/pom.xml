@@ -6,11 +6,11 @@
 	<parent>
 		<artifactId>p4eclipse-parent</artifactId>
 		<groupId>com.perforce</groupId>
-		<version>11.1.1-SNAPSHOT</version>
+		<version>2018.1.0-SNAPSHOT</version>
 		<relativePath>../p4eclipse_parent/pom.xml</relativePath>
 	</parent>
+
 	<artifactId>p4eclipse-repo</artifactId>
-	<version>11.1.1-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
 
 	<build>
@@ -54,7 +54,7 @@
 				<version>${tycho-version}</version>
 				<executions>
 					<execution>
-						<!-- (optional) install the product for all configured os/ws/arch environments 
+						<!-- (optional) install the product for all configured os/ws/arch environments
 							using p2 director -->
 						<id>materialize-products</id>
 						<goals>

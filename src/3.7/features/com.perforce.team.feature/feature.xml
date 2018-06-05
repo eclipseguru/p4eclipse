@@ -2,7 +2,7 @@
 <feature
       id="com.perforce.team.feature"
       label="Perforce SCM Support"
-      version="11.1.1.qualifier"
+      version="2018.1.0.qualifier"
       provider-name="Perforce Software"
       plugin="com.perforce.team.branding"
       image="p4_32x32.gif">

@@ -3,20 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>p4eclipse-parent</artifactId>
 		<groupId>com.perforce</groupId>
-		<version>11.1.1-SNAPSHOT</version>
+		<version>2018.1.0-SNAPSHOT</version>
 		<relativePath>../p4eclipse_parent/pom.xml</relativePath>
 	</parent>
+
 	<artifactId>p4eclipse-test-repo</artifactId>
-	<version>11.1.1-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
 
 	<properties>
 		<local-p4eclipse-site>file:${basedir}/../../build/p4eclipse_updatesite/target/site</local-p4eclipse-site>
 	</properties>
-	
+
 	<repositories>
 		<repository>
 			<id>local-p4eclipse-site</id>
@@ -24,7 +25,7 @@
 			<url>${local-p4eclipse-site}</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>

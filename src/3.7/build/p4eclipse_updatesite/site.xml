@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <description name="P4Eclipse update site" url="http://www.perforce.com/product/components/eclipse_plugin">
-      P4Eclipse is part of Perforce, The Fast Software Configuration Management System. 
+      P4Eclipse is part of Perforce, The Fast Software Configuration Management System.
       For server downloads and licensing, see www.perforce.com/download.html.
    </description>
    <feature url="features/com.perforce.team.feature_0.0.0.jar" id="com.perforce.team.feature" version="0.0.0">
       <category name="Perforce Team Provider (Core)"/>
-   </feature>
-   <feature url="features/com.perforce.team.c.galileo.feature_0.0.0.jar" id="com.perforce.team.c.galileo.feature" version="0.0.0">
-      <category name="Perforce Team Provider (Optional)"/>
-   </feature>
-   <feature url="features/com.perforce.team.charts.feature_0.0.0.jar" id="com.perforce.team.charts.feature" version="0.0.0">
-      <category name="Perforce Team Provider (Optional)"/>
    </feature>
    <feature url="features/com.perforce.team.folder.feature_0.0.0.jar" id="com.perforce.team.folder.feature" version="0.0.0">
       <category name="Perforce Team Provider (Optional)"/>
@@ -29,12 +23,6 @@
       <category name="Perforce Team Provider (Optional)"/>
    </feature>
    <feature url="features/com.perforce.team.search.feature_0.0.0.jar" id="com.perforce.team.search.feature" version="0.0.0">
-      <category name="Perforce Team Provider (Optional)"/>
-   </feature>
-   <feature url="features/com.perforce.team.python.helios.feature_0.0.0.jar" id="com.perforce.team.python.helios.feature" version="0.0.0">
-      <category name="Perforce Team Provider (Optional)"/>
-   </feature>
-   <feature url="features/com.perforce.team.ruby.helios.feature_0.0.0.jar" id="com.perforce.team.ruby.helios.feature" version="0.0.0">
       <category name="Perforce Team Provider (Optional)"/>
    </feature>
    <category-def name="Perforce Team Provider (Core)" label="Perforce Team Provider (Core)">

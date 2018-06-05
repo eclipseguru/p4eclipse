@@ -2,7 +2,7 @@
 <feature
       id="com.perforce.team.search.feature"
       label="Perforce Grep Support"
-      version="11.1.1.qualifier"
+      version="2018.1.0.qualifier"
       provider-name="Perforce Software"
       plugin="com.perforce.team.branding">
 

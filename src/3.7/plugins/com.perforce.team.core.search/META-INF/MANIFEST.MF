@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Localization: plugin
 Bundle-Name: %pluginName
 Bundle-SymbolicName: com.perforce.team.core.search;singleton:=true
-Bundle-Version: 11.1.1.qualifier
+Bundle-Version: 2018.1.0.qualifier
 Bundle-Activator: com.perforce.team.core.search.P4CoreSearchPlugin
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.runtime,

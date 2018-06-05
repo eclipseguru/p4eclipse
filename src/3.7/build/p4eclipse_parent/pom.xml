@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.perforce</groupId>
 	<artifactId>p4eclipse-parent</artifactId>
-	<version>11.1.1-SNAPSHOT</version>
+	<version>2018.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<!-- Sample command line: (see also p4eclipse_target/README)
@@ -13,22 +13,21 @@
 	    $ mvn clean verify -Psignjar,p4test,codeCoverage # test about 15 minutes
 	    $ mvn -Pp4update,signjar clean package -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7 -DforceContextQualifier=MAIN-TEST_ONLY-SNAPSHOT
 	    $ mvn -Pp4update,signjar,replace-p4java clean package -Dp4java-version="[2012.1,)" -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7
-	    $ mvn -Pp4update,signjar clean package -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7 -Djarsigner.keystore=/home/ali/.keystore -Djarsigner.alias=p4eclipse -Djarsigner.storepass=password -Djarsigner.keypass=password  
-	    
+	    $ mvn -Pp4update,signjar clean package -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7 -Djarsigner.keystore=/home/ali/.keystore -Djarsigner.alias=p4eclipse -Djarsigner.storepass=password -Djarsigner.keypass=password
+
 		$ mvn clean package -Djava.vendor.url='http://www.apple.com' -P replace-p4java,replace-help -Dqualifier=BETA ## BnR (vendor for mac)
 		$ mvn clean package -Djava.vendor.url='http://www.apple.com'  -P p4rcp ## build on mac to create rcp (vendor for mac)
 		$ mvn clean verify -P codeCoverage,p4test; mvn sonar:sonar -PcodeCoverage ## Sonar: run test, then analysis
 		$ mvn clean verify -P codeCoverage,p4test -Dmaven.test.failure.ignore=true -Dmaven.test.error.ignore=true ## Sonar
 
 		## deprecated
-		$ mvn -P signjar -Dplatform-version-name=helios clean install ## explicitly set helios as target platform, obsoleted with target definition 
+		$ mvn -P signjar -Dplatform-version-name=helios clean install ## explicitly set helios as target platform, obsoleted with target definition
 		$ mvn clean package -Dtargetplatform.folder=/opt/targetplatform/3.6.2/all ## Old way using local target platform
 	-->
 
 	<!-- this is the parent POM from which all modules inherit common settings -->
 	<properties>
-		<!-- tycho-version>0.17.0</tycho-version -->
-		<tycho-version>0.20.0</tycho-version>
+		<tycho-version>1.2.0</tycho-version>
 		<tycho-groupid>org.eclipse.tycho</tycho-groupid>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -51,18 +50,18 @@
 
 		<!-- The property pointing to the p4 command path, which will be used inside p4eclipse for diff, this will be used by testing see ClipboardTest.java-->
 		<p4Path>/opt/perforce/current/p4</p4Path>
-		
+
 		<!-- local-p4eclipse-site>file://${basedir}/../../build/p4eclipse_updatesite/target/site</local-p4eclipse-site -->
-		
+
 		<!--  The default jar signing parameters -->
 		<jarsigner.keystore>/home/ali/.keystore</jarsigner.keystore>
 		<jarsigner.storepass>password</jarsigner.storepass>
 		<jarsigner.keypass>password</jarsigner.keypass>
 		<jarsigner.alias>p4eclipse</jarsigner.alias>
-		
+
 		<test.vmargs.default>-Xmx2048m -XX:MaxPermSize=256m -Dcom.perforce.team.ui.SUPPRESS_ERROR_DIALOGS=true -Dp4Path=${p4Path}</test.vmargs.default>
-		<targetPlatform>p4e-43</targetPlatform>
-		
+		<targetPlatform>p4e-48</targetPlatform>
+
 	</properties>
 
 <!--  do not configure any repositories in pom, configure in settings.xml instead.  RT 9/6/13
@@ -97,27 +96,27 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<!-- 
-					    This info tycho to fetch the target platform, which defined in com.perforce.target-platform module, 
+					<!--
+					    This info tycho to fetch the target platform, which defined in com.perforce.target-platform module,
 					    and id is ${targetPlatform}.
-					    If commented, tycho will skip resolving target platform. 
-					-->	
-			        <target> 
-			            <artifact> 
-			                <groupId>com.perforce</groupId> 
-			                <artifactId>p4eclipse-target</artifactId> 
+					    If commented, tycho will skip resolving target platform.
+					-->
+			        <target>
+			            <artifact>
+			                <groupId>com.perforce</groupId>
+			                <artifactId>p4eclipse-target</artifactId>
 			                <version>${project.version}</version>
-			                <classifier>${targetPlatform}</classifier> 
-			            </artifact> 
-			        </target> 
-				
+			                <classifier>${targetPlatform}</classifier>
+			            </artifact>
+			        </target>
+
 					<!-- configure the p2 target environments for multi-platform build -->
 					<environments>
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
 							<arch>x86_64</arch>
-						</environment>						
+						</environment>
 						<environment>
 							<os>linux</os>
 							<ws>gtk</ws>
@@ -220,7 +219,7 @@
 				</repository>
 			</repositories>
 		</profile>
-		
+
 		<profile>
 			<id>p4update</id>
 			<modules>
@@ -231,28 +230,20 @@
 				<module>../../plugins/com.perforce.team.core.mergequest</module>
 				<module>../../plugins/com.perforce.team.core.mylyn</module>
 				<module>../../plugins/com.perforce.team.core.search</module>
-				<module>../../features/com.perforce.team.c.feature</module>
-				<module>../../features/com.perforce.team.charts.feature</module>
 				<module>../../features/com.perforce.team.mergequest.feature</module>
 				<module>../../features/com.perforce.team.folder.feature</module>
 				<module>../../features/com.perforce.team.java.feature</module>
 				<module>../../features/com.perforce.team.mylyn.feature</module>
 				<module>../../features/com.perforce.team.patch.feature</module>
-				<module>../../features/com.perforce.team.ruby.feature</module>
-				<module>../../features/com.perforce.team.python.feature</module>
 				<module>../../features/com.perforce.team.search.feature</module>
 				<module>../../plugins/com.perforce.team.branding</module>
 				<module>../../plugins/com.perforce.team.help.ui</module>
 				<module>../../plugins/com.perforce.team.ui</module>
-				<module>../../plugins/com.perforce.team.ui.c</module>
-				<module>../../plugins/com.perforce.team.ui.charts</module>
 				<module>../../plugins/com.perforce.team.ui.folder</module>
 				<module>../../plugins/com.perforce.team.ui.java</module>
 				<module>../../plugins/com.perforce.team.ui.mergequest</module>
 				<module>../../plugins/com.perforce.team.ui.mylyn</module>
 				<module>../../plugins/com.perforce.team.ui.patch</module>
-				<module>../../plugins/com.perforce.team.ui.python</module>
-				<module>../../plugins/com.perforce.team.ui.ruby</module>
 				<module>../../plugins/com.perforce.team.ui.search</module>
 				<module>../../plugins/com.perforce.team.ui.text</module>
 				<module>../../features/com.perforce.team.feature</module>
@@ -260,7 +251,7 @@
 				<module>../p4eclipse_target</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>p4rcp</id>
 			<modules>
@@ -273,7 +264,7 @@
 				<module>../p4eclipse_target</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>p4test</id>
 			<modules>
@@ -284,7 +275,7 @@
 				<module>../p4eclipse_target</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>p4repo</id>
 			<activation>
@@ -300,7 +291,7 @@
 				</repository>
 			</repositories>
 		</profile>
-		
+
 		<!-- profile>
 			<id>p4patch</id>
 			<activation>
@@ -325,7 +316,7 @@
 			<properties>
 				<!-- changed to use standard maven property to locate build repository root.  RT 6/26/13 -->
 				<sonar.jacoco.argLine>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=../../build/p4eclipse_parent/jacoco.exec -XstartOnFirstThread</sonar.jacoco.argLine>
-			</properties>			
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
@@ -349,7 +340,7 @@
 						<configuration>
 							<argLine>${sonar.jacoco.argLine}</argLine>
 						</configuration>
-					</plugin>					
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -367,7 +358,7 @@
 				<build.arch>x86_64</build.arch>
 			</properties>
 		</profile>
-		
+
 		<!-- This profile is used to gather code coverage for Sonar -->
 		<profile>
 			<id>codeCoverage</id>
@@ -386,7 +377,7 @@
 				<sonar.jdbc.password>sonar</sonar.jdbc.password>
 				<sonar.host.url>http://${sonarHost}:9000</sonar.host.url>
 			</properties>
-	
+
 			<build>
 				<plugins>
 					<!-- Enabling use of jacoco -->

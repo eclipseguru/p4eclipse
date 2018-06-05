@@ -2,7 +2,7 @@
 <feature
       id="com.perforce.tests.feature"
       label="P4ECLIPSE Tests"
-      version="11.1.1.qualifier"
+      version="2018.1.0.qualifier"
       provider-name="Perforce Software">
 
    <description url="http://www.example.com/description">

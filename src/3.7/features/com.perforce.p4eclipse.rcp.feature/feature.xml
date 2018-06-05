@@ -2,7 +2,7 @@
 <feature
       id="com.perforce.p4eclipse.rcp.feature"
       label="Perforce RCP Support"
-      version="11.1.1.qualifier"
+      version="2018.1.0.qualifier"
       provider-name="Perforce Software">
 
    <description>

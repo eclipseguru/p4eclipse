@@ -2,7 +2,7 @@
 <feature
       id="com.perforce.team.mylyn.feature"
       label="Perforce Mylyn Connector"
-      version="11.1.1.qualifier"
+      version="2018.1.0.qualifier"
       provider-name="Perforce Software"
       plugin="com.perforce.team.branding">
 

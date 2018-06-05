@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 set -x # echo command
 set -v # echo input
@@ -10,13 +10,13 @@ OS=${OSTYPE//[0-9.]/}
 : ${WORKSPACE:="$BASEDIR/../.."}
 : ${MVN:="/opt/apache-maven/bin/mvn"}
 : ${P4:="/opt/perforce/client/bin/p4"}
-: ${VER:="2012.2"}
-: ${CHANGE:="377088"}
+: ${VER:="2018.1"}
+: ${CHANGE:="0"}
 : ${PROP:="-Dmaven.test.failure.ignore=true -Dmaven.test.error.ignore=true"}
 : ${MAVEN_OPTS:='-Xmx1024m -XX:MaxPermSize=128m'}
 : ${SIGN_JAR:="no"}
 : ${UPDATE_VERSION:="no"}
-: ${TYCHO_VERSION:="0.20.0"}
+: ${TYCHO_VERSION:="1.2.0"}
 
 usage () {
   echo ""
@@ -34,7 +34,7 @@ usage () {
 
 failWithMessage () {
   echo $1
-  echo 
+  echo
   exit 1
 }
 
@@ -49,12 +49,12 @@ printSettings () {
   echo "  VER=$VER"
   echo "  CHANGE=$CHANGE"
   echo "  MAVEN_OPTS=$MAVEN_OPTS"
-  echo 
+  echo
   echo "[Arguments]"
   echo "  MODE=$MODE"
   echo "  UPDATE_VERSION=$UPDATE_VERSION"
   echo "  PROP=$PROP"
-  echo 
+  echo
 }
 
 cleantest () {
@@ -64,7 +64,7 @@ cleantest () {
   rm -f $WORKSPACE/build/p4eclipse_parent/jacoco.exec
 
   killall p4d
-  
+
   if [ ${?} -ne 0 ]; then
      echo "p4d does not exist."
   fi
@@ -79,35 +79,35 @@ updateVersion () {
 buildUpdatesite () {
 if [ "$SIGN_JAR" == "yes" ]; then
     echo "Build update site with jar signing ... "
-    $MVN clean package -P p4update,signjar $PROP 
+    $MVN clean package -P p4update,signjar $PROP
 else
     echo "Build update site without jar signing ... "
-    $MVN clean package -P p4update $PROP 
+    $MVN clean package -P p4update $PROP
 fi
 }
 
 buildRcp () {
-  $MVN clean package -P p4update,p4rcp $PROP 
+  $MVN clean package -P p4update,p4rcp $PROP
 }
 
 test () {
   if [ "$OS" == "darwin" ]; then
      failWithMessage "Can not run test on MacOS, run it on Linux, please!"
-  fi 
+  fi
 
-  cleantest 
+  cleantest
 
-  $MVN clean verify -fae -P p4test $PROP 
+  $MVN clean verify -fae -P p4test $PROP
 }
 
 testAlone () {
   if [ "$OS" == "darwin" ]; then
      failWithMessage "Can not run test on MacOS, run it on Linux, please!"
-  fi 
+  fi
 
   cleantest
-  
-  buildUpdatesite 
+
+  buildUpdatesite
 
   cd $WORKSPACE;rm -rf site;mkdir site;cd site;  unzip ../build/p4eclipse_updatesite/target/p4eclipse-updatesite*.zip; export CHANGE=`$P4 -u ali -pperforce:1666 -Pali changes -m 1|sed 's/Change \([0-9]*\) on.*/\1/'`;cd ../build/p4eclipse_parent;
   $MVN clean verify -fae -P p4test $PROP -Dp4repo.url=file:$WORKSPACE/site
@@ -125,19 +125,19 @@ replacep4java () {
 analyzeCode () {
   if [ "$OS" == "darwin" ]; then
      failWithMessage "Can not run code anaysis on MacOS, run it on Linux, please!"
-  fi 
-  $MVN clean install -fae -P p4test,codeCoverage $PROP 
+  fi
+  $MVN clean install -fae -P p4test,codeCoverage $PROP
   $MVN sonar:sonar -PcodeCoverage $PROP
 }
 
 coverage () {
   if [ "$OS" == "darwin" ]; then
      failWithMessage "Can not run code anaysis on MacOS, run it on Linux, please!"
-  fi 
-  
+  fi
+
   #-Dp4repo.url=file:$WORKSPACE/build/p4eclipse_updatesite/target/site
   cleantest
-  $MVN clean install -fae -P p4update,p4test,codeCoverage $PROP 
+  $MVN clean install -fae -P p4update,p4test,codeCoverage $PROP
   $MVN sonar:sonar -PcodeCoverage $PROP
 }
 
@@ -157,10 +157,10 @@ fi
 
 while [ "$1" != "" ]; do
     case $1 in
-        -sign | --signjar )  
+        -sign | --signjar )
                         SIGN_JAR="yes"
                         ;;
-        -update | --updateversion )  
+        -update | --updateversion )
                         UPDATE_VERSION="yes"
                         ;;
         updatesite | rcp | test | sonar | clean | replacep4java | testAlone)
@@ -169,8 +169,8 @@ while [ "$1" != "" ]; do
         -h | --help )   usage
                         exit 0
                         ;;
-        -D* )      
-                        PROP="$PROP $1" 
+        -D* )
+                        PROP="$PROP $1"
                         ;;
         * )             usage
                         exit 1
@@ -178,9 +178,9 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ -z "${MODE+xxx}" ]; then 
-  usage; 
-  failWithMessage "MODE is not defined! Valid Mode is updatesite | rcp | test | sonar"; 
+if [ -z "${MODE+xxx}" ]; then
+  usage;
+  failWithMessage "MODE is not defined! Valid Mode is updatesite | rcp | test | sonar";
 fi
 
 printSettings
