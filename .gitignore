@@ -1,0 +1,12 @@
+bin/
+target/
+workspace/
+*~
+*.rej
+*.bak
+.DS_Store
+.Trashes
+*.swp
+*.lock
+pom.versionBackup
+.polyglot.build.properties
