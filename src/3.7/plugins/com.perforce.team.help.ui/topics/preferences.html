@@ -1,0 +1,168 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Setting Preferences</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Setting Preferences</h1>
+<p>To change Perforce preferences, choose <b>Window &gt; Preferences</b>,  expand 
+  the <b>Team</b> node, then expand the <strong>Perforce</strong> node. Click the node for the preferences you want to change. The following sections describe the preferences in more detail. <h2><b>Perforce</b></h2>
+<table width="75%" border="1">
+  <tr> 
+    <td><b>Setting</b></td>
+    <td><b>What it does</b></td>
+  </tr>
+  <tr valign="top"> 
+    <td>When adding a file</td>
+    <td>Mark for add: Files are added to the Perforce default changelist<p>
+Create a marker: Tasks are created when files are added to the workspace 
+         </td>
+  </tr>
+  <tr valign="top"> 
+    <td>Show changelist selection dialog when marking files for add, checking out, and 
+      marking for delete</td>
+    <td rowspan="2" valign="middle"> To display a dialog that enables you to specify the target changelist for the operation, enable 
+      this option. To open files in the default changelist, disable this option.    </td>
+  </tr>
+  <tr valign="top">
+    <td>Show changelist selection dialog when refactoring files</td>
+  </tr>
+  <tr valign="top"> 
+    <td>Enable support for Workbench edit, delete, rename and refactoring operations</td>
+    <td> To automatically perform the Perforce operations corresponding to the 
+      changes you make to the files in your project, enable this option. 
+      <p>(If you disable the option, your workspace and depot files can become 
+        inconsistent. To ensure consistency between the workspace and depot, do 
+        not disable this option.)</p>    </td>
+  </tr>
+  <tr valign="top">
+    <td>Enable support for Workbench save operations</td>
+    <td>To automatically check out always-writable files when you save them, enable this option.  By default, files set as always writable (using the Perforce workspace ALLWRITE setting) are not automatically checked out when you start editing them.</td>
+  </tr>
+  <tr valign="top">
+    <td>Use &quot;move&quot; command during refactoring operations</td>
+    <td>The Perforce &quot;move&quot; command, added in release 2010.1, removes the paired &quot;add&quot; and &quot;delete&quot; integrations required in prior releases, to maximize server efficiency and simplify integration history.</td>
+  </tr>
+  <tr valign="top"> 
+    <td>Mark project files for delete when deleting a project</td>
+    <td>Specifies whether project files are marked for delete by Perforce when 
+      you delete project files.</td>
+  </tr>
+  <tr valign="top">
+    <td>Mark linked files/folders for delete when deleting a project</td>
+    <td>Specifies whether linked resources are marked for delete by Perforce when 
+    you delete project files.</td>
+  </tr>
+  <tr valign="top"> 
+    <td>Log all commands to a persistent log file</td>
+    <td> Logs p4 commands to the workspace log file.</td>
+  </tr>
+  <tr valign="top">
+    <td>Retain offline connection state between Eclipse sessions</td>
+    <td>If you intend to work offline (that is, without connection to a Perforce server), enable this option to suppress connection-related messages that are normally issued when Eclipse is launched and attempts to connect to the server.</td>
+  </tr>
+  <tr valign="top">
+    <td>Retain expanded depots/folders in P4 Connections view between sessions</td>
+    <td>To preserve the display state of the depot tree for future sessions, enable this option. </td>
+  </tr>
+  <tr valign="top">
+    <td>Group synchronizations by changelist in the Synchronize view</td>
+    <td> To group files by the Perforce changelist in which they are checked out, enable this option. By default, files are grouped by project in the Synchronize view.</td>
+  </tr>
+  <tr valign="top">
+    <td>Prompt for confirmation when deleting resources</td>
+    <td> To confirm that the file will be marked as deleted from Perforce server when deleting a local file. By default, deleting a local file will also mark the file as deleted from Perforce server.</td>
+  </tr>
+  <tr valign="top">
+    <td>Refresh resource will also refresh Perforce revision information</td>
+    <td> To update the Perforce revision information when a local file is refreshed. By default, refresh a local file will not update the Perforce revision information for that file.</td>
+  </tr>
+</table>
+<h2>Advanced settings</h2>
+<p>For use only as directed by Perforce Technical Support. </p>
+<h2>Branches</h2>
+<p>This setting determines whether the plug-in fetches all jobs or a limited number 
+  of branch specifications from the Perforce server. If your server contains a large number of branch specifications, 
+  setting a limit can minimize server overhead.</p>
+<h2>Changelists</h2>
+<p>This setting determines whether the plug-in fetches all jobs or a limited number 
+  of changelists from the Perforce server. If your server contains a large number of changelists, 
+  setting a limit can minimize server overhead.</p>
+<blockquote>
+  <p><strong>Editor</strong>: configure how you enter changelist descriptions</p>
+  <p><strong>Templates</strong>: configure standard entries for changelist descriptions.</p>
+</blockquote>
+<h2>Console </h2>
+<p>These settings determine how text is displayed in the Perforce console view. 
+</p>
+
+<table width="75%" border="1">
+ <tr> 
+    <td><b>Setting</b></td>
+    <td><b>What it does</b></td>
+  </tr>
+  <tr> 
+    <td>Command line</td>
+    <td>Perforce commands are displayed in the specified color</td>
+  </tr>
+  <tr> 
+    <td>Message</td>
+    <td>Informative messages from the Perforce server are displayed in the specified 
+      color</td>
+  </tr>
+  <tr> 
+    <td>Error</td>
+    <td>Error messages from the Perforce server are displayed in the specified 
+      color</td>
+  </tr>
+
+  <tr> 
+    <td>Command history size</td>
+    <td>Number of commands retained in the log view</td>
+  </tr>
+  <tr>
+    <td>Show timestamp</td>
+    <td>Enable/disable the display of the date and time the command was issued.</td>
+  </tr>
+</table>
+
+<h2>External Tools</h2>
+<p>Configures the location of the P4Merge, P4V, and P4Sandbox Configuration programs, which provide supporting functionality for P4Eclipse.</p>
+<p><strong>Note:</strong> Each field shows the required minimum version number for a particular external tool integration. Ensure that you download and configure an appropriate program version.</p>
+<h2>Folder Diff</h2>
+<p>Enables you to configure the colors that are used to indicate differences between folders.</p>
+<h2>Jobs </h2>
+<p>This setting determines whether the plug-in fetches all jobs or a limited number 
+  of jobs from the server. If your server contains a large number of jobs, setting 
+  a limit can minimize server overhead. </p>
+<h2>Label Decorations </h2>
+<p>These settings specify how the status of files under Perforce control is 
+  displayed. You can also configure the textual status information that is displayed in Perforce views. By default, only &quot;add/edit/delete&quot; file decorations are displayed. </p>
+<h2>Labels</h2>
+<p>This setting determines whether the plug-in fetches all labels or a limited number 
+  of labels from the server. If your server contains a large number of labels, setting 
+a limit can minimize server overhead. </p>
+<h2>Mylyn</h2>
+<p><strong>Connections Mappings</strong> enables you to configure the settings for defect trackers that are used in conjunction with Perforce jobs by Mylyn.</p>
+<p><strong>Job Layout</strong> enables you to specify how job fields are displays in Mylyn tasks.</p>
+<h2>Shelved Changes</h2>
+<p>This setting determines whether the plug-in fetches all labels or a limited number 
+  of changelists from the server. If your server contains a large number of changelists, setting 
+  a limit can minimize server overhead. </p>
+<p>
+<h2>Streams</h2>
+<p>Configures settings for <a href="stream.html">Streams</a>. You can configure the stream switch options and the display settings for P4 Streams view.</p>
+<p>
+<h2>Time-lapse</h2>
+<p>Configures settings for <a href="tlv.html">Time-lapse View</a>. You can configure the file types for which Time-lapse View enables its syntax-sensitive features, the data to be displayed, and the pallette used to display aging of changes.</p>
+<p>
+<h2>Workspaces</h2>
+<p>Configures settings for the Perforce workspace. You can configure the default client root of the workspace, and the synchronization behavior when the Perforce workspace changes.</p>
+<hr>
+<p><p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+
+</body>
+</html>

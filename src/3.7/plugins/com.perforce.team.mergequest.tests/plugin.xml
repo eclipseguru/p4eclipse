@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.perforce.team.core.mergequest.elements">
+      <branch
+            firmness="4321"
+            label="My Test Branch Type"
+            type="testType">
+      </branch>
+      <branch
+            firmness="4321"
+            type="testType2">
+      </branch>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.mergequest.elementDescriptors">
+      <element
+            icon="icons/building.png"
+            important="false"
+            name="branch"
+            type="testType">
+         <createDescription>
+            Create test branch
+         </createDescription>
+      </element>
+   </extension>
+
+</plugin>

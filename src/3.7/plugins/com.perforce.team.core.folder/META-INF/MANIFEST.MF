@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-Localization: plugin
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.perforce.team.core.folder;singleton:=true
+Bundle-Version: 11.1.1.qualifier
+Bundle-Activator: com.perforce.team.core.folder.P4CoreFolderPlugin
+Bundle-Vendor: %providerName
+Require-Bundle: org.eclipse.core.runtime,
+ com.perforce.team.core,
+ org.eclipse.team.core,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: com.perforce.team.core.folder

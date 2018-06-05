@@ -1,0 +1,111 @@
+<settings>
+<localRepository>@@m2_local_repo@@</localRepository>
+  <!-- proxies>
+   <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>10.50.50.20</host>
+      <port>8080</port>
+    </proxy>
+  </proxies -->
+
+
+   <servers>
+     <server>
+       <!-- this is the id of the repo tag specified in distributionManagement -->
+       <id>jteam-nexus</id> 
+       <username>deployment</username>
+       <password>[please ask for password, if needed]</password>
+     </server>
+   </servers>
+
+  <mirrors>
+    <mirror>
+      <!--This sends everything else to /public -->
+      <id>nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <url>http://eng-jteamrepo-vm.perforce.com:8081/nexus/content/groups/public</url>
+    </mirror>
+  </mirrors>
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <!--Enable snapshots for the built in central repo to direct -->
+      <!--all requests to nexus via the mirror -->
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+      </repositories>
+     <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+
+     <profile>
+       <id>defaultProfile</id>
+       <activation>
+         <activeByDefault>true</activeByDefault>
+       </activation>
+ 
+       <repositories>
+         <repository>
+           <id>atlassian-public</id>
+           <url>https://m2proxy.atlassian.com/repository/public</url>
+           <snapshots>
+             <enabled>true</enabled>
+             <updatePolicy>daily</updatePolicy>
+             <checksumPolicy>warn</checksumPolicy>
+           </snapshots>
+           <releases>
+             <enabled>true</enabled>
+             <checksumPolicy>warn</checksumPolicy>
+           </releases>
+         </repository>
+ 	      <repository>
+ 	        <id>atlassian-plugin-sdk</id>
+           <url>file://${env.ATLAS_HOME}/repository</url>
+           <snapshots>
+             <enabled>false</enabled>
+           </snapshots>
+           <releases>
+             <enabled>true</enabled>
+             <checksumPolicy>warn</checksumPolicy>
+           </releases>
+         </repository>
+       </repositories>
+ 
+       <pluginRepositories>
+         <pluginRepository>
+           <id>atlassian-public</id>
+           <url>https://m2proxy.atlassian.com/repository/public</url>
+           <releases>
+             <enabled>true</enabled>
+             <checksumPolicy>warn</checksumPolicy>
+           </releases>
+           <snapshots>
+             <checksumPolicy>warn</checksumPolicy>
+           </snapshots>
+         </pluginRepository>
+       </pluginRepositories>
+       <properties>
+         <downloadSources>true</downloadSources>
+         <downloadJavadocs>true</downloadJavadocs>
+       </properties>
+    </profile>
+
+
+  </profiles>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+</settings>

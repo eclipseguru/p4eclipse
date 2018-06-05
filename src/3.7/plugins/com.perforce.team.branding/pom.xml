@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>p4eclipse-parent</artifactId>
+    <groupId>com.perforce</groupId>
+    <version>11.1.1-SNAPSHOT</version>
+    <relativePath>../../build/p4eclipse_parent/pom.xml</relativePath>
+  </parent>
+  <groupId>com.perforce</groupId>
+  <artifactId>com.perforce.team.branding</artifactId>
+  <version>11.1.1-SNAPSHOT</version>
+  <packaging>eclipse-plugin</packaging>
+  
+  
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<configuration>
+							<tasks>
+								<echo>basedir=${basedir}</echo>
+								<echo>Update buildVersionStub in ${basedir}/about.ini to ${project.version}</echo>
+								<replaceregexp 
+									file="${basedir}/about.ini" 
+									match="buildVersionStub"
+									flags="s" 
+									replace="${project.version}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<artifactId>jakarta-regexp</artifactId>
+						<groupId>jakarta-regexp</groupId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+  
+</project>

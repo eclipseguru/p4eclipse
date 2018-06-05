@@ -1,0 +1,40 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Branching and Merging</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Branching and Merging</h1>	
+
+
+
+Using P4Eclipse, you can branch Eclipse projects - for example, for release or experimental development - and merge changes between branches to obtain changes made by other users or to incorporate your changes into collaboratively-developed projects.</p>
+<h2>Branching </h2>
+<p><strong>To branch a project:</strong></p>
+<ol>
+  <li>Right-click the project in the P4 Connections view and choose <strong>Integrate</strong>. </li>
+  <li>In the <strong>Target</strong> field, specify a location for the branched project, using Perforce depot syntax.( For details about Perforce depot syntax, refer to the <em>P4 Users Guide</em> on the Perforce Web site.)</li>
+  <li>If required, specify desired integration options. (Again, for details about Perforce integration, refer to the <em>P4 Users Guide</em> on the Perforce Web site.)</li>
+  <li>Click <strong>Integrate</strong>. P4Eclipse creates a changelist containing the files to be branched, marked for add.</li>
+  <li>In the P4 Pending Changelists view, right-click the changelists containing the branched files and choose <strong>Submit...</strong> The Perforce Change Specification is displayed.</li>
+  <li>Enter a description and click <strong>Submit</strong>. Perforce branches the files to the specified target location.</li>
+</ol>
+<h2>Branch Specifications</h2>
+<p>To simplify integration, Perforce enables you to save a set of branch-to-branch mappings as a named <em>branch specification</em>. </p>
+<p>To display the branch specifications for the current server, choose <strong>Window &gt; Show View &gt; Other...</strong> and browse to <strong>Perforce &gt; P4 Branches</strong>. In this view, you can create or edit branch specifications and integrate changes.</p>
+<p><strong>To create a branch specification</strong>, click <img src="../images/addbranch.png" width="16" height="16"> and, in the Branch dialog, specify the details. In the View field, specify the source/target mapping using Perforce depot syntax. Depot syntax supports the following wildcards:</p>
+<ul>
+  <li>* matches all characters except slashes (use for a path component)</li>
+  <li>... matches all characters including slashes (use to specify a directory and all its subdirectories)</li>
+</ul>
+<p>To <a href="glossary.html#integrate">integrate</a> changes using a branch specification, right-click the specification and choose<strong> Integrate...</strong></p>
+<p>(For details about integration and depot syntax, refer to <a href="http://www.perforce.com/perforce/doc.current/manuals/intro/index.html"><em>Introducing Perforce</em></a>.) </p>
+<h2>Merging</h2>
+<p>As with branching, to merge changes, you select the source project, choose <strong>Integrate...</strong>, and specify a target path. The difference is that, when you merge, the target files already exist and you are required to <a href="resolving.html">resolve</a> them before Perforce permits you to submit. </p>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

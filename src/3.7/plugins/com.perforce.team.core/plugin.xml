@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<extension-point id="workspace" name="%WorkspaceExtensionPoint.name" schema="schema/workspace.exsd"/>
+<!-- *************** Markers **************** -->
+   <extension
+         id="perforcemarker"
+         point="org.eclipse.core.resources.markers">
+   </extension>
+   <extension
+         id="perforceadd"
+         name="%AddMarker.name"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <super
+            type="com.perforce.team.core.perforcemarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+
+</plugin>

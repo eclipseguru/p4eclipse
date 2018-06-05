@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="P4Eclipse" uid="p4eclipse" id="com.perforce.p4eclipse.rcp.product" application="com.perforce.p4eclipse.rcp.application" version="0.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="/com.perforce.p4eclipse.rcp/icons/p4rcp.png"/>
+      <text>
+         P4Eclipse
+
+Perforce RCP All-In-One Bundle
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Xms40m -Xmx512m -XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i32="/com.perforce.p4eclipse.rcp/icons/p4rcp.png"/>
+
+   <splash
+      location="com.perforce.p4eclipse.rcp"
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
+   <launcher name="p4eclipse">
+      <macosx icon="/com.perforce.p4eclipse.rcp/p4rcp.icns"/>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="com.perforce.p4eclipse.rcp3rd.feature"/>
+      <feature id="com.perforce.p4eclipse.rcp.feature"/>
+      <feature id="org.eclipse.sdk"/>
+      <feature id="org.eclipse.dltk.python"/>
+      <feature id="org.eclipse.dltk.core"/>
+      <feature id="org.eclipse.dltk.mylyn"/>
+      <feature id="org.eclipse.dltk.ruby"/>
+      <feature id="org.eclipse.mylyn.commons"/>
+      <feature id="org.eclipse.mylyn.bugzilla_feature"/>
+      <feature id="org.eclipse.mylyn.builds"/>
+      <feature id="org.eclipse.mylyn.context_feature"/>
+      <feature id="org.eclipse.mylyn.cvs"/>
+      <feature id="org.eclipse.mylyn.git"/>
+      <feature id="org.eclipse.mylyn.github.feature"/>
+      <feature id="org.eclipse.mylyn.htmltext"/>
+      <feature id="org.eclipse.mylyn.hudson"/>
+      <feature id="org.eclipse.mylyn.ide_feature"/>
+      <feature id="org.eclipse.mylyn.ide_feature"/>
+      <feature id="org.eclipse.mylyn.java_feature"/>
+      <feature id="org.eclipse.mylyn.pde_feature"/>
+      <feature id="org.eclipse.mylyn.team_feature"/>
+      <feature id="org.eclipse.mylyn.trac_feature"/>
+      <feature id="org.eclipse.mylyn.versions"/>
+      <feature id="org.eclipse.mylyn.wikitext_feature"/>
+      <feature id="org.eclipse.mylyn_feature"/>
+      <feature id="org.eclipse.cdt"/>
+      <feature id="org.eclipse.birt"/>
+      <feature id="org.eclipse.cdt.mylyn"/>
+   </features>
+
+   <configurations>
+      <plugin id="com.perforce.p4eclipse.rcp" autoStart="false" startLevel="5" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
+   </configurations>
+
+</product>

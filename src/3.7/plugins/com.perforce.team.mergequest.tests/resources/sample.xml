@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphs>
+<graph id="graph1" name="Java Team">
+<branch height="26" id="branch7" name="Hamish" type="development" width="72" x="170" y="410"/>
+<depotPathMapping direction="both" id="dpm1" latestSource="248705" latestTarget="249180" name="Prep 2009.3-Release 2009.3" source="branch1" sourceChanges="VISIBLE_CHANGES" sourceCount="5" sourcePath="//depot/p09.3/..." target="branch2" targetChanges="VISIBLE_CHANGES" targetCount="347" targetPath="//depot/r09.3/..."/>
+<depotPathMapping direction="target" id="dpm2" latestSource="252378" latestTarget="252753" name="Prep 2010.1-Mainline" source="branch3" sourceChanges="VISIBLE_CHANGES" sourceCount="0" sourcePath="//depot/p10.1/..." target="branch0" targetChanges="VISIBLE_CHANGES" targetCount="160" targetPath="//depot/main/..."/>
+<branch height="26" id="branch3" name="Prep 2010.1" type="release" width="104" x="740" y="230"/>
+<branch height="26" id="branch8" name="Michael" type="development" width="71" x="660" y="410"/>
+<depotPathMapping direction="both" id="dpm5" latestSource="252673" latestTarget="252674" name="Michael-Java Team" source="branch8" sourceChanges="VISIBLE_CHANGES" sourceCount="1" sourcePath="//depot/dev/mruan/jteam/tools/..." target="branch5" targetChanges="VISIBLE_CHANGES" targetCount="2" targetPath="//depot/dev/jteam/tools/..."/>
+<depotPathMapping direction="both" id="dpm3" latestSource="252378" latestTarget="252101" name="Prep 2010.1-Release 2010.1" source="branch3" sourceChanges="VISIBLE_CHANGES" sourceCount="30" sourcePath="//depot/p10.1/..." target="branch4" targetChanges="VISIBLE_CHANGES" targetCount="58" targetPath="//depot/r10.1/..."/>
+<branch height="26" id="branch1" name="Prep 2009.3" type="release" width="104" x="100" y="230"/>
+<branchSpecMapping direction="both" id="bsm1" latestSource="252676" latestTarget="252733" name="ksawicki_dev-main" source="branch6" sourceChanges="VISIBLE_CHANGES" sourceCount="27" target="branch5" targetChanges="NO_CHANGES" targetCount="0"/>
+<branch height="26" id="branch4" name="Release 2010.1" type="release" width="124" x="730" y="10"/>
+<depotPathMapping direction="target" id="dpm0" latestSource="248705" latestTarget="252753" name="Prep 2009.3-Mainline" source="branch1" sourceChanges="VISIBLE_CHANGES" sourceCount="0" sourcePath="//depot/p09.3/..." target="branch0" targetChanges="VISIBLE_CHANGES" targetCount="35" targetPath="//depot/main/..."/>
+<branch height="107" id="branch0" name="Mainline" type="main" width="240" x="330" y="40"/>
+<depotPathMapping direction="both" id="dpm4" latestSource="252726" latestTarget="252733" name="Hamish-Java Team" source="branch7" sourceChanges="NO_CHANGES" sourceCount="0" sourcePath="//depot/dev/hreid101dev/p4-java/..." target="branch5" targetChanges="NO_CHANGES" targetCount="0" targetPath="//depot/dev/jteam/p4-java/..."/>
+<branchSpecMapping direction="both" id="bsm0" latestSource="252733" latestTarget="252734" name="jteam_dev-main" source="branch5" sourceChanges="VISIBLE_CHANGES" sourceCount="45" target="branch0" targetChanges="VISIBLE_CHANGES" targetCount="8"/>
+<branch height="26" id="branch5" name="Java Team" type="development" width="88" x="410" y="290"/>
+<branch height="26" id="branch6" name="Kevin Sawicki" type="development" width="105" x="400" y="500"/>
+<branch height="26" id="branch2" name="Release 2009.3" type="release" width="124" x="90" y="10"/>
+</graph>
+</graphs>

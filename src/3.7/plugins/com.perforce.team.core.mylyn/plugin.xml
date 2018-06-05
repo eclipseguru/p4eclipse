@@ -1,0 +1,3 @@
+<plugin>
+	<extension-point id="configuration" name="%JobConfigurationExtensionPoint.name" schema="schema/configuration.exsd"/>
+</plugin>

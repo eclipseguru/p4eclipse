@@ -1,0 +1,67 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Configuring and Using P4Sandbox</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css"></head>
+
+<body>
+<h1>Configuring and Using P4Sandbox</h1>
+<p>P4Sandbox enables you to create and maintain private, local repositories for work such as code experimentation and bug fixes. You can optionally connect a local repositiory (called a local P4Sandbox) to a central server.</p>
+<p>You can use either the Command-Line Client (CLI) or P4Eclipse integrated with the Perforce Sandbox Configuration Wizard to configure and manage your local P4Sandbox.</p> 
+<!--<p><strong>Note:</strong>To use P4Sandbox in P4Eclipse with P4V requires P4V version 2011.1, at minimum.</p>-->
+<p>This topic primarily provides information on how to enable and create a local P4Sandbox, connect a local P4Sandbox to a central server, and manage a P4Sandbox using P4Eclipse. For more information about P4Sandbox (such as conceptual and command reference information and examples), see the P4Sandbox User's Guide.</p>
+<h2>Enabling P4Sandbox Using a CLI</h2>
+<p>To enable P4Sandbox using CLI, see the CLI Method section of the P4Sandbox User's Guide, &quot;Setting Up P4Sandbox&quot; chapter.
+<h2>Enabling P4Sandbox Using P4V</h2>
+<p>This section provides prerequisite information and instructions on enabling P4Sandbox for P4Eclipse using P4V.</p>
+<p><strong>Prerequisites</strong></p>
+<p>To enable P4Sandbox functionality for P4Eclipse:</p>
+<ol>
+  <li>Install P4V and P4Sandbox on your machine. Consult the P4Sandbox ReadMe file for the required minimum version number of P4V that supports P4Sandbox; also note this information appears on the <strong>External Tools</strong> page<!--confirm if page, region, panel, etc.--> of P4Eclipse's <strong><a href="preferences.html">Preferences</a></strong> window.</li>
+  <li>Set the respective paths to the P4V and P4Sandbox executable files on the <strong>External Tools</strong> page. Omitting these paths results in P4Eclipse displaying an error message when you attempt to use P4Sandbox.</li>
+ </ol>
+<h2>Connecting P4Sandbox to a Central Server</h2>
+<p>This section provides instructions on connecting P4Sandbox to a central server.</p>
+<p>To connect P4Sandbox to a central server:</p>
+<ol>
+<li>Go to <strong>Window &gt; Open Perspective &gt; Other &gt; Perforce</strong> to launch the Perforce perspective.</li>
+<li>In the P4 Connections panel, <a href="changesettings.html">define a connection</a> to the central server.</li>
+<li>Context-click the central server connection and select <strong>Configure Sandbox</strong> to launch the <strong>P4Sandbox Configuration Wizard</strong>.</li>
+<li>Continue through the wizard to add a new local P4Sandbox. Be sure to note the localhost and workspace for use in steps 5a and 5b.</li>
+<ul> 
+<li> For more information on using the wizard, see the Visual Client section of the of the P4Sandbox User's Guide, &quot;Setting Up P4Sandbox&quot; chapter.</li>
+<li><strong>Note:</strong> After you click <strong>Finish</strong>, a command line window briefly displays before the <strong>Perforce Connection Wizard</strong> appears.</li></ul>
+<li>In the <strong>Perforce Connection Wizard</strong>, connect the local P4Sandbox to a central server, as follows:</li>
+<ol>
+<li style="list-style-type:lower-alpha"><strong>Add a new Perforce server connection</strong>: Enter the localhost information in the <strong>Server</strong> field, and specify the user's <strong>Authentication</strong> details.</li>
+<li style="list-style-type:lower-alpha"><strong>Choose a Perforce client workspace</strong>: Select the appropriate workspace for the local P4Sandbox.</li>
+<li style="list-style-type:lower-alpha"><strong>Choose remote projects to import</strong>: Select any folders that you want maintained under P4Eclipse control. </li>
+<li style="list-style-type:lower-alpha">Click <strong>Finish</strong>.</li>
+</ol>
+<li>The local P4Sandbox connection to the central server displays in the <strong>P4 Connections</strong> view and the <strong>P4 Streams</strong> view.</li>
+</ol>
+</ol>
+<p>The screenshot below shows an example of a local P4Sandbox central server connection (<tt>localhost:1674,my_workspace,jblack</tt>).</p>
+<p>Once you successfully establish a P4Sandbox connection, you can use P4V's integrated Streams Graph functionality to work with your P4Sandbox; see <a href="#up4s">Using P4Sandbox.</a></p><!--thumbnail image and open it in separate window?-->
+<img src="../images/connectionstreamstabs.png" alt="Viewing local P4Sandbox in P4 Connections and P4 Streams tabs" width="" height="" align="absmiddle">
+<p/>
+<nl>You can copy the recent changes from the remote server to the mirror stream by:
+<li>selecting the <b>mirror</b> folder in the P4 Connections view and context-clicking <b>Pull from Central Server</b>.</li> 
+<li>selecting the <b>mirror</b> stream in the P4 Streams view and context-clicking <b>Pull from Central Server</b>.</li>
+</nl>
+<h2><a id="up4s">Using P4Sandbox</a></h2>
+You can perform P4Sandbox tasks using a CLI, the P4V Streams Graph, or both.
+<p>For more information, see the Command line client vs GUI section in the &quot;Preface&quot; of the P4Sandbox User's Guide. This section contains information on the pertinent chapters to read depending on your preferred work method.</p>
+<p>You can graphically<!--jjb: "graphically"? maybe revise...--> perform most P4Sandbox tasks using the P4V Streams Graph, instead of issuing commands using a CLI.</p>
+<p>To display P4Sandbox in the P4V Streams Graph: In the <strong>P4 Streams</strong> view, click the <strong>Streams Graph</strong> icon <img src="../images/streamsgraph.png" alt=" P4Sandbox Streams graph icon" width="19" height="19" align="absmiddle">.</p>
+<p>For more information about managing your P4Sandbox with the P4V Streams Graph, see the P4Sandbox User's Guide, &quot;Using P4Sandbox with a Visual Client&quot; chapter.</p>
+
+
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+
+
+
+</body>
+</html>

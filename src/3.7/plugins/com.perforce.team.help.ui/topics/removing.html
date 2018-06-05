@@ -1,0 +1,27 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Removing a Project from Perforce Control</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Removing a Project from Perforce Control</h1>
+
+
+<p>To remove a project from Perforce control, right-click the project and choose 
+  <b>Team&gt;Unmanage</b>. To verify that the project is no longer under Perforce 
+  control, right-click the project and choose <b>Team</b>. The only option displayed 
+  for an unmanaged project is <b>Share Project...</b></p>
+<p>Note that, although Perforce is no longer configured as the SCM provider for 
+  the project, its files remain in the depot and in your workspace. If you have 
+  any project files open in changelists, they remain open in the changelist (and 
+  can be submitted). To put the project under Perforce control again, proceed 
+  as described in <a href="adding.html">Putting a Project under Perforce Control</a>. 
+  Be advised that, if you have made changes to the project after removing it from Perforce 
+  control, your changes will be overwritten if you sync (retrieve) the project files using a different Perforce client application (for example, P4V). </p>
+<hr>
+<p><img src="../images/perforcelogo.png" alt="Copyright Perforce Software 2003-2012. All Rights Reserved." ></p>
+</body>
+</html>

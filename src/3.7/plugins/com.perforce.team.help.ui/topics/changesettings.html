@@ -1,0 +1,48 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Perforce Basics</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Defining Perforce Server Connections and Working Offline</h1>
+<h2>Defining Connections</h2>
+<p>Connections enable you to browse the Perforce server to import projects and obtain access to files under Perforce control. You define connections in the P4 Connections view of the Perforce perspective.
+To define a connection, you specify the server host and port, your Perforce user name, and the name of the Perforce client workspace associated with your Eclipse project. 
+<p>To define a connection:
+<ol>
+  <li>In the Perforce perspective's P4 Connections view, right-click and choose <strong>New Connection...</strong> The <B>Perforce Server Connection</B> <strong>Wizard</strong> is launched.
+  (Alternate menu choice: <strong>File &gt; New &gt; Other &gt; Perforce &gt; Connection</strong>)
+  <li>On the first page, enter the connection settings and click <strong>Next.<br>
+</strong>Connection settings:</li>
+<ul>
+  <li><strong>Server</strong>: P4PORT setting (protocol:hostname:port) for the Perforce server (for example ssl:myp4server.example.com:1777)</li>
+  <li><strong>Charset</strong>: set <strong>only</strong> if the Perforce Server is running in Unicode mode.</li>
+  <li><strong>User</strong>: your Perforce user name</li>
+  <li><strong>Password</strong>: your Perforce password</li>
+</ul>
+  <li>On the second page, choose or create a Perforce client workspace to be used in association with the specified server. Uncheck <b>"Launch Perforce Import Wizard to import depot folders as Eclipse projects"</b> if you do not want to import the project from the connection.</li>
+  <li>Click <strong>Finish</strong>. Your newly-defined connection is listed in the P4 Connections view.</li>
+</ol>
+<h2>Workspaces: Perforce vs. Eclipse</h2>
+<p>Both Perforce and Eclipse define workspaces, that is, managed directories that contain local copies of files. Eclipse projects that are managed by Perforce must reside under the client root directory. To ensure that you do not check in machine-specific Eclipse files (which create problems for other developer who import your projects), keep the Eclipse and Perforce workspaces separate, that is, ensure that neither workspace resides inside the other. </p>
+<p>When you create new projects and check them into Perforce, the final location of the project must be in the Perforce workspace. <b>Share Project Wizard</b> can help you move the project into Perforce workspace automatically.</p>
+<p>The Perforce client workspace is configured by editing its client specification. To edit the client specification, right-click the corresponding connection in the P4 Connections view and choose <strong>Edit Perforce client...</strong></p>
+<h2>Working Offline</h2>
+<p>If P4Eclipse cannot connect to a Perforce server to perform an operation, it displays 
+  the following prompt:
+<p><img src="../images/offline.png" width="441" height="166">
+<p>To continue with the current connection settings, click <B>Work Offline</B>. If you 
+  work offline, you must reconcile any changes you make with the Perforce depot 
+  when the server connection is restored. You must add newly-created files, check 
+  in changed files, and delete files from the depot that you have deleted from 
+  the project. To detect files that differ from the depot, right-click the project 
+  in the Navigator pane and choose <B>Team &gt; Check Consistency...</B>
+<p>If you have chosen to work offline, note that, by default, P4Eclipse retries the connection 
+  the next time you launch Eclipse. If you expect to work offline for an extended period of time, you can disable the retries (and the resulting error messages) by enabling the <strong>Team &gt; Perforce</strong> preference <strong>Retain offline connection state between Eclipse sessions</strong>.
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

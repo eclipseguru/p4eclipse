@@ -1,0 +1,195 @@
+<!DOCTYPE html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+  <title>Using Streams</title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Work with Streams</h1>
+
+<p>Streams provide an alternate approach to maintaining codelines.
+<p>Starting with release <strong>2012.1</strong>, P4Eclipse 
+provides the following support for streams:</p>
+<ul>
+  <li>Creating a Stream Spec</li>
+  <li>Populating a Stream</li>
+  <li>Viewing Stream Hierarchy</li>
+  <li>Creating a Stream Client</li>
+  <li>Copying and Merging Changes between Streams</li>
+</ul>
+
+<p>If your organization uses streams, you will see streams depots in the
+<strong>P4 Connections</strong> view. Streams depots are marked with the <img
+src="../images/stream_depot_icon.png" alt="Stream Depot" width="" height="">
+icon. A hierarchical view of the streams and their relationships to each other
+is displayed in the <b>P4 Streams</b> view, along with each stream's name,
+root, parent, owner, type, and description. If P4V (the Perforce Visual Client
+executable) is available, you can also obtain the P4V Streams Graph by clicking
+the <strong>Streams Graph</strong> icon <img src="../images/stream_graph.png"
+alt="Streams graph icon"/> in the <strong>P4 Streams</strong> view. </p>
+
+<table border="0">
+  <tr>
+    <td><img alt="streams view in perforce perspective"
+src="../images/perforce_perspective_stream.png"></td>
+    <td><img alt="streams view in perforce perspective"
+src="../images/perforce_perspective_stream.png"></td>
+  </tr>
+</table>
+
+<p></p>
+
+<h2>Create a Stream Spec</h2>
+
+<p>From the <strong>P4 Streams</strong> view (or the 
+<strong>Create New Stream from...</strong> context
+menu item), click the <strong>Create a New Stream</strong>
+button <img src="../images/addbranch.png"/>.  The <strong>New
+Stream</strong> wizard will pop up.  To create a new Stream spec,
+follow the wizard's prompts and click <strong>Finish</strong>.
+Click <strong>Refresh</strong> button<img src="../images/refresh.png"/> on
+the view toolbar to refresh the view and display the new stream.</p>
+
+<h2>Populate a Stream</h2>
+
+<p>A stream spec defines a path in the stream depot. If the path does not
+exist, you need to populate the stream with content.</p>
+<p>To populate a stream:</p>
+<p>You can check the <strong>Branch files from parent on stream creation</strong> button in the <strong>New Stream</strong> wizard.</p>
+<p>Alternatively, you can:</p>
+<ul>
+  <li>Create a new connection in the <strong>P4 Connections</strong>
+    view and set your Perforce workspace's <strong>Stream</strong>  
+    value to the stream you want to populate.</li>
+  <li>In the <strong>P4 Stream</strong> view, select the stream and 
+    choose <strong>Merge to Stream</strong>.</li>
+  <li>Select the parent stream as the source, select <strong>Merge</strong>, 
+    Resolve any files (accepting the source), and then submit the 
+    changelist.</li> 
+</ul>
+<p>If you are familiar with P4V, you can also:</p>
+<ul>
+  <li>Invoke the P4V graph view 
+   <img src="../images/stream_graph.png" alt="Streams graph icon"/> 
+   to populate the stream from the <strong>P4 Streams</strong> view. </li>
+  <li><strong>Note:</strong> in order to enable context menu functionality in 
+    the stream graph, you will need to select the P4V Preference named
+    <strong>Use the same workspace, and switch it between streams.</strong>
+    (You can set this preference in the Streams page of P4V Preferences.)</li>
+  <li>Use the context menu in the P4V Graph View as you would otherwise
+    use it from within P4V.</li>
+</ul>
+
+<h2>Delete a Stream</h2>
+
+<p>You can delete a stream if it has not children. To delete: select a 
+stream from <strong>P4 Streams</strong> view and choose <strong>Delete 
+Stream</strong> from context menu.</p>
+
+<h2>View Stream hierarchy</h2>
+The <strong>P4 Streams</strong> view can show streams either as a tree 
+<img src="../images/tree_layout.png"/>
+or list <img src="../images/flat_layout.png"/>.  If you have P4V 
+configured in the preferences page, the P4V Stream Graph view can 
+also be invoked from the <strong>P4 Streams</strong> 
+view toolbar <img src="../images/stream_graph.png" alt="Streams graph view">.
+
+<h2>Create a Stream Client</h2>
+<p>To work with a stream depot, a stream client is needed. To create a stream
+client, select a connection from the <strong>P4 Connections</strong> view, 
+select <strong>Edit Perforce Workspace...</strong> from the context 
+menu, set the <strong>Stream</strong> field (and optionally, specify the 
+<strong>AtChange</strong> field), and save the spec.</p>
+
+<p><img src="../images/stream_client.png" alt="Streams client dialog"></p>
+
+<h3>Work in a Stream</h3>
+<p>Alternatively, you can select the context menu <strong>Work in this Stream...</strong> 
+of the <strong>P4 Streams</strong> View, P4Eclipse will prompt you to either
+update the current Perforce client to associate with selected stream, or create
+a new client to associate with the selected stream, based on the preference. 
+The default behavior is to update the current client to associate with the 
+selected stream.</p>
+<p>Once you select the stream client, P4Eclipse will automatically switch the 
+Perforce workspace and synchronize the existing projects to the latest revision.</p>
+
+<h2>Copy and Merge Changes between Streams</h2>
+<hr>
+
+<p>Consider the following set of streams:</p>
+
+<p><img src="../images/stream_graph.jpg" alt="Streams graph view"></p>
+
+<p>After fixing a bug or implementing a new feature in a 
+development stream, you may want to copy up your changes 
+to the main stream. Or you may want to merge down the 
+changes from the main stream to the development stream.</p>
+<p>Prior to the 2012.3 release, you needed to manually switch to target streams.
+Since the 2012.3 release, the support for automatically
+switching between streams was added and working with multiple streams is much easier.
+</p>
+
+<h3>Auto-switch streams</h3>
+<p>When you invoke the <b>Copy to Stream...</b> and <b>Merge to Stream...</b> actions, 
+P4Eclipse will automatically switch to the target stream if necessary.</p>
+
+<h4>To copy changes from the development stream to the main stream:</h4>
+
+<ul>
+  <li>Open P4 Streams view, and select the main stream, context-click
+  <b>Copy to Stream...</b>, if you are currently in dev stream, P4Eclipse
+  will automatically switch to the main stream, and synchronize the resources.</li>
+  <li>You can then follow the prompts from the <strong>Copy to Stream</strong> wizard, 
+    and click <strong>Copy</strong> to finish. </li>
+  <li>Resolve the pending changelist and submit the change.</li>
+</ul>
+
+<h4>To merge changes from the main stream to the development stream:</h4>
+
+<ul>
+  <li>Open P4 Streams view, and select the dev stream, context-click
+  <b>Merge to Stream...</b>, if you are currently in main stream, P4Eclipse
+  will automatically switch to the dev stream, and synchronize the resources.</li>
+  <li>You can then follow the prompts from the <strong>Merge to Stream</strong> wizard, 
+    and click <strong>Merge</strong> to finish. </li>
+  <li>Resolve the pending changelist and submit the change.</li>
+</ul>
+
+<h2>Work with Task Stream</h2>
+<p>Task stream provide a light way to branch streams. Usually you work with task stream for
+a minor bug fix or a small feature development.</p>
+
+<p>P4 Eclipse provide following support for task stream, and most of them are available from the <strong>P4 Streams</strong> view:</p>
+
+<ul>
+	<li>Create a task stream</li>
+	<li>Populate a task stream
+		<ul>
+			<li>From parent stream</li>
+			<li>From a depot</li>
+		</ul>
+	</li>
+	<li>Work in a task stream</li>
+	<li>Delete a task stream</li>
+	<li>Unload/reload a task stream</li>
+	<li>Re-parent a task stream</li>
+</ul>
+
+<h3>Task Stream Workflow</h3>
+<p>The following workflow is suggested but not required:</p>
+<ul>
+	<li>Create a task stream relate to a task (feature or bug)</li>
+	<li>Checkout files in task stream</li>
+	<li>Modify the files in the task stream</li>
+	<li>Submit files to task stream</li>
+	<li>Copy changes up to parent</li>
+	<li>Unload or delete task stream</li>
+</ul>
+<hr>
+
+<p><img src="../images/perforcelogo.png"
+alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

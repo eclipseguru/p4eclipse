@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Branchgraph
+Bundle-SymbolicName: com.perforce.team.mergequest.tests;singleton:=true
+Bundle-Version: 11.1.1.qualifier
+Bundle-Activator: com.perforce.team.tests.branchgraph.BranchGraphTestPlugin
+Bundle-Vendor: PERFORCE
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.perforce.team.core.mergequest,
+ com.perforce.team.ui.mergequest,
+ com.perforce.team.core,
+ org.eclipse.core.resources,
+ com.perforce.team.tests,
+ org.junit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

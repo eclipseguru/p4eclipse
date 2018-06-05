@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>p4eclipse-parent</artifactId>
+    <groupId>com.perforce</groupId>
+    <version>11.1.1-SNAPSHOT</version>
+    <relativePath>../../build/p4eclipse_parent/pom.xml</relativePath>
+  </parent>
+  <groupId>com.perforce</groupId>
+  <artifactId>com.perforce.team.help.ui</artifactId>
+  <version>11.1.1-SNAPSHOT</version>
+  <packaging>eclipse-plugin</packaging>
+  
+  	<profiles>
+		<profile>
+			<id>replace-help</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<phase>process-sources</phase>
+								<configuration>
+									<tasks>
+										<echo>basedir=${basedir}</echo>
+										<property name="docdir" value="${basedir}/../../../../p4-doc/manuals/p4eclipse"/>
+										<available file="${docdir}" type="dir" property="isDocAvail" />
+										<fail unless="isDocAvail" message="Can not find the folder holding the online helps. Please assure ${docdir} exists." />
+
+										<echo>delete file in ${basedir}/topics, ${basedir}/images, ${basedir}/index.html </echo>
+										<delete>
+											<fileset dir="${basedir}">
+											    <include name="images/*"/>
+											    <include name="topics/*"/>
+											    <include name="index.html"/>
+										    </fileset>
+										</delete>
+
+										<echo>copying ${docdir} to ${basedir}</echo>
+										<copy todir="${basedir}">
+											<fileset dir="${docdir}" />
+										</copy>
+
+										<fail message="Can not find ${basedir}/index.html. Please assure ${docdir} has right content and ${basedir} is writable.">
+											<condition>
+												<not>
+													<available file="${basedir}/index.html" type="file" />
+												</not>
+											</condition>
+										</fail>
+
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+				
+</project>

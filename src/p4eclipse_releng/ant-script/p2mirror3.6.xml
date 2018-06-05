@@ -1,0 +1,139 @@
+<!--
+For Repository management: 
+  http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_repositorytasks.htm 
+-->
+<project name="P2Mirror3.6" default="main">
+	<property file="${basedir}/ant_build.properties" />
+	<property name="repo" value="file:${tools.dir}/p2mirror3.6"/>
+	<property name="repo.name" value="Helios artifact and metadata repository"/>
+
+	<target name="main">
+		<echo message="start mirroring repos...${ant.project.name}" />
+
+		<p2.mirror description="Mirroring Junit for PDE testing...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/eclipse/updates/3.6/"/>
+				<repository location="http://download.eclipse.org/releases/helios/"/>
+			</source>
+			<iu id="org.junit" version="3.8.2.v3_8_2_v20100427-1100"/>
+			<iu id="org.junit.source" version="3.8.2.v3_8_2_v20100427-1100"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="true" latestVersionOnly="false"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring missing plugin dependencies ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/eclipse/updates/3.6/"/>
+				<repository location="http://download.eclipse.org/releases/helios/"/>
+			</source>
+			<!-- some missing dependencies -->
+			<iu id="org.w3c.dom.smil" version="1.0.0.v200806040011"/>
+			<iu id="javax.xml.soap" version="1.2.0.v201005080501"/>
+			<iu id="javax.wsdl" version="1.5.1.v201005080630"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="false" followStrict="true" latestVersionOnly="false"/>
+		</p2.mirror>
+		
+		<p2.mirror description="Mirroring Eclipse 3.6 equinox and platform...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/eclipse/updates/3.6/"/>
+			</source>
+			<iu id="org.eclipse.platform.ide" version="3.6.2.M20110210-1200"/>
+			<iu id="org.eclipse.platform.sdk" version="3.6.2.M20110210-1200"/>
+			<iu id="org.eclipse.sdk.ide" version="3.6.2.M20110210-1200"/>
+			<iu id="org.eclipse.pde.feature.group" version="3.6.2.r362_v20110203-7b7mFL2FET3dhHalh1iNZtL"/>
+			<iu id="org.eclipse.equinox.executable.feature.group" version="3.4.2.R36x_v20110125-7N7K7bF8zk1BAKMh0iz0t94miBLY"/>
+			<iu id="org.eclipse.cvs.feature.group" version="1.2.1.r362_v20101111-7B77FKv99HL0GvIAF99I8H14B7E"/>
+			<iu id="org.eclipse.cvs.source.feature.group" version="1.2.1.r362_v20101111-7B77FKv99HL0GvIAF99I8H14B7E"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring mylyn 3.6 ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/mylyn/releases/3.6/"/>
+			</source>
+			<iu id="org.eclipse.mylyn.context_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" version="1.5.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.hudson.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.cdt.mylyn.feature.group" version="5.2.302.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.ide_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.java_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.pde_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.team_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.trac_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.cvs.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.git.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.builds.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.builds.sdk.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.commons.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.docs.sdk.feature.group" version="1.5.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.htmltext.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.sdk_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.test_feature.feature.group" version="3.6.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.versions.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.versions.sdk.feature.group" version="0.8.2.v20110908-0706"/>
+			<iu id="org.eclipse.mylyn.wikitext.sdk.feature.group" version="1.5.2.v20110908-0706"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring birt and cdt ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/releases/helios/"/>
+			</source>
+			<iu id="org.eclipse.birt.feature.group" version="2.6.2.r262_v20101008-9iF7A9JGHMBCRz-R8tbxRel8kQrI"/>
+			<iu id="org.eclipse.birt.chart.cshelp.feature.group" version="2.6.2.r262_v20101008-3507w31211924"/>
+			<iu id="org.eclipse.birt.cshelp.feature.group" version="2.6.2.r262_v20101008-3517s373aw31221317"/>
+			<iu id="org.eclipse.birt.doc.feature.group" version="2.6.2.r262_v20101008-3507w31211924"/>
+			<iu id="org.eclipse.birt.example.feature.group" version="2.6.2.r262_v20101008-7F7e7CDBRmTc_XEMHBHMm"/>
+			<iu id="org.eclipse.birt.source.feature.group" version="2.6.2.r262_v20101008-9iF7A9JGHMBCRz-R8tbxRel8kQrI"/>
+			<iu id="org.eclipse.gef.sdk.feature.group" version="3.6.2.v20110128-0100-7G7R77A5WNcHQDbhX8JWOYLOSeRJ"/>
+			<iu id="org.eclipse.cdt.feature.group" version="7.0.2.201102110609"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring antlr ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository"/>
+			</source>
+			<iu id="org.antlr.runtime" version="3.0.0.v200803061811"/>
+			<iu id="org.antlr.runtime.source" version="3.0.0.v200803061811"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring dltk ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/technology/dltk/updates/"/>
+			</source>
+			<iu id="org.eclipse.dltk.core.feature.group" version="2.0.0.v20100518-1923-7L--EAAoOVMSMc4AWEvJ"/>
+			<iu id="org.eclipse.dltk.core.sdk.feature.group" version="2.0.0.v20090730-1127-5--90U45SFRujYToYq6KvGxbBBpP"/>
+			<iu id="org.eclipse.dltk.core.index.feature.group" version="2.0.0.v20100616-2015-6--9oA5855M7O2968L"/>
+			<iu id="org.eclipse.dltk.core.index.sdk.feature.group" version="2.0.0.v20090917-1539-4--8342CrDDBD7R_S_AE_N_pB696"/>
+			<iu id="org.eclipse.dltk.itcl.feature.group" version="2.0.0.v20100603-4--9oA57D5F9H29D9E"/>
+			<iu id="org.eclipse.dltk.itcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--8142CrDD_J7MAJDz0RGOE6G_I"/>
+			<iu id="org.eclipse.dltk.javascript.feature.group" version="2.0.0.v20100118-1339-7J--E_EkMWeN5avAaJuT"/>
+			<iu id="org.eclipse.dltk.javascript.sdk.feature.group" version="2.0.0.v20090730-1412-4--84O23HCIoXYiTAmxKxLwlAFlN"/>
+			<iu id="org.eclipse.dltk.mylyn.feature.group" version="1.0.0.v20100518-1923-2--7w3121163103314"/>
+			<iu id="org.eclipse.dltk.mylyn.sdk.feature.group" version="1.0.0.v20090730-1311-2--8-42Az-696B3_E6658368x423"/>
+			<iu id="org.eclipse.dltk.python.feature.group" version="2.0.0.v20090730-1514-77--BcMACkBgGa3CKHQ"/>
+			<iu id="org.eclipse.dltk.python.sdk.feature.group" version="2.0.0.v20090730-1514-4--84B22NfWGFmFoKh5MUJSCdNBD"/>
+			<iu id="org.eclipse.dltk.rse.feature.group" version="2.0.0.v20100603-5--9oA5855C8K2A98F"/>
+			<iu id="org.eclipse.dltk.rse.sdk.feature.group" version="2.0.0.v20090730-1127-4--8242CrDDAA7K_ME0MFQ66D9L3"/>
+			<iu id="org.eclipse.dltk.ruby.feature.group" version="2.0.0.v20100505-1154-7G--E_EkMU3NHhvAUo0G"/>
+			<iu id="org.eclipse.dltk.ruby.sdk.feature.group" version="2.0.0.v20090730-1127-4--84L23HCMnUW7RPoxKoq2YAFlN"/>
+			<iu id="org.eclipse.dltk.tcl.feature.group" version="2.0.0.v20100505-1154-7L0-EC3wSZiWSqREkvtZ"/>
+			<iu id="org.eclipse.dltk.tcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--84Q33HFAz-abmaaxTP7yvrD4x"/>
+			<iu id="org.eclipse.dltk.xotcl.feature.group" version="2.0.0.v20100603-5--_kE79O7ODJ3BGCN"/>
+			<iu id="org.eclipse.dltk.xotcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--8242DnHFBU9WFLFz-YMZP8PEK"/>
+			<slicingOptions includeOptional="true" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<echo message="end mirroring repos...${ant.project.name}" />
+	</target>
+</project>

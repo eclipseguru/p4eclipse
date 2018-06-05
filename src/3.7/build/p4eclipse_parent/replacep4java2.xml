@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.perforce</groupId>
+	<artifactId>p4eclipse-replacep4java</artifactId>
+	<version>12.2.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- This will replace the p4java with a jar from the p4java release tar 
+		ball and update the related manifest files and class path. The following 
+		structure is assumed for p4java tarball: 
+		p4java-2013.1.639393.PREP-TEST_ONLY-SNAPSHOT 
+			|- p4java-2013.1.639393.PREP-TEST_ONLY-SNAPSHOT.jar 
+		The Bnr maven build for eclipse can run this in the process-resource stage. 
+		The Bnr build will be responsible to fetch the right p4java.zip file from 
+		either Main|P|R-line. 
+		And then calling the following command to inject the p4java dependency:
+		 
+		  mvn -f replacep4java2.xml process-resources -Dp4java=/home/ali/Perforce/myclient/bin.java/p4java.zip 
+    -->
+
+	<properties>
+		<targetprj>${project.basedir}/../../plugins/com.perforce.team.core</targetprj>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<configuration>
+							<tasks>
+								<property name="dependency" value="${targetprj}/_tmp_dependency" />
+								<echo>targetprj=${targetprj}</echo>
+								<delete dir="${dependency}"/>
+								<mkdir dir="${dependency}/" />
+								<unzip src="${p4java}" dest="${dependency}" />
+								<!-- p4java jar file pattern: p4java-2011.1.297684.jar -->
+								<path id="p4javaPath">
+									<fileset dir="${dependency}">
+										<include name="**/p4java-*.*.*jar" />
+									</fileset>
+								</path>
+								<pathconvert property="p4javaFile" refid="p4javaPath">
+									<globmapper from="*" to="*" />
+								</pathconvert>
+								<basename file="${p4javaFile}" property="p4javaName" />
+								<echo>p4javaFile=${p4javaFile}</echo>
+								<echo>p4javaName=${p4javaName}</echo>
+								<echo>deleting ${targetprj}/libraries/p4java-*.jar</echo>
+								<echo>copying ${p4javaFile} to ${targetprj}/libraries</echo>
+								<delete>
+									<fileset dir="${targetprj}/libraries" includes="p4java-*.jar"
+										excludes="${p4javaName}" />
+								</delete>
+								<copy file="${p4javaFile}" todir="${targetprj}/libraries" />
+								<replaceregexp file="${targetprj}/.classpath"
+									match="p4java-.*\.jar" flags="m" replace="${p4javaName}" />
+								<replaceregexp file="${targetprj}/META-INF/MANIFEST.MF"
+									match="p4java-.*\.jar" flags="m" replace="${p4javaName}" />
+								<replaceregexp file="${targetprj}/build.properties"
+									match="p4java-.*\.jar" flags="m" replace="${p4javaName}" />
+								<!-- exec dir="${basedir}" executable="${basedir}/src/main/sh/do-something.sh" 
+									failonerror="true"> <arg line="arg1 arg2 arg3 arg4" /> </exec -->
+								<delete dir="${dependency}"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<artifactId>jakarta-regexp</artifactId>
+						<groupId>jakarta-regexp</groupId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

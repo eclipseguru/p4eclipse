@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>p4eclipse-parent</artifactId>
+		<groupId>com.perforce</groupId>
+		<version>11.1.1-SNAPSHOT</version>
+		<relativePath>../../build/p4eclipse_parent/pom.xml</relativePath>
+	</parent>
+	<groupId>com.perforce</groupId>
+	<artifactId>com.perforce.team.tests</artifactId>
+	<version>11.1.1-SNAPSHOT</version>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<properties>
+		<!-- Please do not format following lines, especially no line break -->
+		<ui.test.vmargs>${test.vmargs.default}</ui.test.vmargs>
+		<maven.test.skip>false</maven.test.skip>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>skip-ui-tests</id>
+			<activation>
+				<property>
+					<name>skip-ui-tests</name>
+				</property>
+			</activation>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+			</properties>
+		</profile>
+		<profile>
+			<id>macosx</id>
+			<activation>
+				<os>
+					<name>mac os x</name>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- Please do not add line break to following element -->
+				<ui.test.vmargs>${jacoco-agent} -XstartOnFirstThread ${test.vmargs.default}</ui.test.vmargs>
+			</properties>
+		</profile>
+		<profile>
+			<id>codeCoverage</id>
+			<properties>
+				<!-- Please do not format following lines, especially no line break -->
+				<jacoco-agent>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${sonar.jacoco.reportPath}</jacoco-agent>	
+				<ui.test.vmargs>${jacoco-agent} ${test.vmargs.default}</ui.test.vmargs>
+			</properties>
+			</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>${tycho-groupid}</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<!-- Kill test JVM if tests take more than 60 minutes (3600 seconds) to finish -->
+					<forkedProcessTimeoutInSeconds>3600</forkedProcessTimeoutInSeconds>
+					<!-- mac osx only -->
+					<argLine>-XstartOnFirstThread</argLine>
+					<testFailureIgnore>true</testFailureIgnore>
+					<testErrorIgnore>true</testErrorIgnore>
+					<testSuite>com.perforce.team.tests</testSuite>	   	
+ 					<testClass>com.perforce.team.tests.CISuite</testClass>
+					<useUIThread>true</useUIThread>
+					<useUIHarness>true</useUIHarness>
+					<product>org.eclipse.sdk.ide</product>
+					<argLine>${ui.test.vmargs}</argLine>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<dependencies>
+						<dpendency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.sdk.ide</artifactId>
+							<version>${platform-version}</version>
+						</dpendency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.c.galileo.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.charts.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.folder.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.java.galileo.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.mergequest.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.mylyn.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.patch.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.search.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.python.helios.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.ruby.helios.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>com.perforce.team.ruby.helios.feature.feature.group</artifactId>
+							<version>0.0.1</version>
+						</dependency>
+						<!-- dependency> <type>p2-installable-unit</type> <artifactId>com.perforce.p4eclipse.rcp.feature.feature.group</artifactId> 
+							<version>0.0.1</version> </dependency> <dependency> <type>p2-installable-unit</type> 
+							<artifactId>com.perforce.p4eclipse.rcp3rd.feature.feature.group</artifactId> 
+							<version>0.0.1</version> </dependency -->
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.pde.feature.group</artifactId>
+							<version>${platform-version}</version>
+						</dependency>
+					</dependencies>
+				</configuration>
+
+				<!-- Non-UI test -->
+				<!-- executions>
+					<execution>
+						<id>CISuite</id>
+						<phase>integration-test</phase>
+						<configuration>
+							<useUIThread>false</useUIThread>
+							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+							<includes>
+								<include>com/perforce/team/tests/CISuite.class</include>
+							</includes>
+						</configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions -->
+
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

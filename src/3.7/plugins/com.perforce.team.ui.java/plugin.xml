@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.perforce.team.ui.java.timelapse.JavaTimeLapseEditor"
+            default="false"
+            id="com.perforce.team.ui.java.JavaTimeLapseEditor"
+            name="%TimeLapseEditor">
+      </editor>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.timelapse">
+      <editor
+            id="com.perforce.team.ui.java.JavaTimeLapseEditor">
+         <contentType
+               id="org.eclipse.jdt.core.javaSource">
+         </contentType>
+      </editor>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.fileDiff">
+      <diff
+            class="com.perforce.team.ui.java.diff.JavaDiffer"
+            contentType="org.eclipse.jdt.core.javaSource">
+      </diff>
+      <diff
+            class="com.perforce.team.ui.java.diff.PropertiesDiffer"
+            contentType="org.eclipse.jdt.core.javaProperties">
+      </diff>
+      <diff
+            class="com.perforce.team.ui.java.diff.JarDiffer"
+            extension="jar">
+      </diff>
+   </extension>
+
+</plugin>

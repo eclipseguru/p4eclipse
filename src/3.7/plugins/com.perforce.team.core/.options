@@ -1,0 +1,10 @@
+# Debugging options for the com.perforce.team.ui plugin.
+
+# Turn on debugging for the com.perforce.team.ui plugin.
+com.perforce.team.core/debug=false
+
+# Monitor plugin activation
+com.perforce.team.core/debug/activation=false
+
+# Performance measure
+com.perforce.team.core/debug/time=false

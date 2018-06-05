@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="P4Eclipse update site" url="http://www.perforce.com/product/components/eclipse_plugin">
+      P4Eclipse is part of Perforce, The Fast Software Configuration Management System. 
+      For server downloads and licensing, see www.perforce.com/download.html.
+   </description>
+   <feature url="features/com.perforce.tests.feature_0.0.0.jar" id="com.perforce.tests.feature" version="0.0.0">
+      <category name="Perforce Team Provider Test (RCP)"/>
+   </feature>
+   <category-def name="Perforce Team Provider Test (RCP)" label="Perforce Team Provider Test (RCP)">
+      <description>
+         P4Eclipse Team Provider Test Bundles.
+      </description>
+   </category-def>
+</site>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.perforce.team.ui.python.timelapse.PythonTimeLapseEditor"
+            default="false"
+            id="com.perforce.team.ui.python.PythonTimeLapseEditor"
+            name="%TimeLapseEditor">
+      </editor>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.timelapse">
+      <editor
+            id="com.perforce.team.ui.python.PythonTimeLapseEditor">
+         <contentType
+               id="org.eclipse.dltk.pythonContentType">
+         </contentType>
+      </editor>
+   </extension>
+
+</plugin>

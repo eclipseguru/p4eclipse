@@ -1,0 +1,83 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Perforce Basics</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Introduction to Perforce</h1>
+<h2>Basic Terminology </h2>
+<ul>
+  <li><b>Depot</b>: the central repository where file revisions are stored and 
+    managed by the Perforce Server.</li>
+  <li> <b>Workspace</b>: the area on your computer where you work with your copies 
+    of files that are under Perforce control.</li>
+  <li><b>Perforce Server</b>: the program that manages file revisions.</li>
+  <li><b>Changelist</b>: A group of files, with a description explaining how you&#146;ve 
+    changed them (for example, &#147;Fix bug #123&#148;). Changelists are assigned 
+    numbers by the Perforce Server so you can track them. Changelists enable you to group related files and submit them together.</li>
+</ul>
+<p>The following diagram shows the relationship between workspace and depot. 
+<p><img src="../images/basics.png" >
+<h2>Basic Tasks</h2>
+<ul>
+  <li><b>Retrieve</b> a file: Retrieve a copy of a file version from the depot. <b>Note:</b> Perforce also uses the term "sync" to mean "retrieve a file." This usage is different from the Eclipse term "synchronize."</li>
+   <li> <b>Check out</b>: enables you to change the file.  
+  <li> <b>Mark</b> for add or delete: indicates that the file is added to or deleted from the depot when the changelist is submitted .</li>
+  <li> <b>Revert</b> a file: Discard any changes you have made to an open file. 
+    If you open a file for edit and make changes, then change your mind and revert 
+    the file, Perforce reloads the last version you got from the depot and discards 
+    your changes.</li>
+  <li> <b>Submit</b> a changelist: Update the depot to reflect any changes you&#146;ve 
+    made to files in the changelist. Submitting is an all-or-nothing operation: if there&#146;s 
+    a problem submitting one file in a changelist, none of the other files in 
+    the changelist are updated.</li>
+</ul>
+    <h2>Perforce File Decorations</h2>
+    <p>File decorations indicate status as follows.</p>
+<table width="36%" border="0">
+      <tr>
+        <td width="25%"><img src="../images/add.png" width="7" height="7"></td>
+        <td width="75%">Marked for add</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/delete.png" width="7" height="7"></td>
+        <td width="75%">Marked for delete</td>
+      </tr>
+      <tr>
+        <td width="25%" height="8"><img src="../images/edit.png" width="7" height="7"></td>
+        <td width="75%" height="8">Checked out by you</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/edit_other.png" width="7" height="7"></td>
+        <td width="75%">Checked out by another user</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/lock.png" width="7" height="7"></td>
+        <td width="75%">Locked</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/notsync.png" width="7" height="7"></td>
+        <td width="75%">Version in workspace is not latest version</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/sync.png" width="7" height="7"></td>
+        <td width="75%">Workspace version is up to date</td>
+      </tr>
+      <tr>
+        <td width="25%"><img src="../images/unresolved.png" width="7" height="7"><br>
+        </td>
+        <td width="75%">Needs resolve <br>
+          (conflicting changes have been made)</td>
+      </tr>
+</table>
+  
+<p>For more details about configuring P4Eclipse, see <a href="preferences.html">Setting Preferences</a>.</p>
+<hr>
+<p><img src="../images/perforcelogo.png" alt="Copyright Perforce Software 2003-2012. All Rights Reserved." ></p>
+<p><font size="-2">This product includes software developed by the Eclipse Project 
+  (http://www.eclipse.org/). </font> </p>
+</body>
+</html>

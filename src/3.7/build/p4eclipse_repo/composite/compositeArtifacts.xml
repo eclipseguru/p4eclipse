@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='"P4Eclipse Project Test Site"'
+    type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' 
+    version='1.0.0'>
+  <properties size='1'>
+    <property name='p2.timestamp' value='201110131554'/>
+  </properties>
+  <children size='2'>
+    <child location='http://10.0.101.150/p4eclipse/3.6'/>
+    <child location='http://10.0.101.150/p4eclipse/3.7'/>
+  </children>
+</repository>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.search.searchPages">
+      <page
+            canSearchEnclosingProjects="false"
+            class="com.perforce.team.ui.search.query.P4SearchPage"
+            icon="icons/depot_search.png"
+            id="com.perforce.team.ui.search.page"
+            label="%P4SearchPage.label"
+            showScopeSection="false">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.search.searchResultViewPages">
+      <viewPage
+            class="com.perforce.team.ui.search.results.P4SearchResultPage"
+            id="com.perforce.team.ui.search.viewPage"
+            searchResultClass="com.perforce.team.ui.search.results.P4SearchResult">
+      </viewPage>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.page">
+      <page
+            editorId="com.perforce.team.ui.changelists.ChangelistEditor"
+            factory="com.perforce.team.ui.search.editor.SearchPageFactory"
+            id="com.perforce.team.ui.search.searchPage">
+      </page>
+   </extension>
+
+</plugin>

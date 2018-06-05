@@ -1,0 +1,34 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Defect Tracking (Perforce Jobs)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Defect Tracking (Perforce Jobs)</h1>
+
+<p>Perforce jobs enable you to track the status of work such as bug reports and 
+  feature requests. You can attach jobs to changelists, to associate it with the 
+  file changes that implement the job. When you check in the changelist, the job status is updated. Jobs are listed in the Perforce perspective's P4 Jobs view.</p>
+<p><strong>To create a new job</strong>, click <img src="../images/newconnection.png" alt="Plus sign" width="12" height="12">. </p>
+<p><strong>To edit a job</strong>, double-click it.</p>
+<p><b>To change the job fields</b> that are displayed in the jobs pane, click 
+  <img src="../images/jobcolumns.png" width="24" height="23">.</p>
+<p><b>To add a job to a changelist</b>: right-click the changelist, choose <b>Add 
+  Jobs...</b> and select the job that you want to add to the changelist.</p>
+<p><b>To filter the job list</b>: enter the filter criteria in the Keyword and Folder/file fields
+  at the top of the jobs pane. You can filter based on the contents of a field 
+  (for example, ReportedDate&gt;2003/01/01) or search for words in the description 
+  (for example, &quot;assigned&quot;). For details about searching jobs, refer 
+  to Perforce user documentation.</p>
+<p><strong>To change data in one or more fields in <em>all</em> the jobs in a server</strong>, right-click a job in the Jobs view and choose <strong>Bulk Edit Jobs...</strong></p>
+<h2>Managing Jobs with Mylyn</h2>
+<p>Be sure to enable <strong>Preferences&gt;Team&gt;Perforce&gt;Mylyn&gt;Use Mylyn Task editor by default when editing jobs</strong>. Define a task repository for the server that contains the required Perforce jobs.</p>
+<p>You can <strong>configure how job fields are displayed</strong>: display <strong>Preferences</strong>, choose <strong>Team &gt; Perforce &gt; Mylyn &gt; Job Layout</strong>, and arrange the fields by dragging and dropping them into the desired arrangement.</p>
+<p>You can also view the changes that have been made to a Perforce job. To do so, your Perforce installation must have a <em>spec depot</em> configured. (For details about spec depots, consult your Perforce administrator or the <em><a href="http://www.perforce.com/perforce/doc.current/manuals/p4sag/index.html">Perforce System Administrator's Guide</a></em>.) <strong>To display the changes using Time-lapse View</strong>, click <img src="../images/history.png" alt="history icon" width="18" height="16">. <strong>To list the changes</strong> that have been made to the job, click <img src="../images/historylist.png" alt="History list" width="13" height="18">. <strong>To diff two revisions of a job</strong>, drag one to the other.</p>
+<hr>
+<p><img src="../images/perforcelogo.png" alt="Copyright Perforce Software 2003-2012. All Rights Reserved." ></p>
+</body>
+</html>

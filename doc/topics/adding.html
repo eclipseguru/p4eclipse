@@ -1,0 +1,70 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Putting a Project under Perforce Control</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Putting a Project under Perforce Control </h1>
+<p><B>Important:</B> Keep the Eclipse workspace and the Perforce client workspaces separate, and do not place the Eclipse metadata files under Perforce control. 
+<p><b>To put a project under Perforce control</b>:</P>
+<ol>
+  <li>In the Java perspective's Package or Navigator pane, right-click the project and 
+    choose <b>Team&gt;Share Project&#133;</b> The <b>Share Project</b> dialog 
+    is displayed.</li>
+  
+  <li>From the <b>Repository Type</b> list, choose Perforce and click <b>Next</b>. 
+    The <b>Enter Perforce Server Connection Information</b> dialog is displayed.</li>
+   
+  <li>Choose <B>Server connection</B> for the Perforce server where you want the project to reside, and set the correct <B>Target Perforce workspace location</B>.</li>
+  <li>Check <B>Move to Target</B> for the projects which will be moved from <B>Current Location</B> to <B>Target Perforce Workspace Location</B>. Uncheck those projects which will stay at <B>Current Location</B>.</li>
+ 
+  <li>Click <b>Finish</b>.</li>
+  <li>For projects that already exist in the depot, you are done.</li>
+  <li>For projects that do not exist in the depot, in the Package or Navigator view, right-click the project folder, choose <b>Team&gt;Mark for Add...</b>. In the Package Explorer view, the files to be added are (by default) decorated with red plus signs. In the Perforce perspective, the files are listed in the P4 Pending Changelists view.</li>
+  <li>To move files to a different changelist, click <img src=../images/newchange.png>. On the Change Specification form, check the files that you want the changelist to include and click <b>OK</b>.</li>
+  <li>To submit the changelist, right-click it in the <b>P4 Pending Changelists</b> 
+    pane and choose <b>Submit...</b> The <b>Perforce Change Specification</b> 
+    dialog is displayed.</li>
+  <li>Enter a description and click <B>OK</B>. The project files are added to the depot 
+    according to the settings you specified. </li>
+</ol>
+<p>If you subsequently add files to the project, you must also add them to Perforce 
+  as described above or using the line item created under the Infos heading in 
+  the Problems View. <p>
+  <b>To add a file to the depot</b>: 
+<ol>
+  <li>Right-click the problem line item. </li>
+  <li>Choose <b>Quick Fix&#133;</b> </li>
+  <li>Choose the <b>Mark for Add</b> fix. (To exclude the file from Perforce control 
+    and remove the task, choose <b>Add to .p4ignore.</b>)<br>
+  </li>
+</ol>
+
+<p><b>NOTE:</b> P4Eclipse does not support deleting, moving, renaming, or refactoring 
+  linked resources (files and folders that are stored in locations in the file 
+  system outside of the project's location).</p>
+<h1><b>Excluding Files from Source Control</b></h1>
+<p>To conserve space in the repository and to keep changelists small, you can exclude individual files or file types  (for example, build or release artifacts) from source control. Eclipse excludes a standard set of such files if you use the default Eclipse build output folder setup and global file type ignore features. If you need to go beyond the default&#8212;for example if you use a different builder or build output setup, or you intersperse temporary or other non-essential files with Perforce-managed files in your workspace&#8212;you can customize file exclusions using  the approaches described in this section. Note that the different exclusion approaches  operate independently. For example, if you exclude a file type using a .p4ignore file, you cannot override the exclusion by modifying the list of ignored resources in <strong>Preferences</strong>.</p>
+<p>You can also exclude files from being submitted to the depot by modifying your Perforce client view to exclude the files. For details, refer to the discussion of &quot;tight&quot; client views in the <em>Perforce System Administrator's Guide.</em></p>
+<p>In general:</p>
+<ul>
+  <li>To exclude on a per-filetype basis, use <strong>Preferences &gt; Team &gt; Ignored Resources</strong></li>
+  <li>To exclude build/test artifacts, set the Derived property</li>
+  <li>To exclude specific files and folders, use <strong>Team &gt;Add to .p4ignore</strong> or manually-maintained .p4ignore files </li>
+</ul>
+<p><strong>Important</strong>: you cannot exclude files after you have placed them under Perforce control. If you have files opened in a changelist and you want to exclude them from Perforce control, revert them from the changelist before excluding them.</p>
+<p>Following are details:</p>
+<ul>
+  <li><strong>To exclude files in a project based on file type </strong>(for example, to exclude all &quot;.bak&quot; or &quot;.jar&quot; files in a project from Perforce management), choose <strong>Preferences</strong>. On the Preferences dialog, choose <strong>Team &gt; Ignored Resources</strong> and check the file types you want to exclude. For more details, refer to  Eclipse online help.<p> </li>
+  <li><strong>To exclude a specific set of folders or files</strong>,  right-click the files or folders, choose <strong>Properties</strong>, and check &quot;Derived.&quot; P4Eclipse  ignores derived files and folders, including (recursively) subfolders in derived folders. <br><br>Note that the Derived property is intended to mark temporary or volatile folders and files that are derived from or created by a build or test process. This mechanism is not the best choice for the general case of exclusion. By default, Eclipse marks compiled .class files and associated output folders as derived, if you use the standard Eclipse layout and build features to define the output folders. However, if you're using non-standard build paths, mechanisms, folders, etc., you might need to manually enable the derived property for these objects. <p></li>
+  <li><strong>For temporary exclusion or exclusions that are not addressed by the preceding approaches</strong>, right-click the file or folder and choose <strong>Team &gt; Add to .p4ignore</strong>.<br><br>
+   The P4Eclipse <strong>Add to .p4ignore</strong> feature stores exclusions in a .p4ignore file, similar to CVS's .cvsignore feature. The .p4ignore file is a text file that specifies excluded files and folders that reside in its containing folder and any subfolders (recursively). P4Eclipse searches up the project folder hierarchy looking for .p4ignore files, and stops at the first .p4ignore file entry that matches a specific file or folder. You can create .p4ignore files manually, and you can edit .p4ignore files that were created by P4Eclipse. The .p4ignore file itself is typically under source control control, but you can exclude it.<br><br><strong>To create a .p4ignore file manually</strong>, right-click in the Navigator pane and choose <strong>New &gt; File</strong>. Enter exclusions and save the file as &quot;.p4ignore&quot; in the folder where you want the exclusions applied. Each entry must be on a separate line in the same format used in .cvsignore files. You can use the * and ? (match any single character) wildcards in .p4ignore files. </li>
+</ul>
+<p><strong>To display text label decorations for ignored files in the Navigator</strong>, choose <strong>Window &gt; Preferences</strong>. On the Preferences dialog, go to <strong>Team &gt; Perforce &gt; Label</strong> <strong>Decorations</strong> , select <strong>Text Decorations</strong> tab and check <strong>Decorate ignored resources</strong>.</p>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

@@ -1,0 +1,1144 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Glossary of Perforce Terminology</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Glossary of Perforce Terminology</h1>
+<table>
+  <TR> 
+    <TH width="232"> 
+      <div align="left"><STRONG>Term</STRONG>
+      </div>
+    </TH>
+    <TH width="871"> 
+      <div align="left"><STRONG>Definition</STRONG>
+      </div>
+    </TH>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051603></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>access level </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051606></A> 
+      <P>A permission assigned to a user to control which Perforce commands the 
+        user can execute. See <A 
+      href="#1052071"><EM>protections</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1071025></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>admin access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1071027></A> 
+      <P>An access level that gives the user permission to run Perforce commands 
+        that override <A 
+      href="#1052010"><EM>metadata</EM></A>, but do not affect the state of the 
+        server. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051611></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>apple file type </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051613></A> 
+      <P>Perforce file type assigned to Macintosh files that are stored using 
+        AppleSingle format, permitting the data fork and resource fork to be stored 
+        as a single file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051615></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>atomic change transaction </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051618></A> 
+      <P>Grouping operations affecting a number of files in a single transaction. 
+        If all operations in the transaction succeed, all the files are updated. 
+        If any operation in the transaction fails, none of the files are updated. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051620></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>base </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051623></A> 
+      <P>The file revision on which two newer, conflicting file revisions are 
+        based. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051626></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>binary file type </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051628></A> 
+      <P>Perforce file type assigned to a non-text file. By default, the contents 
+        of each revision are stored in full and the file is stored in compressed 
+        format. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051631></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>branch </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051634></A> 
+      <P>(<EM>noun</EM>) A codeline created by copying another codeline, as opposed 
+        to a codeline that was created by adding original files. <A 
+      href="#1051631"><EM>branch</EM></A> is often used as a synonym for <A 
+      href="#1051648"><EM>branch view</EM></A>. <A name=1051641></A> 
+      <P>(<EM>verb</EM>) To create a codeline branch with <KBD>p4 integrate</KBD>. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051643></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>branch form </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051645></A> 
+      <P>The Perforce form you use to modify a branch. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052316></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>branch specification </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052348></A> 
+      <P>Specifies how a branch is to be created by defining the location of the 
+        original codeline and the branch. The branch specification is used by 
+        the integration process to create and update branches. Client workspaces, 
+        labels, and branch specifications cannot share the same name. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051648></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>branch view </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051651></A> 
+      <P>A specification of the branching relationship between two codelines in 
+        the depot. Each branch view has a unique name, and defines how files are 
+        mapped from the originating codeline to the target codeline. See <A 
+      href="#1051631"><EM>branch</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051664></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>changelist </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051666></A> 
+      <P>An atomic change transaction in Perforce. The changes specified in the 
+        changelist are not stored in the depot until the changelist is submitted 
+        to the depot. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051668></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>changelist form </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051670></A> 
+      <P>The Perforce form you use to modify a changelist. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051672></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>changelist <BR>
+        number </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051675></A> 
+      <P>The unique numeric identifier of a changelist. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051678></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>change review </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051681></A> 
+      <P>The process of sending email to users who have registered their interest 
+        in changes made to specified files in the depot. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051683></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>checkpoint </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051686></A> 
+      <P>A copy of the underlying server metadata at a particular moment in time. 
+        See <A 
+      href="#1052010"><EM>metadata</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051695></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client form </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051697></A> 
+      <P>The Perforce form you use to define a client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051699></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client name </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051701></A> 
+      <P>A name that uniquely identifies the current client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051703></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client root </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051706></A> 
+      <P>The root directory of a client workspace. If two or more client workspaces 
+        are located on one machine, they cannot share a root directory. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051708></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client side </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051711></A> 
+      <P>The right-hand side of a mapping within a client view, specifying where 
+        the corresponding depot files are located in the client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051714></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client view </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051717></A> 
+      <P>A set of mappings that specifies the correspondence between file locations 
+        in the depot and the client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051720></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>client workspace </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051722></A> 
+      <P>Directories on the client computer where you work on file revisions that 
+        are managed by Perforce. By default this name is set to the name of the 
+        host machine on which the client workspace is located; to override the 
+        default name, set the <KBD>P4CLIENT</KBD> environment variable. Client 
+        workspaces, labels, and branch specifications cannot share the same name. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051725></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>codeline </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051728></A> 
+      <P>A set of files that evolve collectively. One codeline can be branched 
+        from another, allowing each set of files to evolve separately. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051731></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>conflict </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051733></A> 
+      <P>One type of conflict occurs when two users open a file for edit. One 
+        user submits the file; after which the other user can't submit because 
+        of a conflict. The cause of this type of conflict is two users opening 
+        the same file. <A name=1051734></A> 
+      <P>The other type of conflict is when users try to merge one file into another. 
+        This type of conflict occurs when the comparison of two files to a common 
+        base yields different results, indicating that the files have been changed 
+        in different ways. In this case, the merge can't be done automatically 
+        and must be done by hand. The type of conflict is caused by non-matching 
+        <A 
+      href="#1051800"><EM>diff</EM></A>s. <A name=1051741></A> 
+      <P>See <A 
+      href="#1051829"><EM>file conflict</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051743></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>counter </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051746></A> 
+      <P>A numeric variable used by Perforce to track changelist numbers in conjunction 
+        with the review feature. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051748></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>default changelist </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051750></A> 
+      <P>The changelist used by Perforce commands, unless a numbered changelist 
+        is specified. A default pending changelist is created automatically when 
+        a file is opened for edit. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051753></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>default depot </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051756></A> 
+      <P>The depot name that is assumed when no name is specified. The default 
+        depot name is <KBD>depot</KBD>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051758></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>deleted file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051760></A> 
+      <P>In Perforce, a file with its head revision marked as deleted. Older revisions 
+        of the file are still available. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051762></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>delta </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051765></A> 
+      <P>The differences between two files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051775></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>depot </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051778></A> 
+      <P>A file repository on the Perforce server. It contains all versions of 
+        all files ever submitted to the server. There can be multiple depots on 
+        a single server. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051780></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>depot root </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051782></A> 
+      <P>The root directory for a depot. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051784></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>depot side </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051787></A> 
+      <P>The left side of any client view mapping, specifying the location of 
+        files in a depot. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051789></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>depot syntax </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051792></A> 
+      <P>Perforce syntax for specifying the location of files in the depot. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051794></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>detached </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051797></A> 
+      <P>A client computer that cannot connect to a Perforce server. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051800></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>diff </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051805></A> 
+      <P>A set of lines that don't match when two files are compared. A <A 
+      href="#1051731"><EM>conflict</EM></A> is a pair of unequal diffs between 
+        each of two files and a common third file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051814></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>donor file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051817></A> 
+      <P>The file from which changes are taken when propagating changes from one 
+        file to another. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051819></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>exclusionary mapping </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051822></A> 
+      <P>A view mapping that excludes specific files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051824></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>exclusionary access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051826></A> 
+      <P>A permission that denies access to the specified files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051829></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file conflict </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051831></A> 
+      <P>In a three-way file merge, a situation in which two revisions of a file 
+        differ from each other and from their base file. <A name=1051833></A> 
+      <P>Also: an attempt to submit a file that is not an edit of the head revision 
+        of the file in the depot; typically occurs when another user opens the 
+        file for edit after you have opened the file for edit. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051835></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file pattern </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051837></A> 
+      <P>Perforce command line syntax that enables you to specify files 
+        using wildcards. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051839></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file repository </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051842></A> 
+      <P>The master copy of all files; shared by all users. In Perforce, this 
+        is called the <A 
+      href="#1051775"><EM>depot</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051848></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file revision </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051851></A> 
+      <P>A specific version of a file within the depot. Each revision is assigned 
+        a number, in sequence. Any revision can be accessed in the depot by its 
+        revision number, for example: <KBD>testfile#3</KBD>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051853></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file tree </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051855></A> 
+      <P>All the subdirectories and files under a given root directory. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051857></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>file type </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051859></A> 
+      <P>An attribute that determines how Perforce stores and diffs a particular 
+        file. Examples of file types are <KBD>text</KBD> and <KBD>binary</KBD>. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051861></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>fix </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051864></A> 
+      <P>A job that has been linked to a changelist. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051866></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>form </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051868></A> 
+      <P>Screens displayed by certain Perforce commands. For example, you use 
+        the Perforce change form to enter comments about a particular changelist 
+        and to verify the affected files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051870></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>full-file <BR>
+        storage </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051873></A> 
+      <P>The method by which Perforce stores revisions of binary files in the 
+        depot: every file revision is stored in full. Contrast this with <A 
+      href="#1052107"><EM>reverse delta storage</EM></A>, which Perforce uses 
+        for <KBD>text</KBD> files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051878></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>get </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051883></A> 
+      <P>An obsolete Perforce term: replaced by <A 
+      href="#1052192"><EM>sync</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051885></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>group </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051888></A> 
+      <P>A list of Perforce users. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051890></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>have list </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051893></A> 
+      <P>The list of file revisions currently in the client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051896></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>head revision </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051899></A> 
+      <P>The most recent revision of a file within the depot. Because file revisions 
+        are numbered sequentially, this revision is the highest-numbered revision 
+        of that file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=integrate></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>integrate </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051904></A> 
+      <P>To compare two sets of files (for example, two codeline branches) and 
+      <UL>
+        <A name=1051905></A> 
+        <LI>determine which changes in one set apply to the other, <BR>
+          <A 
+        name=1051906></A> 
+        <LI>determine if the changes have already been propagated, <BR>
+          <A 
+        name=1051907></A> 
+        <LI>propagate any outstanding changes.<BR>
+        </LI>
+      </UL>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051909></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>Inter-File <BR>
+        Branching </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051912></A> 
+      <P>Perforce's proprietary branching mechanism. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051914></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>job </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051916></A> 
+      <P>A user-defined unit of work tracked by Perforce. The job template determines 
+        what information is tracked. The template can be modified by the Perforce 
+        system administrator </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051918></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>job specification </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051920></A> 
+      <P>A specification containing the fields and valid values stored for a Perforce 
+        job. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051923></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>job view </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051925></A> 
+      <P>A syntax used for searching Perforce jobs. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051927></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>journal </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051930></A> 
+      <P>A file containing a record of every change made to the Perforce server's 
+        metadata since the time of the last checkpoint. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051932></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>journaling </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051934></A> 
+      <P>The process of recording changes made to the Perforce server's metadata. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051936></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>label </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051939></A> 
+      <P>A named list of user-specified file revisions. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051942></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>label view </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051945></A> 
+      <P>The view that specifies which file names in the depot can be stored in 
+        a particular label. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051947></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>lazy copy </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051950></A> 
+      <P>A method used by Perforce to make internal copies of files without duplicating 
+        file content in the depot. Lazy copies minimize the consumption of disk 
+        space by storing references to the original file instead of copies of 
+        the file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051952></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>license file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051954></A> 
+      <P>Ensures that the number of Perforce users on your site does not exceed 
+        the number for which you have paid. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051956></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>list access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051958></A> 
+      <P>A protection level that enables you to run reporting commands but prevents 
+        access to the contents of files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051960></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>local depot </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051963></A> 
+      <P>Any depot located on the current Perforce server. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051965></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>local syntax </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051968></A> 
+      <P>The operating-system-specific syntax for specifying a file name. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051970></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>lock </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051972></A> 
+      <P>A Perforce file lock prevents other clients from submitting the locked 
+        file. Files are unlocked with the <KBD>p4 unlock</KBD> command or submitting 
+        the changelist that contains the locked file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051975></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>log </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051977></A> 
+      <P>Error output from the Perforce server. By default, error output is written 
+        to standard error. To specify a log file, set the <KBD>P4LOG</KBD> environment 
+        variable, or use the <KBD>p4d -L</KBD> flag. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051979></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>mapping </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051982></A> 
+      <P>A single line in a view, consisting of a left side and a right side that 
+        specify the correspondences between files in the depot and files in a 
+        client, label, or branch. The left side specifies the depot file and the 
+        right side specifies the client files. <A name=1051992></A> 
+      <P>(See also <A 
+      href="#1051714"><EM>client view</EM></A>, <A 
+      href="#1051648"><EM>branch view</EM></A>, <A 
+      href="#1051942"><EM>label view</EM></A>). </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051995></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>MD5 checksum </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1051997></A> 
+      <P>The method used by Perforce to verify the integrity of archived files. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1051999></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>merge </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052002></A> 
+      <P>The process of combining the contents of two conflicting file revisions 
+        into a single file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052004></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>merge file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052007></A> 
+      <P>A file generated by Perforce from two conflicting file revisions. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052010></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>metadata </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052013></A> 
+      <P>The data stored by the Perforce server that describes the files in the 
+        depot, the current state of client workspaces, protections, users, clients, 
+        labels, and branches. Metadata includes all the data stored in the server 
+        except for the actual contents of the files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052015></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>modification time </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052017></A> 
+      <P>The time a file was last changed. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052019></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>nonexistent <BR>
+        revision </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052021></A> 
+      <P>A completely empty revision of any file. Syncing to a nonexistent revision 
+        of a file removes it from your workspace. An empty file revision created 
+        by deleting a file and the <KBD>#none</KBD> revision specifier are examples 
+        of nonexistent file revisions. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052023></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>numbered changelist </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052025></A> 
+      <P>A pending changelist to which Perforce has assigned a number. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052027></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>open file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052029></A> 
+      <P>A file that you are changing in your client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052031></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>owner </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052033></A> 
+      <P>The Perforce user who created a particular client, branch, or label. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052035></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt><KBD>P4</KBD> </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052037></A> 
+      <P>The Perforce Command-Line Client program, and the command you issue to 
+        execute Perforce commands from the operating system command line. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052039></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt><KBD>P4D</KBD> </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052041></A> 
+      <P>The program on the Perforce server that manages the depot and the metadata. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052043></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>P4Diff </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052045></A> 
+      <P>A Perforce application that displays the differences between two files. 
+        <KBD>P4Diff</KBD> is the default application used to compare files during 
+        the file resolution process. </P>
+    </TD>
+
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052051></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>pending changelist </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052054></A> 
+      <P>A changelist that has not been submitted. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052056></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>Perforce server </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052061></A> 
+      <P>The Perforce depot and metadata on a central host. Also the program that 
+        manages the depot and metadata. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052071></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>protections </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052073></A> 
+      <P>The permissions stored in the Perforce server's protections table. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052075></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>RCS format </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052078></A> 
+      <P>Revision Control System format. Used for storing revisions of text files. 
+        RCS format uses reverse delta encoding for file storage. Perforce uses 
+        RCS format to store text files. See also <A 
+      href="#1052107"><EM>reverse delta storage</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052083></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>read access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052085></A> 
+      <P>A protection level that enables you to read the contents of files managed 
+        by Perforce. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052087></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>remote depot </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052090></A> 
+      <P>A depot located on a server other than the current Perforce server. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052092></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>reresolve </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052094></A> 
+      <P>The process of resolving a file after the file is resolved and before 
+        it is submitted </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052096></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>resolve </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052099></A> 
+      <P>The process you use to reconcile the differences between two revisions 
+        of a file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052107></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>reverse delta <BR>
+        storage </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052110></A> 
+      <P>The method that Perforce uses to store revisions of text files. Perforce 
+        stores the changes between each revision and its previous revision, plus 
+        the full text of the head revision. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052112></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>revert </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052115></A> 
+      <P>To discard the changes you have made to a file in the client workspace. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052117></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>review access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052119></A> 
+      <P>A special protections level that includes <KBD>read</KBD> and <KBD>list</KBD> 
+        accesses, and grants permission to run the <KBD>review</KBD> command. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052121></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>review daemon </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052125></A> 
+      <P>Any daemon process that uses the <KBD>p4 review</KBD> command. See also 
+        <A 
+      href="#1051678"><EM>change review</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052135></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>revision number </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052138></A> 
+      <P>A number indicating which revision of the file is being referred to. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052140></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>revision range </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052143></A> 
+      <P>A range of revision numbers for a specified file, specified as the low 
+        and high end of the range. For example, <KBD>foo#5,7</KBD> specifies revisions 
+        5 through 7 of file <KBD>foo</KBD>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052145></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>revision specification </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052148></A> 
+      <P>A suffix to a filename that specifies a particular revision of that file. 
+        Revision specifiers can be revision numbers, change numbers, label names, 
+        date/time specifications, or client names. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052353></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>server </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052355></A> 
+      <P>In Perforce, the program that executes the commands sent by client programs. 
+        The Perforce server (<KBD>p4d</KBD>) maintains depot files and metadata 
+        describing the files, and tracks the state of client workspaces. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052161></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>server root </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052163></A> 
+      <P>The directory in which the server program stores its metadata and all 
+        the shared files. To specify the server root, set the <KBD>P4ROOT</KBD> 
+        environment variable. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052169></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>status </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052171></A> 
+      <P>For a changelist, a value that indicates whether the changelist is new, 
+        pending, or submitted. For a job, a value that indicates whether the job 
+        is open, closed, or suspended. You can customize job statuses. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052173></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>submit </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052176></A> 
+      <P>To send a pending changelist and changed files to the Perforce server 
+        for processing. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052178></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>subscribe </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052181></A> 
+      <P>To register to receive email whenever changelists that affect particular 
+        files are submitted. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052183></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>super access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052185></A> 
+      <P>An access level that gives the user permission to run <EM>every</EM> 
+        Perforce command, including commands that set protections, install triggers, 
+        or shut down the server for maintenance. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052187></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>symlink file type </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052189></A> 
+      <P>A Perforce file type assigned to UNIX symbolic links. On non-UNIX clients, 
+        symlink files are stored as text files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052192></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>sync </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052194></A> 
+      <P>To copy a file revision (or set of file revisions) from the depot to 
+        a client workspace. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052196></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>target file </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052198></A> 
+      <P>The file that receives the changes from the donor file when you are integrating 
+        changes between a branched codeline and the original codeline. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052201></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>text file type </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052204></A> 
+      <P>Perforce file type assigned to a file that contains only ASCII text. 
+        See also <A 
+      href="#1051626"><EM>binary file type</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052210></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>theirs </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052213></A> 
+      <P>The revision in the depot with which the client file is merged when you 
+        resolve a file conflict. When you are working with branched files, <A 
+      href="#1052210"><EM>theirs</EM></A> is the donor file. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052218></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>three-way merge </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052221></A> 
+      <P>The process of combining three file revisions. During a three-way merge, 
+        you can identify where conflicting changes have occurred and specify how 
+        you want to resolve the conflicts. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052223></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>tip revision </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052229></A> 
+      <P>In Perforce, the <A 
+      href="#1051896"><EM>head revision</EM></A>. <EM>Tip revision</EM> is a term 
+        used by some other SCM systems. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052232></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>trigger </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052234></A> 
+      <P>A script automatically invoked by the Perforce server when changelists 
+        are submitted. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052237></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>two-way merge </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052240></A> 
+      <P>The process of combining two file revisions. In a two-way merge, you 
+        can see differences between the files but cannot see conflicts. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052242></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>typemap </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052244></A> 
+      <P>A Perforce table in which you assign Perforce file types to files. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052246></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>user </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052248></A> 
+      <P>The identifier that Perforce uses to determine who is performing an operation. 
+      </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052250></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>view </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052256></A> 
+      <P>A description of the relationship between two sets of files. See <A 
+      href="#1051714"><EM>client view</EM></A>, <A 
+      href="#1051942"><EM>label view</EM></A>, <A 
+      href="#1051648"><EM>branch view</EM></A>. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052264></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>wildcard </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052266></A> 
+      <P>A special character used to match other characters in strings. Perforce 
+        wildcards are: 
+      <UL>
+        <A name=1052267></A> 
+        <LI><KBD>*</KBD> matches anything except a slash<BR>
+          <A name=1052268></A> 
+        <LI><KBD>...</KBD> matches anything including slashes<BR>
+          <A 
+        name=1052269></A> 
+        <LI><KBD>%d</KBD> used for parameter substitution in views<BR>
+        </LI>
+      </UL>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052278></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>write access </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052280></A> 
+      <P>A protection level that enables you to run commands that alter the contents 
+        of files in the depot. <KBD>Write</KBD> access includes <KBD>read</KBD> 
+        and <KBD>list</KBD> accesses. </P>
+    </TD>
+  <TR> 
+    <TD vAlign=top width="232"><font size="+1"><tt><A name=1052282></A> </tt> 
+      </font> 
+      <P><font size="+1"><tt>yours </tt></font></P>
+    </TD>
+    <TD vAlign=top width="871"><A name=1052285></A> 
+      <P>The edited version of a file in the client workspace, when you resolve 
+        a file. Also, the target file when you integrate a branched file. </P>
+    </TD>
+  </TR>
+</TABLE>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD></TR></TBODY></TABLE>
+
+<hr>
+<p>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."></p>
+</body>
+</html>

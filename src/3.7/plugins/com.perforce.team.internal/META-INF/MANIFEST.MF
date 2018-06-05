@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.perforce.team.internal;singleton:=true
+Bundle-Version: 11.1.1.qualifier
+Bundle-Activator: com.perforce.team.internal.InternalPlugin
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.perforce.team.core,
+ com.perforce.team.ui,
+ org.eclipse.ui.forms,
+ com.perforce.team.core.mylyn,
+ org.eclipse.mylyn.tasks.core,
+ com.perforce.team.ui.mylyn,
+ org.eclipse.jface.text,
+ org.eclipse.mylyn.tasks.ui,
+ org.eclipse.core.resources,
+ org.eclipse.ui.browser
+

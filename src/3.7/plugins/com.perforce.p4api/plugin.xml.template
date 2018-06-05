@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="com.perforce.p4api"
+   name="Perforce Client API"
+   version="__P4VERSIONTOKEN__RELYEAR.__P4VERSIONTOKEN__RELREL.__P4VERSIONTOKEN__PATCHLEVEL"
+   class="com.perforce.p4api.P4APIPlugin"
+   provider-name="Perforce Software">
+
+   <runtime>
+      <library name="p4api.jar">
+         <export name="*"/>
+         <packages prefixes="com.perforce.p4api"/>
+      </library>
+   </runtime>
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+   </requires>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="com.perforce.p4api.P4APIPreferenceInitializer"/>
+   </extension>
+   
+</plugin>

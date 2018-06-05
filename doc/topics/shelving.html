@@ -1,0 +1,45 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Shelving Files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Shelving Files</h1>
+<p><em>Shelving</em> enables you to store copies of open  files temporarily in the Perforce server without checking them in. Shelving is useful for a variety of purposes, including taking and restoring  snapshots of  in-progress work and reviewing other users' code before it's checked in. When you shelve a file, a copy is placed in a  pending changelist from which other users can unshelve it. Pending changelists that contain shelved files are displayed as follows: <img src="../images/shelved-changelist.png" alt="shelved changelist badge" width="18" height="17">. When the changelist is expanded, it contains a node listing shelved files. When you expand the Shelved Files node, shelved files are indicated as follows: <img src="../images/shelved-file.png" alt="shelved file" width="14" height="17">. The decoration on the file indicates the action for which it was opened before being shelved.</p>
+<p>When managing shelved files, note the following:</p>
+<ul>
+  <li><strong>Server</strong>: Shelving is available for Perforce server 2010.2 and higher.</li>
+  <li><strong>Basics</strong>: To be shelved, a file must be checked out. However, you cannot <em>un</em>shelve a checked-out file.</li>
+  <li><strong>Submitting shelved files</strong>: You cannot submit a shelved file directly. To submit a shelved file, you must first unshelve it, then delete the shelved copy. (Unshelving does not delete the shelved copy.)</li>
+  <li><strong>Managing changelists</strong>: You cannot submit a changelist that contains shelved files. You must delete the shelved copies before submitting. You cannot move a shelved copy to another pending changelist. If you revert a file after shelving it, the copy remains shelved in the changelist until you delete it. Only the changelist owner can reshelve or delete  files that are shelved in the changelist.</li>
+  <li><strong>File history</strong>: No file history is created when you shelve or unshelve files.</li>
+  <li><strong>Diffing</strong>: You can diff shelved copies just as you diff any other file. For example, to display any changes you made after shelving a file, drag the shelved copy and drop it on the checked-out file. <strong>To diff a file and its shelved version</strong>, right-click the file and choose <strong>Compare With Shelved Version...</strong></li>
+</ul>
+<p> <strong>To shelve checked-out files in a pending changelist:</strong></p>
+<ol>
+  <li>In the P4 Pending Changelists view, right-click the changelist and choose <strong>Shelve...</strong> P4Eclipse displays the Shelve dialog. </li>
+  <li>Check the files you want to shelve and click <strong>Shelve</strong>. P4Eclipse shelves the file in the selected changelist (or, if you are shelving files in the default changelist, creates a new changelist).</li>
+</ol>
+<h1>Unshelving Files</h1>
+<p>After shelving a file, you (or another user) can <em>unshelve</em> it, which restores the shelved copy  to your workspace  and opens it in the  changelist of your choice. Unshelving does not remove files from the shelf. To unshelve a file that was shelved by another user, you must have permission to check out the file. When you unshelve a file that was shelved by another user, it is copied to one of your changelists, from which you can edit and submit the file. To replace a file with its shelved version, right-click the file and choose <strong>Replace with Shelved Version...</strong></p>
+<p><strong>To unshelve files too a specified pending changelist:</strong> </p>
+<ol>
+  <li>Right-click the shelved file or the Shelved Files node and choose <strong>Unshelve...</strong> P4Eclipse displays the <strong>Unshelve</strong> dialog.</li>
+  <li>Check the files you want to unshelve and specify the changelist in which you want them unshelved.</li>
+  <li>Check any  desired options, then click <strong>OK</strong>. The shelved file is copied to your workspace and opened in the specified changelist.</li>
+</ol>
+<p>Shelved files remain shelved until you delete them from the pending changelist. <strong>To delete a shelved file from a pending changelist,</strong> right-click the shelved file and choose <strong>Delete Shelved Files</strong>. </p>
+<h1>Submit a Changelist Containing only Shelved Files</h1>
+<p>You can submit a changelist which has shelved files if they are mapped in your client view. To do that, you need make sure that the shelved changelist is submittable, i.e., the changelist should not contain opened files, then</p>
+<ul>
+	<li>Right-click the shelved changelist either from P4 Shelved Changes view, or from the Pending Changelists view</li>
+	<li>Select the <strong>Submit Shelved Files...</strong> if the context menu is enabled. If the selected shelve changelist is not submittable, P4Eclipse will prompt you. Then you can either move the non-shelved file to a new changelist, or revert them, then re-submit</li>
+	<li>Confirm the submit. </li>
+</ul>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

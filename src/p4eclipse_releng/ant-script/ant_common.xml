@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project>
+	<!-- This macro executes the default application of an eclipse installation that resides
+	     in the folder @{eclipse.dir}
+	     the @{app} is just an alias of the application. We here mainly use director application.
+	  -->
+	<macrodef name="find">
+		<attribute name="dir" />
+		<attribute name="pattern" />
+		<attribute name="property" />
+		<sequential>
+			<pathconvert property="@{property}">
+				<first count="1">
+					<sort>
+						<fileset dir="@{dir}" includes="@{pattern}" />
+						<reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators">
+							<date />
+						</reverse>
+					</sort>
+				</first>
+			</pathconvert>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="launchEclipse">
+		<attribute name="app" />
+		<attribute name="eclipse.dir" />
+		<element name="args" optional="true" />
+		<sequential>
+			<!-- Set the Eclipse installation location -->
+			<property name="app.deploy.dir" value="@{eclipse.dir}" />
+
+			<!-- Find the Eclipse launcher and adding its location to the @{app}.launcher property -->
+			<local name="app.launcher" />
+			<find dir="${app.deploy.dir}/plugins" pattern="**/org.eclipse.equinox.launcher_*.jar" property="app.launcher"></find>
+
+			<!-- Launch the eclipse application -->
+			<echo message="Invoking eclipse launcher ..."/>
+			<echo message="app=@{app}"/>
+			<echo message="app.launcher=${app.launcher}"/>
+			<echo message="app.deploy.dir=${app.deploy.dir}"/>
+			<java fork="true" jar="${app.launcher}" dir="${app.deploy.dir}" failonerror="true">
+				<!-- Uncomment to debug <jvmarg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"/> -->
+				<jvmarg value="-Xmx1024m" />
+				<args />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="p2.mirror">
+		<attribute name="source"/>
+		<attribute name="destination"/>
+		<attribute name="eclipse.dir"/>
+		<sequential>
+			<echo message="Mirroring repository @{source} to @{destination}..."/>
+			<launchEclipse app="mirrorArtifact" eclipse.dir="@{eclipse.dir}">
+				<args>
+					<arg line="-application org.eclipse.equinox.p2.artifact.repository.mirrorApplication"/>
+					<arg line="-source @{source}"/>
+					<arg line="-destination @{destination}"/>
+				</args>
+			</launchEclipse>
+
+			<launchEclipse app="mirrorMetadata" eclipse.dir="@{eclipse.dir}">
+				<args>
+					<arg line="-application org.eclipse.equinox.p2.metadata.repository.mirrorApplication"/>
+					<arg line="-source @{source}"/>
+					<arg line="-destination @{destination}"/>
+				</args>
+			</launchEclipse>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antRunner">
+		<attribute name="script"/>
+		<attribute name="eclipse.dir"/>
+		<sequential>
+			<echo message="Running ant script - @{script} - inside of Eclipse runtime..."/>
+			<launchEclipse app="antrunner" eclipse.dir="@{eclipse.dir}">
+				<args>
+					<arg line="-application org.eclipse.ant.core.antRunner"/>
+					<arg line="-f @{script}"/>
+				</args>
+			</launchEclipse>
+		</sequential>
+	</macrodef>
+	
+	<!-- run repo2runnable task:
+	parameter: 
+	source - source site (if file, using file:)
+	destination - destination directory (if file using file:)
+	SDKPath - SDK directory (SDK/eclipse is runnable) 
+	-->
+	<macrodef name="repo2runnable">
+		<attribute name="source" />
+		<attribute name="destination" />
+		<attribute name="SDKPath" />
+		<element name="cmdargs" optional="true" />
+		<sequential>
+			<echo message="source=@{source}"/>
+			<echo message="destination=@{destination}"/>
+			<echo message="SDKPath=@{SDKPath}"/>
+			<launchEclipse app="repo2runnable" eclipse.dir="@{SDKPath}">
+				<args>
+					<arg line="-application org.eclipse.equinox.p2.repository.repo2runnable" />
+					<arg line="-source @{source}" />
+					<arg line="-destination @{destination}" />
+				</args>
+				<cmdargs />
+			</launchEclipse>
+		</sequential>
+	</macrodef>
+
+	<!-- Install SDK to local folder. This will check if SDK zips exists in ${toolsPath} first -->
+	<macrodef name="getAndUnzipSDK">
+		<attribute name="toFolder"/>
+		<sequential>
+			<echo message="Fetching Eclipse SDK to @{toFolder}." />
+			<echo message="Initialize supported Eclipse version and platforms..."/>
+			<condition property="isMac">
+				<matches pattern="[m|M]ac*" string="${os.name}" />
+			</condition>
+
+			<condition property="isWindows">
+				<os family="windows" />
+			</condition>
+
+			<condition property="isUnix">
+				<os family="unix" />
+			</condition>
+
+
+			<if>
+				<equals arg1="${isWindows}" arg2="true" />
+				<then>
+					<property name="host.os" value="win32"/>
+					<property name="host.ws" value="win32"/>
+					<property name="host.arch" value="${os.arch}"/>
+				</then>
+				<elseif>
+					<equals arg1="${isMac}" arg2="true" />
+					<then>
+						<property name="host.os" value="macosx"/>
+						<property name="host.ws" value="cocoa"/>
+						<property name="host.arch" value="${os.arch}"/>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${isUnix}" arg2="true" />
+					<then>
+						<property name="host.os" value="linux"/>
+						<property name="host.ws" value="gtk"/>
+						<if>
+							<equals arg1="${os.arch}" arg2="amd64" />
+							<then>
+								<property name="host.arch" value="x86_64"/>
+							</then>
+							<elseif>
+								<equals arg1="${os.arch}" arg2="i386" />
+								<then>
+									<property name="host.arch" value="x86"/>
+								</then>
+							</elseif>
+							<else>
+								<property name="host.arch" value="${os.arch}"/>
+							</else>
+						</if>
+					</then>
+				</elseif>
+			</if>
+
+			<echo message="host.os=${host.os}"/>
+			<echo message="host.ws=${host.ws}"/>
+			<echo message="host.arch=${host.arch}"/>
+
+			<if>
+				<and>
+					<equals arg1="${host.os}" arg2="win32" />
+					<equals arg1="${host.ws}" arg2="win32" />
+					<equals arg1="${host.arch}" arg2="x86" />
+				</and>
+				<then>
+					<if>
+						<available file="${toolsPath}/${sdk.win32-win32-x86}"/>
+						<then>
+							<echo>found ${toolsPath}/${sdk.win32-win32-x86}</echo>
+							<unzip src="${toolsPath}/${sdk.win32-win32-x86}" dest="@{toFolder}" />
+						</then>
+						<else>
+							<echo>download ${sdk.url.prefix}/${sdk.win32-win32-x86} to ${toolsPath}</echo>
+							<get src="${sdk.url.prefix}/${sdk.win32-win32-x86}" dest="${toolsPath}" />
+							<unzip src="${toolsPath}/${sdk.win32-win32-x86}" dest="@{toFolder}" />
+						</else>
+					</if>
+				</then>
+				<elseif>
+					<and>
+						<equals arg1="${host.os}" arg2="linux" />
+						<equals arg1="${host.ws}" arg2="gtk" />
+						<equals arg1="${host.arch}" arg2="x86" />
+					</and>
+					<then>
+						<if>
+							<available file="${toolsPath}/${sdk.linux-gtk-x86}"/>
+							<then>
+								<echo>found ${toolsPath}/${sdk.linux-gtk-x86}</echo>
+								<untar src="${toolsPath}/${sdk.linux-gtk-x86}" dest="@{toFolder}" compression="gzip"/>
+							</then>
+							<else>
+								<echo>download ${sdk.url.prefix}/${sdk.linux-gtk-x86} to ${toolsPath}</echo>
+								<get src="${sdk.url.prefix}/${sdk.linux-gtk-x86}" dest="${toolsPath}" />
+								<untar src="${toolsPath}/${sdk.linux-gtk-x86}" dest="@{toFolder}" compression="gzip"/>
+							</else>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="${host.os}" arg2="linux" />
+						<equals arg1="${host.ws}" arg2="gtk" />
+						<equals arg1="${host.arch}" arg2="x86_64" />
+					</and>
+					<then>
+						<if>
+							<available file="${toolsPath}/${sdk.linux-gtk-x86_64}"/>
+							<then>
+								<echo>found ${toolsPath}/${sdk.linux-gtk-x86_64}</echo>
+								<untar src="${toolsPath}/${sdk.linux-gtk-x86_64}" dest="@{toFolder}" compression="gzip"/>
+							</then>
+							<else>
+								<echo>download ${sdk.url.prefix}/${sdk.linux-gtk-x86_64} to ${toolsPath}</echo>
+								<get src="${sdk.url.prefix}/${sdk.linux-gtk-x86_64}" dest="${toolsPath}" />
+								<untar src="${toolsPath}/${sdk.linux-gtk-x86_64}" dest="@{toFolder}" compression="gzip"/>
+							</else>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="${host.os}" arg2="macosx" />
+						<equals arg1="${host.ws}" arg2="cocoa" />
+						<equals arg1="${host.arch}" arg2="x86" />
+					</and>
+					<then>
+						<if>
+							<available file="${toolsPath}/${sdk.macosx-cocoa-x86}"/>
+							<then>
+								<echo>found ${toolsPath}/${sdk.macosx-cocoa-x86}</echo>
+								<untar src="${toolsPath}/${sdk.macosx-cocoa-x86}" dest="@{toFolder}" compression="gzip"/>
+							</then>
+							<else>
+								<echo>download ${sdk.url.prefix}/${sdk.macosx-cocoa-x86} to ${toolsPath}</echo>
+								<get src="${sdk.url.prefix}/${sdk.macosx-cocoa-x86}" dest="${toolsPath}" />
+								<untar src="${toolsPath}/${sdk.macosx-cocoa-x86}" dest="@{toFolder}" compression="gzip"/>
+							</else>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="${host.os}" arg2="macosx" />
+						<equals arg1="${host.ws}" arg2="cocoa" />
+						<equals arg1="${host.arch}" arg2="x86_64" />
+					</and>
+					<then>
+						<if>
+							<available file="${toolsPath}/${sdk.macosx-cocoa-x86_64}"/>
+							<then>
+								<echo>found ${toolsPath}/${sdk.macosx-cocoa-x86_64}</echo>
+								<untar src="${toolsPath}/${sdk.macosx-cocoa-x86_64}" dest="@{toFolder}" compression="gzip"/>
+							</then>
+							<else>
+								<echo>download ${sdk.url.prefix}/${sdk.macosx-cocoa-x86_64} to ${toolsPath}</echo>
+								<get src="${sdk.url.prefix}/${sdk.macosx-cocoa-x86_64}" dest="${toolsPath}" />
+								<untar src="${toolsPath}/${sdk.macosx-cocoa-x86_64}" dest="@{toFolder}" compression="gzip"/>
+							</else>
+						</if>
+					</then>
+				</elseif>
+				<else>
+					<fail message="host=${host.os}-${host.ws}-${host.arch} is not supported yet."/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+</project>
+

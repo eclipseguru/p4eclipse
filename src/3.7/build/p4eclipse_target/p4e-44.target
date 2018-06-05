@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+
+<target name="p4e-4.4.target" sequenceNumber="84">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.team.svn.feature.group" version="2.0.0.I20140609-1700"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.0.v20140519-0339"/>
+<unit id="org.eclipse.cdt.platform.source.feature.group" version="8.4.0.201406111759"/>
+<unit id="org.eclipse.birt.feature.group" version="4.4.0.v201405191524-DPEp7FGixAot6DLz0hXcUqaHoLSX"/>
+<unit id="org.eclipse.birt.source.feature.group" version="4.4.0.v201405191524-DPEp7FGixAot6DLz0hXcUqaHoLSX"/>
+<unit id="org.eclipse.cdt.sdk.feature.group" version="8.4.0.201406111759"/>
+<unit id="org.eclipse.egit.feature.group" version="3.4.0.201406110918-r"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.9.100.201405261516"/>
+<unit id="org.eclipse.sdk.ide" version="4.4.0.I20140606-1215"/>
+<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.100.v20140603-1326"/>
+<repository location="http://download.eclipse.org/releases/luna/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="3.12.0.v20140605-1728"/>
+<unit id="org.eclipse.mylyn.reviews.sdk.feature.feature.group" version="2.3.0.v20140605-1717"/>
+<unit id="org.eclipse.mylyn.builds.sdk.feature.group" version="1.4.0.v20140606-1204"/>
+<unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="3.12.0.v20140605-1718"/>
+<unit id="org.eclipse.mylyn.versions.sdk.feature.group" version="1.4.0.v20140606-1204"/>
+<unit id="org.eclipse.mylyn.context.sdk.feature.group" version="3.12.0.v20140606-1805"/>
+<repository location="http://download.eclipse.org/releases/luna/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.dltk.core.feature.group" version="4.0.0.201206062034"/>
+<unit id="org.eclipse.dltk.core.sdk.feature.group" version="4.0.0.201206062034"/>
+<unit id="org.eclipse.dltk.python.feature.group" version="4.0.0.201206062034"/>
+<unit id="org.eclipse.dltk.python.sdk.feature.group" version="4.0.0.201206062034"/>
+<unit id="org.eclipse.dltk.ruby.feature.group" version="4.0.0.201206062034"/>
+<unit id="org.eclipse.dltk.ruby.sdk.feature.group" version="4.0.0.201206062034"/>
+<repository location="http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/technology/swtbot/snapshots/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="0.0.0"/>
+<repository location="http://community.polarion.com/projects/subversive/download/eclipse/4.0/update-site/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.apache.ant.source" version="1.8.2.v20120109-1030"/>
+<unit id="org.apache.ant" version="1.8.2.v20120109-1030"/>
+<unit id="org.apache.commons.compress" version="1.4.1.v201301140946"/>
+<unit id="org.apache.commons.compress.source" version="1.4.1.v201301140946"/>
+<unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
+<unit id="org.apache.log4j.source" version="1.2.15.v201012070815"/>
+<unit id="org.kohsuke.args4j" version="2.0.21.v201301150030"/>
+<unit id="org.kohsuke.args4j.source" version="2.0.21.v201301150030"/>
+<unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.core.source" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.integration.source" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.generator" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.generator.source" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.integration" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.library.source" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.text.source" version="1.1.0.v20090501071000"/>
+<unit id="javaewah" version="0.5.6.v201210150900"/>
+<unit id="javaewah.source" version="0.5.6.v201210150900"/>
+<unit id="org.objenesis" version="1.0.0.v201105211943"/>
+<unit id="org.objenesis.source" version="1.0.0.v201105211943"/>
+<unit id="org.mockito" version="1.8.4.v201102171835"/>
+<unit id="org.mockito.source" version="1.8.4.v201102171835"/>
+<unit id="com.jcraft.jsch" version="0.1.46.v201205102330"/>
+<unit id="com.jcraft.jsch.source" version="0.1.46.v201205102330"/>
+<unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="com.google.protobuf" version="2.4.0.v201105131100"/>
+<unit id="com.google.protobuf.source" version="2.4.0.v201105131100"/>
+<unit id="javax.servlet" version="2.5.0.v201103041518"/>
+<unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.sdk" version="4.4.0.I20140606-1215"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
+</location>
+</locations>
+</target>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.perforce.team.ui.c.timelapse.CTimeLapseEditor"
+            default="false"
+            id="com.perforce.team.ui.c.CTimeLapseEditor"
+            name="%TimeLapseEditor">
+      </editor>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.timelapse">
+      <editor
+            id="com.perforce.team.ui.c.CTimeLapseEditor">
+         <contextHandler class="com.perforce.team.ui.c.timelapse.CContextHandler" />
+         <contentType
+               id="org.eclipse.cdt.core.cSource">
+         </contentType>
+         <contentType
+               id="org.eclipse.cdt.core.cxxSource">
+         </contentType>
+         <contentType
+               id="org.eclipse.cdt.core.cHeader">
+         </contentType>
+         <contentType
+               id="org.eclipse.cdt.core.cxxHeader">
+         </contentType>
+      </editor>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.fileDiff">
+      <diff
+            class="com.perforce.team.ui.c.diff.CDiffer"
+            contentType="org.eclipse.cdt.core.cSource">
+      </diff>
+      <diff
+            class="com.perforce.team.ui.c.diff.CDiffer"
+            contentType="org.eclipse.cdt.core.cxxSource">
+      </diff>
+      <diff
+            class="com.perforce.team.ui.c.diff.CDiffer"
+            contentType="org.eclipse.cdt.core.cHeader">
+      </diff>
+      <diff
+            class="com.perforce.team.ui.c.diff.CDiffer"
+            contentType="org.eclipse.cdt.core.cxxHeader">
+      </diff>
+   </extension>
+
+</plugin>

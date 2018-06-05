@@ -1,0 +1,47 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Resolving Files in Perforce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Team Development and Resolving Conflicting Changes</h1>	
+
+
+File conflicts can occur when you submit a changelist containing a file that another 
+user has edited and checked in. When conflicts occur, Perforce schedules the 
+conflict files for resolve. Conflicts must be resolved before the changelist that contains 
+the conflicting files can be successfully submitted. 
+<p><B>To resolve a file</B>: right-click the file in the Pending Changelist pane and choose <strong>Resolve...</strong> There are two methods to resolve file conflicts:</p>
+<blockquote>
+  <p><b>Automatic Resolve</b>: to resolve without launching the merge utility, specify how you want to resolve the conflicting files.</p>
+  <p>The options available when auto-resolving are as follows: </p>
+  <ul>
+    <li><b>Accept source</b>: accept the latest version of the file 
+     in the depot, containing changes made by other users</li>
+    <li><b>Accept target</b>: accept the version of the file you 
+     checked out and changed in your workspace </li>
+    <li><b>Safe automatic resolve</b>: accept only when source or 
+     target differs from base</li>
+    <li><b>Allow merging with no conflicts</b>: Resolve by merging, 
+     skipping files with conflicts</li>
+    <li><b>Allow merging with conflict markers</b>: Resolve by merging,
+     replacing your workspace's file with the merged result, including
+     any conflict markers</li>
+  </ul>
+  <p><b>Interactive Resolve</b>: to run the merge utility so you can 
+    compare the conflicting files and choose individual chunks, or 
+    edit the file contents, choose Manual Resolve.</p></blockquote>
+<p>By default, you are prompted to choose the resolve method. To avoid
+having to do this every time, you can select and set a default resolve 
+method, and the Resolve wizard will use the UI that corresponds to your
+selected default resolve method.</p>
+<p>You can change the default resolve method in the preference page
+under <b>Team &gt; Perforce &gt; Resolve</b>. You can also customize
+the resolve options in the resolve preference page.</p>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

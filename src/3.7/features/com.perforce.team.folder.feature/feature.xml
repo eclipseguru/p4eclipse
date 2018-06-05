@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.perforce.team.folder.feature"
+      label="Perforce Folder Diff Support"
+      version="11.1.1.qualifier"
+      provider-name="Perforce Software"
+      plugin="com.perforce.team.branding">
+
+   <description>
+      This feature contains the P4Eclipse Folder Diff and Time-lapse support.
+   </description>
+
+   <license>
+      P4Eclipse is part of Perforce, The Fast Software Configuration Management System.  
+For server downloads and licensing, see www.perforce.com/download.html.
+   </license>
+
+   <requires>
+      <import feature="com.perforce.team.feature" version="0.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="com.perforce.team.ui.folder"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.perforce.team.core.folder"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

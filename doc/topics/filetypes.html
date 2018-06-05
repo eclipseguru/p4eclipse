@@ -1,0 +1,90 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Perforce File Types</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+
+<BODY>
+<H1>Perforce File Types</H1>
+
+
+<p>Perforce assigns file types to determine whether files can be diffed and how 
+  they are stored. Perforce file types are as follows:</p>
+<ul>
+  <li><b>text</b></li>
+  <br>
+  <li><b>binary</b></li>
+  <br>
+  <li><b>symlink</b> (symbolic link )</li>
+  <br>
+  <li><b>apple</b> (multi-forked Macintosh file )</li>
+  <br>
+  <li><b>unicode</b> (for storing text files containing international characters 
+    on Perforce servers operating in internationalized mode)</li>
+  <br>
+</ul>
+<p>You can set the following file type modifiers: </p>
+<ul>
+  <li><b>+x</b>: Execute bit set. Use for executable files. </li>
+  <br>
+  <li><b>+w</b>: File is always writable in workspace. (Perforce manages the write 
+    bit, and files that are not checked out are, by default, not writable.)</li>
+  <br>
+  <li><b>+k</b>: Enable RCS keyword expansion. If you submit text files containing 
+    the keywords listed below, Perforce expands them before storing them. Supported 
+    keywords are: 
+    <p> 
+    <ul>
+      <li><b>$Id$</b>: File name and revision number in Perforce depot syntax. <br>
+      
+      <li><b>$Header$</b>: Same as <b>$Id</b>.<br>
+      <li><b>$Date$</b>: Date of submission in format <i>YYYY/MM/DD.</i> </li><br>       
+      <li><b>$DateTime$</b>: Date and time of last submission in format <i>YYYY/MM/DD 
+        hh:mm:ss.</i> Date and time are as of the local time on the Perforce server 
+        at time of submission. </li>
+     <br>
+      
+      <li><b>$Change$</b>: Number of Perforce changelist in which file was submitted. 
+      </li>
+      <br>
+      
+      <li><b>$File$</b>: File name in depot syntax (without revision number). 
+      </li>
+      <li><b>$Revision$:</b> Perforce revision number of file.<br>
+      </li>
+      <li><b>$Author$</b>: Perforce user name of submitter.</li>
+      <br>
+    </ul>
+  </li>
+  <br>
+  <li><b>+l</b>: Exclusive open (locking). If set, only one user at a time will 
+    be able to open a file for editing. Useful for binary file types, which cannot 
+    be merged.</li>
+  <br>
+  <li> <b>+C</b>: Server stores the full compressed version of each file revision. 
+    (Binary files are always stored this way.)</li>
+  <br>
+  <li> <b>+D</b>: Server stores deltas in RCS format (Default server storage mechanism 
+    for text files.)</li>
+  <br>
+  <li> <b>+F</b>: Server stores full file per revision. Useful for long ASCII 
+    files that aren't read by users as text, such as PostScript files.</li>
+  <br>
+  <li> <b>+S</b>: Server stores only the head revision. Useful for executable 
+    or .obj files. </li>
+  
+  <li> <b>+m</b>: Preserve original modtime. The file's timestamp on the local 
+    filesystem is preserved upon submission and restored upon sync. Useful for 
+    third-party DLLs in Windows environments. </li>
+  
+</ul>
+<p>
+  
+
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+
+</BODY></HTML>

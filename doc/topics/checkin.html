@@ -1,0 +1,49 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Checking in Changes (Working with Changelists)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1> Checking in Changes (Working with Changelists)</h1>
+<p>To check in changes you have made to the files in a project, you <i>submit</i> 
+  the changelist containing the files. Use changelists to structure your changes. 
+  For example, use a changelist to group the changes required to fix a bug or 
+  add a feature. This approach enables you to keep the revision history of your project files coherent.</p>
+<p>To check in changes:</p>
+<ol>
+  <li>In the P4 Pending Changelists view, right-click the changelist that 
+    contains the files you want to check in and choose <b>Submit...</b> The Perforce 
+    Change Specification dialog is displayed.</li><p>
+  <li>Enter a description of your changes. If there are files you do not want 
+    to submit, un-check them. Any files that you do not submit remain checked out.</li><p>
+  <li>Click <b>Submit</b>. Your changes are submitted. To verify, check the Perforce 
+    Log Console view for messages like those in the following figure (note the <tt>p4 submit </tt>command and the absence of error messages).</li>
+  <p>
+</ol>
+<p><img src="../images/submitted.png"></p>
+<p>To create a changelist, click <img src="../images/newchange.png" alt="new changelist" width="14" height="13">in the P4 Pending Changelists view.<b></b></p>
+<p>To move files among changelists, select the files in the P4 Pending Changelist 
+  view and drag them to the target changelist.</p>
+<p>To compare the state of the project in your workspace with the version in the 
+  depot, right-click the project in the navigator and choose <b>Team&gt;Check 
+  Consistency...</b> P4Eclipse displays files you have added to or deleted from the 
+  project, enabling you to make sure that you check in the correct project files, 
+  as shown in the following figure. Click OK to mark files for add or delete as 
+  required, or click Cancel to dismiss the dialog without opening any files.</p>
+<p><img src="../images/checkconsistency.png" width="547" height="313"></p>
+<p>&nbsp;</p>
+<p>When you submit a changelist, you might encounter file conflicts that require 
+  resolution. Conflicts can occur, for example, if another user checks in changes 
+  after you check a file out. Perforce requires you to decide how the two differing 
+  versions of the file are resolved. For more details, see <a href="resolving.html">Team 
+  Development and Resolving Conflicting Changes.</a></p>
+<p>Changelists submitted by you and other users are listed in the P4 Submitted 
+  Changelists view. You can filter this view to display only the changelists pertaining to a specified user, path, and workspace. 
+  To clear the filter, click <img src="../images/eraser.png" width="24" height="22"></p>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."></p>
+</body>
+</html>

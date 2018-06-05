@@ -1,0 +1,13 @@
+<project name="RemoveIUs" default="main">
+	<property file="${basedir}/ant_build.properties" />
+	<property name="repo" value="file:${tools.dir}/indigoRepo"/>
+	<target name="main">
+		<p2.remove.iu>
+			<repository location="${repo}"/>
+				<iu id="org.eclipse.dltk.python.feature.group" artifacts="(format=packed)"/>
+				<iu id="org.eclipse.dltk.python.sdk.feature.group" artifacts="(format=packed)"/>
+				<!-- iu id="javax.servlet" artifacts="(format=packed)"/ -->
+		</p2.remove.iu>
+	</target>
+</project>
+		

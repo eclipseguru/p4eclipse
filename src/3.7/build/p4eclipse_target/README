@@ -1,0 +1,27 @@
+The target files defines the jars to build against. You can run from commandline to build update sites: 
+$> ./build_linux.sh updatesite -DtargetPlatform=p4e-42
+
+or build an rcp:
+$> ./build_linux.sh rcp -DtargetPlatform=p4e-42
+
+We also created maven repo at http://artifactory.bnr.perforce.com:8081/artifactory, you can cache the artifacts by:
+
+$> ./build_linux.sh updatesite -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/
+$> ./build_linux.sh rcp -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/
+
+When in development mode, you can import the target files as the active "Target Platform".
+
+To run the UI test:
+
+$> ./build_linux.sh testAlone -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/
+or
+$> export WORKSPACE=/home/ali/Perforce/ali_p4eclipse_dev_lt/p4eclipsedev/3.7
+$> ./build_linux.sh updatesite -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/
+$> cd $WORKSPACE;mkdir site;cd site; unzip ../p4eclipse-updatesite*.zip;
+$> mvn clean verify -fae -P p4test,p4repo,codeCoverage -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/ -Dp4repo.url=file:$WORKSPACE/build/p4eclipse_repo/target/repository/
+
+then analyze coverage
+$> mvn sonar:sonar -Pp4update,codeCoverage,p4repo -DtargetPlatform=p4e-42 -Dp2repo.url=http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-42/ -Dp4repo.url=file:$WORKSPACE/site
+
+
+

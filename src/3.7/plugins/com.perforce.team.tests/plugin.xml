@@ -1,0 +1,26 @@
+<plugin>
+	<!-- P4 workspace listener extension point testing -->
+	<!-- extension point="com.perforce.team.core.workspace">
+		<listener class="com.perforce.team.tests.extensions.BadClassName2ForListenerExtensionPoint"/>
+	</extension>
+	<extension point="com.perforce.team.core.workspace">
+		<listener class="com.perforce.team.tests.extensions.ListenerExtensionPointTest"/>
+	</extension>
+	<extension point="com.perforce.team.core.workspace">
+		<listener class="com.perforce.team.tests.extensions.BadClassName2ForListenerExtensionPoint"/>
+	</extension -->
+ <extension
+       point="com.perforce.team.core.mylyn.configuration">
+    <configuration
+          class="com.perforce.team.tests.mylyn.TestCoreConfiguration"
+          id="com.perforce.team.tests.configuration1">
+    </configuration>
+ </extension>
+ <extension
+       point="com.perforce.team.ui.mylyn.configuration">
+    <configuration
+          class="com.perforce.team.tests.mylyn.TestUiConfiguration"
+          id="com.perforce.team.tests.configuration2">
+    </configuration>
+ </extension>
+</plugin>

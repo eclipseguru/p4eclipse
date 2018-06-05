@@ -1,0 +1,79 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Time-lapse View: Graphical Annotation Tool</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Time-lapse View: Interactive Annotation Tool</h1>
+<p>Time-lapse View displays an interactive graphical representation of a file's 
+  history, showing when lines were added, changed, and deleted, who made the changes, 
+  and when the changes were made. Time-lapse View enables you to browse forward 
+  and back through changes dynamically,  to locate changes of interest.</p>
+<p>To display Time-lapse View, right-click the file of interest and choose <strong>Team&gt;Time-lapse View</strong>. To move through revisions, use the slider.  Time-lapse View is syntax-sensitive (C/C++, Java, and Ruby), enabling you to navigate file content using an outline view. To hide information that is not of interest, for example, to display only the changes to a single method, fold information using the +/- expander buttons.</p>
+<p>To control the display, use the following settings and features, which are displayed in the toolbar.</p>
+<table width=" 90%" border="1" cellpadding="1">
+  <tr align="center">
+    <td valign="middle"><h2><strong>Feature</strong></h2></td>
+    <td><h2><strong>Description</strong></h2></td>
+  </tr>
+  <tr> 
+    <td width="10%" align="center" valign="middle"><b>Scale</b></td>
+    <td width="90%">Specifies the unit used to display revisions: changelist number, date, or Perforce file revision number.</td>
+  </tr>
+<tr> 
+    <td align="center" valign="middle"><img src="../images/tlv-nextdiff.png" width="40" height="19"></td>
+    <td>Go to next or previous revision.</td>
+  </tr>  <tr> 
+    <td align="center" valign="middle"><img src="../images/tlv-integhist.png" ></td>
+    <td>Toggles display of integration history, to include content that was contributed by branch and merge operations as well as edits.</td>
+  </tr>
+  <tr> 
+    <td align="center" valign="middle"><img src="../images/tlv-details.png" width="17" height="19"></td>
+    <td>Toggles display of information from the changelist in which the currently-selected revision was submitted.</td>
+  </tr>
+  <tr> 
+    <td align="center" valign="middle"><img src="../images/tlv-actions.png" width="18" height="20"></td>
+    <td>Toggles the display of action badges under the slider. The badges indicate the  action (add, edit, or delete, for example) that was performed on the file in the corresponding changelist (or date or file revision, depending on the scale you select for the slider).</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv_aging.png" alt="" width="15" height="15"></td>
+    <td>Displays color coding to indicate how recently a change was entered. The 
+      darker the shading, the more recent the change.</td>
+  </tr>
+  
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-lineend.png" alt="" width="22" height="16"></td>
+    <td>Specifies how line endings and whitespace are treated to determine differences</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-user.png" width="22" height="22"></td>
+    <td>Toggles display of the user that made the change.</td>
+  </tr>
+  
+  <tr> 
+    <td align="center" valign="middle"><img src="../images/tlv-range.png" width="17" height="20"></td>
+    <td>Toggles the display of the range of revisions that include each line.</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-fold.png" width="20" height="22"></td>
+    <td>Enable/disable folding, which enables you to show or hide chunks of text</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-funchist.png" width="18" height="20"></td>
+    <td>For each chunk, display decorations under the slider indicating the status of the chunk in the corresponding revision.</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-tick.png" width="23" height="22"></td>
+    <td>Reduce the increments under the slider by displaying only revisions that affect the currently-selected chunk.</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><img src="../images/tlv-linkoutline.png" width="26" height="26"></td>
+    <td>Link/unlink the selection in the outline view to the slider. When linked, the focus remains on the selected chunk when you use the slider to browse revisions.</td>
+  </tr>
+</table>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Retrieving a Project from Perforce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Retrieving a Project from Perforce</h1>
+<p>To obtain access to files in Perforce depots, you <a href="changesettings.html">define connections</a> to servers.  Using the connections, you can browse the contents of Perforce servers in the P4 Connections view. By default, all files in the depot are displayed, but typically you have access only to a subset of the files (depending on how your Perforce client view is defined). To display only the file to which you have access, click <img src="../images/view.png" alt="down arrow" width="20" height="18"> and choose <strong>Filter by Client Workspace</strong> from P4 Connections view menu.
+<p>When browsing a server, you can right-click files and folders and perform 
+  the following tasks:
+  
+<ul>
+  <li><b>Get Latest Revision</b>: retrieve the latest version from the depot into the client
+    workspace</li>
+  <li><b>Get Revision...</b>: retrieve specified versions from the depot into the workspace</li>
+  <li><b>Remove from Workspace</b>: delete the local copy of a depot file</li>
+  <li><b>Check Out</b>: check out a file that you intend to change</li>
+  <li><b>Mark for Delete</b>: mark a file that you intend to delete</li>
+  <li><b>Revert Files</b>: discard changes you have made to a file and restore 
+    the version you last retrieved</li>
+  <li><b>Import as Project</b>: copy files and open them as a project in the workbench  </li>
+</ul>
+
+<p><b>To import a project:</b>
+<ol>
+  <li>In the P4 Connections view, right-click the project and choose <b>Import as Project..</b>. 
+  </li>
+  <li>When prompted, specify your client workspace root directory as the location 
+    for project files. </li>
+  <li>Open the project for edit.</li>
+</ol>
+<p><b>To update all the imported projects from the connection</b>: in the P4 Connections view, right-click the connection 
+  and choose <b>Sync Imported Projects</b>. All the imported projects from the connection are updated with the most recent 
+  file revisions from the server.
+   
+<p><b>To retrieve a project's files from the depot</b>: in the Navigator view, right-click the project 
+  and choose <b>Team &gt; Get Latest Revision</b>. The most recent file revisions are copied 
+to your workspace. 
+<p><b>To retrieve a specific revision of a file</b>: in the Navigator view, right-click 
+  the file and choose <b>Team &gt; Get Revision...</b>. Specify dates as: <i><tt>yyyy/mm/dd:hh:mm:ss</tt></i> or <i><tt>yyyy/mm/dd 
+    hh:mm:ss</tt></i> (with a space or colon between the date and the time). To 
+  specify the current date and time, type <tt>now.</tt> 
+<p><b>Note</b>: 
+<ol>
+  <li>The <i>p4 sync</i> command is used to import a project. For those files to import which are in the pending change list, e.g., checked out, opened for edit, 
+the <i>sync</i> will not fetch them. In such case, you should revert pending changes first before importing a project. </li>
+  <li>Importing Team Project Set is similar.</li>
+</ol>
+</p>
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

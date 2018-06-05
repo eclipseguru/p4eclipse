@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.perforce</groupId>
+	<artifactId>p4eclipse-parent</artifactId>
+	<version>11.1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- Sample command line: (see also p4eclipse_target/README)
+	    $ mvn -Dtycho.mode=maven org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=2011.2.43210 ## change versions
+	    $ mvn clean verify -Psignjar,p4test,codeCoverage # test about 15 minutes
+	    $ mvn -Pp4update,signjar clean package -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7 -DforceContextQualifier=MAIN-TEST_ONLY-SNAPSHOT
+	    $ mvn -Pp4update,signjar,replace-p4java clean package -Dp4java-version="[2012.1,)" -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7
+	    $ mvn -Pp4update,signjar clean package -Dp2repo.url=file:/home/ali/build/tools/p2repo3.7 -Djarsigner.keystore=/home/ali/.keystore -Djarsigner.alias=p4eclipse -Djarsigner.storepass=password -Djarsigner.keypass=password  
+	    
+		$ mvn clean package -Djava.vendor.url='http://www.apple.com' -P replace-p4java,replace-help -Dqualifier=BETA ## BnR (vendor for mac)
+		$ mvn clean package -Djava.vendor.url='http://www.apple.com'  -P p4rcp ## build on mac to create rcp (vendor for mac)
+		$ mvn clean verify -P codeCoverage,p4test; mvn sonar:sonar -PcodeCoverage ## Sonar: run test, then analysis
+		$ mvn clean verify -P codeCoverage,p4test -Dmaven.test.failure.ignore=true -Dmaven.test.error.ignore=true ## Sonar
+
+		## deprecated
+		$ mvn -P signjar -Dplatform-version-name=helios clean install ## explicitly set helios as target platform, obsoleted with target definition 
+		$ mvn clean package -Dtargetplatform.folder=/opt/targetplatform/3.6.2/all ## Old way using local target platform
+	-->
+
+	<!-- this is the parent POM from which all modules inherit common settings -->
+	<properties>
+		<!-- tycho-version>0.17.0</tycho-version -->
+		<tycho-version>0.20.0</tycho-version>
+		<tycho-groupid>org.eclipse.tycho</tycho-groupid>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<junit-version>4.8.1</junit-version>
+		<!-- jacoco.version>0.5.3.201107060350</jacoco.version -->
+		<jacoco.version>0.6.3.201306030806</jacoco.version>
+		<sonarHost>localhost</sonarHost>
+
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<forceContextQualifier>v${maven.build.timestamp}</forceContextQualifier>
+		<!-- forceContextQualifier>${qualifier}</forceContextQualifier -->
+
+		<!-- The p2 repositories url to build against -->
+		<p2repo.url>file:/home/ali/build/tools/p2repo3.7</p2repo.url>
+		<!-- p2repo.url>http://artifactory.bnr.perforce.com:8081/artifactory/eclipse-release-p2/</p2repo.url -->
+		<p2repo.url>http://artifactory.bnr.perforce.com:8081/artifactory/p2repo-38/</p2repo.url>
+		<!-- The local built p4eclipse updatesite, this is artifacts from the other build -->
+		<!-- p4repo.url>file:/p4eclipse_updatesite/target/site/</p4repo.url -->
+
+		<!-- The property pointing to the p4 command path, which will be used inside p4eclipse for diff, this will be used by testing see ClipboardTest.java-->
+		<p4Path>/opt/perforce/current/p4</p4Path>
+		
+		<!-- local-p4eclipse-site>file://${basedir}/../../build/p4eclipse_updatesite/target/site</local-p4eclipse-site -->
+		
+		<!--  The default jar signing parameters -->
+		<jarsigner.keystore>/home/ali/.keystore</jarsigner.keystore>
+		<jarsigner.storepass>password</jarsigner.storepass>
+		<jarsigner.keypass>password</jarsigner.keypass>
+		<jarsigner.alias>p4eclipse</jarsigner.alias>
+		
+		<test.vmargs.default>-Xmx2048m -XX:MaxPermSize=256m -Dcom.perforce.team.ui.SUPPRESS_ERROR_DIALOGS=true -Dp4Path=${p4Path}</test.vmargs.default>
+		<targetPlatform>p4e-43</targetPlatform>
+		
+	</properties>
+
+<!--  do not configure any repositories in pom, configure in settings.xml instead.  RT 9/6/13
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven.eclipse.org</id>
+			<url>http://maven.eclipse.org/nexus/content/groups/public/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>tycho</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+-->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>${tycho-groupid}</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-groupid}</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<!-- 
+					    This info tycho to fetch the target platform, which defined in com.perforce.target-platform module, 
+					    and id is ${targetPlatform}.
+					    If commented, tycho will skip resolving target platform. 
+					-->	
+			        <target> 
+			            <artifact> 
+			                <groupId>com.perforce</groupId> 
+			                <artifactId>p4eclipse-target</artifactId> 
+			                <version>${project.version}</version>
+			                <classifier>${targetPlatform}</classifier> 
+			            </artifact> 
+			        </target> 
+				
+					<!-- configure the p2 target environments for multi-platform build -->
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>						
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<id>execution1</id>
+							<phase>post-integration-test</phase>
+							<configuration>
+							<!-- Ant task for collecting the test results for Sonar. see sonar.surefire.reportsPath -->
+								<tasks>
+									<echo>copy from ${basedir}/target/surefire-reports to ${basedir}/../../build/</echo>
+									<copy todir="${basedir}/../../build/" failonerror="false">
+										<fileset dir="${basedir}/target/surefire-reports" includes="*.xml" />
+									</copy>
+								</tasks>
+							</configuration>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>execution2</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Displaying value of settings.xml element</echo>
+									<echo>[settings.localRepository] ${settings.localRepository}</echo>
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>${tycho-groupid}</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>${tycho-groupid}</groupId>
+					<artifactId>tycho-source-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<executions>
+						<execution>
+							<id>plugin-source</id>
+							<goals>
+								<goal>plugin-source</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<encoding>ISO-8859-1</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>useExistingP2Repo</id>
+			<activation>
+				<property>
+					<name>p2repo.url</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>eclipse-p2-repo</id>
+					<layout>p2</layout>
+					<url>${p2repo.url}</url>
+				</repository>
+			</repositories>
+		</profile>
+		
+		<profile>
+			<id>p4update</id>
+			<modules>
+				<!-- p4eclipse bundles -->
+				<module>../../plugins/com.perforce.p4api</module>
+				<module>../../plugins/com.perforce.team.core</module>
+				<module>../../plugins/com.perforce.team.core.folder</module>
+				<module>../../plugins/com.perforce.team.core.mergequest</module>
+				<module>../../plugins/com.perforce.team.core.mylyn</module>
+				<module>../../plugins/com.perforce.team.core.search</module>
+				<module>../../features/com.perforce.team.c.feature</module>
+				<module>../../features/com.perforce.team.charts.feature</module>
+				<module>../../features/com.perforce.team.mergequest.feature</module>
+				<module>../../features/com.perforce.team.folder.feature</module>
+				<module>../../features/com.perforce.team.java.feature</module>
+				<module>../../features/com.perforce.team.mylyn.feature</module>
+				<module>../../features/com.perforce.team.patch.feature</module>
+				<module>../../features/com.perforce.team.ruby.feature</module>
+				<module>../../features/com.perforce.team.python.feature</module>
+				<module>../../features/com.perforce.team.search.feature</module>
+				<module>../../plugins/com.perforce.team.branding</module>
+				<module>../../plugins/com.perforce.team.help.ui</module>
+				<module>../../plugins/com.perforce.team.ui</module>
+				<module>../../plugins/com.perforce.team.ui.c</module>
+				<module>../../plugins/com.perforce.team.ui.charts</module>
+				<module>../../plugins/com.perforce.team.ui.folder</module>
+				<module>../../plugins/com.perforce.team.ui.java</module>
+				<module>../../plugins/com.perforce.team.ui.mergequest</module>
+				<module>../../plugins/com.perforce.team.ui.mylyn</module>
+				<module>../../plugins/com.perforce.team.ui.patch</module>
+				<module>../../plugins/com.perforce.team.ui.python</module>
+				<module>../../plugins/com.perforce.team.ui.ruby</module>
+				<module>../../plugins/com.perforce.team.ui.search</module>
+				<module>../../plugins/com.perforce.team.ui.text</module>
+				<module>../../features/com.perforce.team.feature</module>
+				<module>../p4eclipse_updatesite</module>
+				<module>../p4eclipse_target</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>p4rcp</id>
+			<modules>
+				<!-- RCP product bundles -->
+				<module>../../plugins/com.perforce.team.internal</module>
+				<module>../../plugins/com.perforce.p4eclipse.rcp</module>
+				<module>../../features/com.perforce.p4eclipse.rcp.feature</module>
+				<module>../../features/com.perforce.p4eclipse.rcp3rd.feature</module>
+				<module>../p4eclipse_repo</module>
+				<module>../p4eclipse_target</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>p4test</id>
+			<modules>
+				<!-- Test bundles -->
+				<module>../../plugins/com.perforce.team.tests</module>
+				<module>../../plugins/com.perforce.team.mergequest.tests</module>
+				<module>../../features/com.perforce.tests.feature</module>
+				<module>../p4eclipse_target</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>p4repo</id>
+			<activation>
+				<property>
+					<name>p4repo.url</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>p4eclipse-p2-repo</id>
+					<layout>p2</layout>
+					<url>${p4repo.url}</url>
+				</repository>
+			</repositories>
+		</profile>
+		
+		<!-- profile>
+			<id>p4patch</id>
+			<activation>
+				<property>
+					<name>!qualifier</name>
+				</property>
+			</activation>
+			<properties>
+				<forceContextQualifier></forceContextQualifier>
+			</properties>
+		</profile -->
+
+		<profile>
+			<!-- as a workaround for TYCHO-520, only build mac binaries on macs -->
+			<id>macosx</id>
+			<activation>
+				<property>
+					<name>java.vendor.url</name>
+					<value>http://www.apple.com/</value>
+				</property>
+			</activation>
+			<properties>
+				<!-- changed to use standard maven property to locate build repository root.  RT 6/26/13 -->
+				<sonar.jacoco.argLine>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=../../build/p4eclipse_parent/jacoco.exec -XstartOnFirstThread</sonar.jacoco.argLine>
+			</properties>			
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>${tycho-groupid}</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<environments combine.children="append">
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>${tycho-groupid}</groupId>
+						<artifactId>tycho-surefire-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<argLine>${sonar.jacoco.argLine}</argLine>
+						</configuration>
+					</plugin>					
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<activation>
+				<os>
+					<name>Linux</name>
+				</os>
+			</activation>
+			<id>linuxBuild</id>
+			<properties>
+				<build.os>linux</build.os>
+				<build.ws>gtk</build.ws>
+				<build.arch>x86_64</build.arch>
+			</properties>
+		</profile>
+		
+		<!-- This profile is used to gather code coverage for Sonar -->
+		<profile>
+			<id>codeCoverage</id>
+			<properties>
+				<!-- Properties to enable jacoco code coverage analysis -->
+				<sonar.language>java</sonar.language>
+				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+				<sonar.jacoco.reportPath>${project.basedir}/../../build/p4eclipse_parent/jacoco.exec</sonar.jacoco.reportPath>
+				<sonar.surefire.reportsPath>${project.basedir}/../../build/</sonar.surefire.reportsPath>
+				<!-- For portability purpose, the server conf was put there -->
+				<sonar.jdbc.url>jdbc:mysql://${sonarHost}:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+				<!-- sonar.jdbc.url>jdbc:mysql://${sonarHost}:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&amp;requireSSL=true</sonar.jdbc.url -->
+				<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+				<sonar.jdbc.username>sonar</sonar.jdbc.username>
+				<sonar.jdbc.password>sonar</sonar.jdbc.password>
+				<sonar.host.url>http://${sonarHost}:9000</sonar.host.url>
+			</properties>
+	
+			<build>
+				<plugins>
+					<!-- Enabling use of jacoco -->
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>${jacoco.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<!-- Where to put jacoco coverage report -->
+									<destFile>${sonar.jacoco.reportPath}</destFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>signjar</id>
+			<!-- activation>
+				<property>
+					<name>jarsigner.alias</name>
+				</property>
+			</activation -->
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>verify</id>
+								<goals>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit-version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

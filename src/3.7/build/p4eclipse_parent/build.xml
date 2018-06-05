@@ -1,0 +1,116 @@
+<!--
+  Layout:
+    p4eclipse_build
+      pom.xml 
+      m2_settings.templ.xml  - m2 user settings template
+      ant-lib
+      build.xml  - build boot strap
+
+    builddir
+        [m2_11.1_3.6]   - m2 local repo
+        [m2_11.1_3.7]   - m2 local repo
+        [m2_settings_11.1_3.6.xml]  - m2 user settings
+        [m2_settings_11.1_3.7.xml]  - m2 user settings
+-->
+
+<project name="Build P4Eclipse" default="main">
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${basedir}/ant-lib/ant-contrib.jar" />
+	<taskdef resource="com/perforce/p4java/ant/tasks/P4Tasks.properties"
+        classpath="${basedir}/ant-lib/p4ant-2010.1.293250.jar:
+                   ${basedir}/ant-lib/p4java-2011.1.297684.jar" />
+
+	<property name="p4.port" value="perforce:1666"/>
+	<property name="p4.user" value="ali"/>
+	<property name="p4.passwd" value="changeitnow"/>
+	<property name="p4.client" value="ubuntu"/>
+	
+	<property name="p4.platform.version" value="3.6"/>
+
+	<!-- The folder will hold maven related artifacts -->
+	<property name="p4.builddir" value="${basedir}/.."/>
+	
+	<!--
+		$$$p4.bundle.version.major is passed from command line. by default, it is undefined 
+	-->
+	<target name="main">
+		<echo>p4.port=${p4.port}</echo>
+		<echo>p4.user=${p4.user}</echo>
+		<echo>p4.client=${p4.client}</echo>
+		<echo>p4.platform.version=${p4.platform.version}</echo>
+
+	    <!-- ===================================================== --> 
+		<echo>Setting bundle version ...</echo>
+		<if>
+			<isset property="p4.bundle.version.major"/>
+			<then>
+			</then>
+			<else>
+				<fail message="Please set P4 Release version, they should look like number.number, e.g. -Dp4.bundle.version.major=11.2"/>
+			</else>
+		</if>
+
+	    <!-- ===================================================== --> 
+		<echo>Update maven settings.xml ...</echo>
+		<property name="maven.reponame" value="m2_${p4.bundle.version.major}_${p4.platform.version}"/>
+		<property name="p4.maven.settings" value="${p4.builddir}/m2_settings_${p4.bundle.version.major}_${p4.platform.version}.xml"/>
+		<property name="p4.maven.repo.local" value="${p4.builddir}/${maven.reponame}"/>
+		<echo>p4.maven.repo.local=${p4.maven.repo.local}</echo>
+		<echo>p4.maven.settings=${p4.maven.settings}</echo>
+		<copy file="${basedir}/m2_settings_templ.xml" 
+			tofile="${p4.maven.settings}" overwrite="true"/>
+		<replace file="${p4.maven.settings}" token="@@m2_local_repo@@" value="${p4.maven.repo.local}" />
+		
+	    <!-- ===================================================== --> 
+		<echo>Update bundles and features version ...</echo>
+		<antcall target="update-bundle-version"/>	
+		
+	    <!-- ===================================================== --> 
+		<echo>Starting tycho build ...</echo>
+		<!-- exec executable="mvn" dir="${basedir}/.." failonerror="true">
+			<arg line="-s ${p4.maven.settings} -l ${p4.builddir}/${maven.reponame}.log clean package"/>
+			<arg value="-s"/>
+			<arg value="${p4.maven.settings}"/>
+			<arg value="-l"/>
+			<arg value="${p4.builddir}/${maven.reponame}.log"/>
+			<arg value="clean"/>
+			<arg value="package"/ >
+		</exec-->
+
+	</target>
+
+	<target name="update-bundle-version">
+		<echo>Retrieving latest change number:</echo>
+		<p4jchanges
+    	    maxmostrecent="1"
+    	    files="//depot/main/p4-eclipse/..."
+    		property="changelistnumber"
+    	/>
+		<echo>changelistnumber=${changelistnumber}</echo>
+
+		<property name="p4.bundle.version" value="${p4.bundle.version.major}.${changelistnumber}"/>
+		<echo>Update bundle version to ${p4.bundle.version} ...</echo>
+		<!-- exec executable="mvn" dir="${basedir}/.." failifexecutionfails="true">
+			<arg line="-s ${p4.maven.settings} -Dtycho.mode=maven org.sonatype.tycho:tycho-versions-plugin:set-version -DnewVersion=${p4.bundle.version}-SNAPSHOT"/>
+			<arg value="-s"/>
+			<arg value="${p4.maven.settings}"/>
+			<arg value="-Dtycho.mode=maven"/>
+			<arg value="org.sonatype.tycho:tycho-versions-plugin:set-version"/>
+			<arg value="-DnewVersion=${p4.bundle.version}-SNAPSHOT"/>
+		</exec-->
+
+		<echo>Update ${basedir}/../pom.xml target platform version to ${p4.bundle.version}-SNAPSHOT ...</echo>
+		<replace file="${basedir}/../pom.xml" token="0.0.1-SNAPSHOT" value="${p4.bundle.version}-SNAPSHOT" />
+		<echo>Update ${basedir}/../p4eclipse_repo/category.xml feature version to ${p4.bundle.version}-SNAPSHOT ...</echo>
+		<replace file="${basedir}/../p4eclipse_repo/category.xml" token="0.0.1.qualifier" value="${p4.bundle.version}.qualifier" />
+
+	</target>
+	
+	<macrodef name="checkout-source">
+		<attribute name="destFolder" />
+		<sequential>
+			<echo>check out source code from depot</echo>
+			<echo message="check out codes to @{destFolder}" />
+		</sequential>
+	</macrodef>
+	
+</project>

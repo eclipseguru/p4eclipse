@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="com.perforce.team.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="com.perforce.team.core" id="workspace" name="P4 Workspace Listener"/>
+      </appinfo>
+      <documentation>
+         This extension point allows listeners to be added to the P4Workspace class.
+Added listeners will be notified of events that occur from user-initiated actions inside P4ECLIPSE.  The events will contain the type of action performed and the affected resources.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="listener" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="configurer"/>
+            <element ref="connectionListener" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="listener">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Listener class that must implement com.perforce.team.core.p4java.IP4Listener
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.perforce.team.core.p4java.IP4Listener"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="configurer">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.perforce.team.core.p4java.IP4WorkspaceConfigurer"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="connectionListener">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.perforce.team.core.p4java.IP4ConnectionListener"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         This extension point was added in the 2008.2 P4-ECLIPSE release
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         &lt;pre&gt;
+&lt;extension point=&quot;com.perforce.team.core.workspace&quot;&gt;
+ &lt;listener class=&quot;com.my.xzy.MyWorkspaceListener&quot; /&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+The above code registers the MyWorkspaceListener class as a listener on the P4Workspace singleton
+      </documentation>
+   </annotation>
+
+
+
+
+</schema>

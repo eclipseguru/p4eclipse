@@ -1,0 +1,34 @@
+<plugin>
+   <extension
+         point="com.perforce.team.core.mylyn.configuration">
+      <configuration
+            class="com.perforce.team.internal.Perforce1666JobConfiguration"
+            id="com.perforce.team.internal.configuration1">
+      </configuration>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.mylyn.configuration">
+      <configuration
+            class="com.perforce.team.internal.Perforce1666JobUiConfiguration"
+            id="com.perforce.team.internal.configuration1">
+      </configuration>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.contentAssist">
+      <provider
+            class="com.perforce.team.internal.Perforce1666ContentAssistProvider"
+            context="pending.edit">
+      </provider>
+   </extension>
+   <extension
+       point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+    <hyperlinkDetector
+          activate="true"
+          class="com.perforce.team.internal.CallHyperlinkDetector"
+          description="%CallHyperlinkDetector.description"
+          id="com.perforce.team.internal.hyperlinkDetector1"
+          name="%CallHyperlinkDetector.name"
+          targetId="org.eclipse.ui.DefaultTextEditor">
+    </hyperlinkDetector>
+ </extension>
+</plugin>

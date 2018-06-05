@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+
+<target includeMode="feature" name="p4eclipse-3.7-target" sequenceNumber="95">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="3.8.3.v20130107-0100"/>
+<unit id="org.eclipse.mylyn.context.sdk.feature.group" version="3.8.3.v20130107-0100"/>
+<unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="3.8.3.v20130107-0100"/>
+<repository location="http://download.eclipse.org/mylyn/releases/indigo/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.team.svn.feature.group" version="1.0.1.I20130306-1700"/>
+<repository location="http://download.eclipse.org/technology/subversive/1.0/update-site/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="3.0.1.I20130331-1700"/>
+<repository location="http://community.polarion.com/projects/subversive/download/eclipse/3.0/update-site/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.antlr.runtime" version="3.0.0.v200803061811"/>
+<unit id="org.antlr.runtime.source" version="3.0.0.v200803061811"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.dltk.core.feature.group" version="2.0.0.v20100518-1923-7L--EAAoOVMSMc4AWEvJ"/>
+<unit id="org.eclipse.dltk.core.sdk.feature.group" version="2.0.0.v20090730-1127-5--90U45SFRujYToYq6KvGxbBBpP"/>
+<unit id="org.eclipse.dltk.core.index.feature.group" version="2.0.0.v20100616-2015-6--9oA5855M7O2968L"/>
+<unit id="org.eclipse.dltk.core.index.sdk.feature.group" version="2.0.0.v20090917-1539-4--8342CrDDBD7R_S_AE_N_pB696"/>
+<unit id="org.eclipse.dltk.itcl.feature.group" version="2.0.0.v20100603-4--9oA57D5F9H29D9E"/>
+<unit id="org.eclipse.dltk.itcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--8142CrDD_J7MAJDz0RGOE6G_I"/>
+<unit id="org.eclipse.dltk.javascript.feature.group" version="2.0.0.v20100118-1339-7J--E_EkMWeN5avAaJuT"/>
+<unit id="org.eclipse.dltk.javascript.sdk.feature.group" version="2.0.0.v20090730-1412-4--84O23HCIoXYiTAmxKxLwlAFlN"/>
+<unit id="org.eclipse.dltk.mylyn.feature.group" version="1.0.0.v20100518-1923-2--7w3121163103314"/>
+<unit id="org.eclipse.dltk.mylyn.sdk.feature.group" version="1.0.0.v20090730-1311-2--8-42Az-696B3_E6658368x423"/>
+<unit id="org.eclipse.dltk.python.feature.group" version="2.0.0.v20090730-1514-77--BcMACkBgGa3CKHQ"/>
+<unit id="org.eclipse.dltk.python.sdk.feature.group" version="2.0.0.v20090730-1514-4--84B22NfWGFmFoKh5MUJSCdNBD"/>
+<unit id="org.eclipse.dltk.rse.feature.group" version="2.0.0.v20100603-5--9oA5855C8K2A98F"/>
+<unit id="org.eclipse.dltk.rse.sdk.feature.group" version="2.0.0.v20090730-1127-4--8242CrDDAA7K_ME0MFQ66D9L3"/>
+<unit id="org.eclipse.dltk.ruby.feature.group" version="2.0.0.v20100505-1154-7G--E_EkMU3NHhvAUo0G"/>
+<unit id="org.eclipse.dltk.ruby.sdk.feature.group" version="2.0.0.v20090730-1127-4--84L23HCMnUW7RPoxKoq2YAFlN"/>
+<unit id="org.eclipse.dltk.tcl.feature.group" version="2.0.0.v20100505-1154-7L0-EC3wSZiWSqREkvtZ"/>
+<unit id="org.eclipse.dltk.tcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--84Q33HFAz-abmaaxTP7yvrD4x"/>
+<unit id="org.eclipse.dltk.xotcl.feature.group" version="2.0.0.v20100603-5--_kE79O7ODJ3BGCN"/>
+<unit id="org.eclipse.dltk.xotcl.sdk.feature.group" version="2.0.0.v20090730-1127-4--8242DnHFBU9WFLFz-YMZP8PEK"/>
+<repository location="http://download.eclipse.org/technology/dltk/updates/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.birt.feature.group" version="3.7.2.v20120213-BDF9E9bGTzuHh03p2c0AWvmC3Ltk"/>
+<unit id="org.eclipse.cdt.sdk.feature.group" version="8.0.2.201202111925"/>
+<unit id="org.eclipse.egit.feature.group" version="1.3.0.201202151440-r"/>
+<unit id="org.eclipse.jgit.feature.group" version="1.3.0.201202151440-r"/>
+<unit id="org.eclipse.platform.ide" version="3.7.2.M20120208-0800"/>
+<unit id="org.eclipse.equinox.executable.feature.group" version="3.5.1.v20111216-1653-7P7NFUIFIbaUcU77s0KQWHw5HZTZ"/>
+<unit id="org.eclipse.platform.sdk" version="3.7.2.M20120208-0800"/>
+<unit id="org.eclipse.rcp.sdk.id" version="3.7.2.M20120208-0800"/>
+<unit id="org.eclipse.sdk.ide" version="3.7.2.M20120208-0800"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.7.2.v20120130-0943"/>
+<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.7.1.R37x_v20110907-9N7sHDdGIUw3H-591a16Tcf5FePP"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.7.2.v20110927-2020-7G7W77A5WNgIRPdWXDIbNTSQPdQL"/>
+<repository location="http://download.eclipse.org/releases/indigo/"/>
+</location>
+</locations>
+</target>

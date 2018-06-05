@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="com.perforce.p4eclipse.rcp.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.perforce.p4eclipse.rcp.Perspective"
+            icon="icons/house.png"
+            id="com.perforce.p4eclipse.rcp.perspective"
+            name="P4 Eclipse">
+      </perspective>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.perforce.p4eclipse.rcp.application"
+            name="P4Eclipse">
+         <property
+               name="appName"
+               value="P4Eclipse">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/p4rcp.png">
+         </property>
+         <property
+               name="aboutText"
+               value="P4Eclipse&#x0A;&#x0A;Perforce RCP All-In-One Bundle">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/p4rcp.png">
+         </property>
+      </product>
+   </extension>
+</plugin>

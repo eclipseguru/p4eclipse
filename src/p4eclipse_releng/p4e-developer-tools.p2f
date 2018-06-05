@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?p2f version='1.0.0'?>
+<p2f version='1.0.0'>
+  <ius size='42'>
+    <iu id='org.antlr.runtime' name='ANTLR Runtime' version='3.0.0.v200803061811'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.antlr.runtime.source' name='ANTLR Runtime Source' version='3.0.0.v200803061811'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.apache.commons.collections' name='Apache Commons Collections' version='3.2.0.v201005080500'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.apache.httpcomponents.httpclient' name='Apache HttpComponents HttpClient' version='4.1.2.v201203221030'>
+      <repositories size='3'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.apache.httpcomponents.httpcore' name='Apache HttpComponents HttpCore' version='4.1.4.v201203221030'>
+      <repositories size='3'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.apache.httpcomponents.httpcore.nio' name='Apache HttpComponents HttpCore NIO' version='4.1.0.v201101201700'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.birt.feature.group' name='BIRT Framework' version='4.2.2.v201301281649-ClBI9nGZcVSofEz-Xuz0n-ruJtUm'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.cdt.sdk.feature.group' name='C/C++ Development Tools SDK' version='8.1.2.201302132326'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.codehaus.jackson.mapper' name='Data mapper for Jackson JSON processor' version='1.6.0.v20101005-0925'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.core.feature.group' name='Dynamic Languages Toolkit - Core Frameworks' version='4.0.0.201206062034'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.core.sdk.feature.group' name='Dynamic Languages Toolkit - Core Frameworks SDK' version='4.0.0.201206062034'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.mylyn.feature.group' name='Dynamic Languages Toolkit - Mylyn Integration' version='4.0.0.201206062034'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.python.feature.group' name='Dynamic Languages Toolkit - Python IDE' version='4.0.0.201206062034'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.python.sdk.feature.group' name='Dynamic Languages Toolkit - Python IDE SDK' version='4.0.0.201206062034'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.rse.feature.group' name='Dynamic Languages Toolkit - Remote Development Support' version='4.0.0.201206062034'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.rse.sdk.feature.group' name='Dynamic Languages Toolkit - Remote Development Support SDK' version='4.0.0.201206062034'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.ruby.feature.group' name='Dynamic Languages Toolkit - Ruby Development Tools' version='4.0.0.201206062034'>
+      <repositories size='2'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.dltk.ruby.sdk.feature.group' name='Dynamic Languages Toolkit - Ruby Development Tools SDK' version='4.0.0.201206062034'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.birt.source.feature.group' name='Eclipse BIRT Source Feature' version='4.2.2.v201301281649-ClBI9nGZcVSofEz-Xuz0n-ruJtUm'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.egit.feature.group' name='Eclipse EGit' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.egit.source.feature.group' name='Eclipse EGit - Source' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.jgit.source.feature.group' name='Eclipse JGit - Source' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.jgit.pgm.feature.group' name='Eclipse JGit Command Line Interface' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.jgit.pgm.source.feature.group' name='Eclipse JGit Command Line Interface - Source' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.test.feature.group' name='Eclipse Test Framework' version='3.5.100.v20120528-1717-7R7dBhBgLiCViQnG8ITHM73701A1'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/eclipse/updates/3.8'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.egit.mylyn.feature.group' name='EGit Mylyn' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.egit.import.feature.group' name='EGit Plug-in Import Support' version='2.3.1.201302201838-r'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/egit/updates'/>
+      </repositories>
+    </iu>
+    <iu id='com.google.gson' name='Google GSON' version='2.1.0.v201203072145'>
+      <repositories size='3'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='com.google.guava' name='Guava: Google Core Libraries for Java 1.5' version='10.0.1.v201203051515'>
+      <repositories size='3'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+    <iu id='org.codehaus.jackson.core' name='Jackson JSON processor' version='1.6.0.v20101005-0925'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+      </repositories>
+    </iu>
+    <iu id='org.codehaus.jackson.jaxrs' name='JAX-RS provider for JSON content type, using Jackson data binding' version='1.6.0.v20101005-1100'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.builds.sdk.feature.group' name='Mylyn Builds SDK' version='1.1.0.I20130408-1307'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.commons.sdk.feature.group' name='Mylyn Commons SDK' version='3.9.0.I20130408-1229'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.context.sdk.feature.group' name='Mylyn Context SDK' version='3.9.0.I20130408-1305'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.docs.epub.sdk.feature.group' name='Mylyn Docs EPUB SDK' version='1.1.0.I20130408-1312'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.docs.sdk.feature.group' name='Mylyn Docs SDK' version='1.8.0.I20130408-1312'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.reviews.sdk.feature.feature.group' name='Mylyn Reviews SDK' version='2.0.0.I20130409-0416'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.sdk_feature.feature.group' name='Mylyn Tasks SDK' version='3.9.0.I20130408-1240'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.test_feature.feature.group' name='Mylyn Tasks Tests SDK' version='3.9.0.I20130408-1240'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.versions.sdk.feature.group' name='Mylyn Versions SDK' version='1.1.0.I20130408-1237'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.mylyn.wikitext.sdk.feature.group' name='Mylyn WikiText SDK' version='1.8.0.I20130408-1312'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/nightly'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.rse.feature.group' name='Remote System Explorer End-User Runtime' version='3.4.1.201302122026'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/releases/juno/'/>
+      </repositories>
+    </iu>
+  </ius>
+</p2f>

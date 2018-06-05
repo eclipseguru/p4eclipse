@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.perforce.team.python.helios.feature"
+      label="Perforce Python Time-lapse View Support (DLTK Prerequisite)"
+      version="11.1.1.qualifier"
+      provider-name="Perforce Software"
+      plugin="com.perforce.team.branding">
+
+   <description>
+      This feature contains the P4Eclipse Python Time-Lapse view.
+   </description>
+
+   <license>
+      P4Eclipse is part of Perforce, The Fast Software Configuration Management System.  
+For server downloads and licensing, see www.perforce.com/download.html.
+   </license>
+
+   <url>
+      <discovery label="DLTK Update Site" url="http://download.eclipse.org/technology/dltk/updates/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.dltk.core" version="2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.ui" version="2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.python.core" version="1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.python.ui" version="1.0" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.feature" version="0.0.0" match="greaterOrEqual"/>
+      <import plugin="org.antlr.runtime" version="3.0.0" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="com.perforce.team.ui.python.helios"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

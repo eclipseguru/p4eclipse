@@ -1,0 +1,62 @@
+<project name="Main" default="main">
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${basedir}/../ant-lib/ant-contrib.jar" />
+	<!-- import file="${basedir}/ant_settings.xml" / -->
+	<import file="${basedir}/ant_common.xml" />
+	<property file="${basedir}/ant_build.properties" />
+	
+	<property name="toolsPath" value="${tools.dir}"/>
+	<property name="eclipsePath" value="${toolsPath}/eclipse"/>
+	
+	<target name="main" depends="init,p2repo3.6,p2repo3.7" />
+
+	<target name="p2repo3.6" depends="init">
+		<antRunner script="${basedir}/p2mirror3.6.xml" eclipse.dir="${eclipsePath}"/>
+		<repo2runnable source="file:${tools.dir}/p2mirror3.6" destination="file:${tools.dir}/p2repo3.6" SDKPath="${eclipsePath}"/>
+	</target>
+	
+	<target name="p2repo3.7" depends="init">
+		<antRunner script="${basedir}/p2mirror3.7.xml" eclipse.dir="${eclipsePath}"/>
+		<repo2runnable source="file:${tools.dir}/p2mirror3.7" destination="file:${tools.dir}/p2repo3.7" SDKPath="${eclipsePath}"/>
+	</target>
+
+	<target name="p2repo3.8" depends="init">
+		<antRunner script="${basedir}/p2mirror3.8.xml" eclipse.dir="${eclipsePath}"/>
+		<repo2runnable source="file:${tools.dir}/p2mirror3.8" destination="file:${tools.dir}/p2repo3.8" SDKPath="${eclipsePath}"/>
+	</target>
+	
+	<target name="p2repo4.2" depends="init">
+		<antRunner script="${basedir}/p2mirror4.2.xml" eclipse.dir="${eclipsePath}"/>
+		<repo2runnable source="file:${tools.dir}/p2mirror4.2" destination="file:${tools.dir}/p2repo4.2" SDKPath="${eclipsePath}"/>
+	</target>
+	
+    <target name="installRcpTarget" depends="init" >
+            <ant antfile="installRcpTarget.xml" target="installAll" inheritrefs="true"/>
+    </target>
+
+	<target name="removeIU" depends="init">
+		<antRunner script="${basedir}/removeIUs.xml" eclipse.dir="${eclipsePath}"/>
+	</target>
+	
+	<target name="init">
+		<echo message="init" />
+		<echo message="
+			toolsPath=${toolsPath}
+			" />
+		<mkdir dir="${toolsPath}"/>
+		<condition property="sdk.ready">
+			<and>
+				<available file="${toolsPath}/eclipse/plugins" type="dir"/>
+				<available file="${toolsPath}/eclipse/features" type="dir" />
+			</and>
+		</condition>
+		<if>
+			<equals arg1="${sdk.ready}" arg2="true" />
+			<then>
+			</then>
+			<else>
+				<getAndUnzipSDK toFolder="${toolsPath}"/>
+			</else>
+		</if>
+	</target>
+	
+</project>

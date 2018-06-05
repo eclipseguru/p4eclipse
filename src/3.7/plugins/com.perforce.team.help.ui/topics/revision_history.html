@@ -1,0 +1,88 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Revision History</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Displaying File Status and History</h1>
+<p>You can display the following types of information about files:
+<ul>
+  <li><b>File status</b>: the current state of the file as managed by Perforce, 
+    indicated by label decorations</li>
+  <li><b>File properties</b>: location, number of revisions, and so on. Displayed 
+    on the Perforce Properties dialog.</li>
+  <li><b>Revision history</b>: the changes that have been checked into the depot, 
+    including a description of the change, date, user, and so on.</li>
+  <li><b>Submitted changelists</b>: previously-submitted changelists, including 
+    a list of files submitted.</li>
+</ul>
+<p>You can also <a href="#search">search</a> the contents of files under Perforce control using a grep-style search.
+<h2>File Status</H2>
+<p>To view the status of open files, examine the file icons in the P4 Pending 
+  Changelist view. The <i>label decorations</i> displayed on the icons indicate 
+  the status of the file. For example, the following figure shows files open for 
+  delete (red x), edit (red check mark), and add (red +).</p>
+<p><img src="../images/labeldecorations.png" width="393" height="116"></p>
+<h2>File Properties</H2>
+<p>To display file properties:
+<ol>
+  <li>Right-click the file in the Navigator view and choose <b>Properties</b>.</li>
+  <li>Click <b>Perforce</b>. File properties are displayed as shown in the following 
+    figure. </li>
+</ol>
+<p><img src="../images/fileproperties.png" >
+<p>Note that the <i>head</i> revision is the revision most recently checked in, 
+  and the <i>have</i> revision is the one last synced to your workspace.
+<h2>Revision History</H2>
+<p>To display the revision history of a file, right-click the file and choose 
+<b>Revision History.</b></p>
+<p>The  History view lists the following details about the revisions 
+  of a file that have been submitted to the Perforce depot: </p>
+<ul>
+  <li><b>Revision</b>: the revision number of the file. Every time you (successfully) 
+    submit the file, its revision number is incremented.</li>
+  <p> 
+  <li><b>Changelist</b>: the changelist number associated with the file revision 
+    when it was submitted to the depot. This number is assigned by Perforce, and 
+    is used to group related files when submitting them. For example, if you change 
+    several files in the process of fixing a bug or adding a feature, the changelist 
+    number identifies the point at which the change was submitted. You can use 
+    the changelist number to sync the files to your workspace as a group. </li>
+  <p> 
+  <li><b>Date</b>: the date the changelist was submitted.</li>
+  <p> 
+  <li><b>User</b>: the Perforce user name of the user who submitted the changelist</li>
+  <p> 
+  <li><b>Action</b>: the action perforce on the file, for example, add, edit, 
+    or delete.</li>
+  <p> 
+  <li><b>Description</b>: details about the changelist, entered by the user who 
+    submitted the changelist.</li>
+  <p> 
+</p></ul>
+<p>To compare two revisions to see what changes have been made, select the desired 
+  revisions, then right-click and choose <b>Diff Two Revisions</b>. The <b>Diff 
+  Two Revisions</b> dialog is displayed, highlighting the differences between 
+  the files, as shown in the following figure. 
+<p><img src="../images/diff.png"> 
+<h2>Submitted Changelists</h2>
+<p>To display a list of previously-submitted changelists, click the P4 Submit tab. To display details for a submitted changelist, click the desired changelist. Details are displayed in the pane below the list.
+<h2><a name="search"></a>Searching File Content</h2>
+<p>To search the contents of files in a Perforce depot:
+<ol>
+  <li>Click the toolbar Search button. The Search dialog is displayed.</li>
+  <li>Click the P4 Grep tab. </li>
+  <li>Specify the text you are seeking, the files to be searched, and any search options. </li>
+  <li>Click Search. Results are displayed in a Search results tab. </li>
+  <li>To display the contents of file that contains the search text, double-click it in the Search pane. To locate an instance of the search text in the file, expand the results for the file and double-click the line that displays details about the instance. </li>
+ 
+</ol>
+You can also search file text from the P4 Submit view.
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+
+</body>
+</html>

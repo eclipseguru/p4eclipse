@@ -1,0 +1,405 @@
+<project name="TargetPlatformProject" default="installAll">
+	<!--
+		The following properties are inherited from parent project:
+			 rcpTargetPath - the directory to where the target will be installed
+			 toolsPath - the directory where tools like p2 director is installed
+			             we assume ${toolsPath}/eclipse/eclipse is an executable
+			             
+		Currently, we install following features:
+		   Features from remote website
+		     http://download.eclipse.org/releases/juno/
+		       - birt (emf)
+		       - cdt
+		       - rse
+		     http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository
+		       - antlr
+		       - httpcomponents.httpclient
+		       - httpcomponents.httpcore
+		       - httpcomponents.httpcore.nio
+		       - org.codehaus.jackson.core
+		       - org.codehaus.jackson.jaxrs
+		       - org.codehaus.jackson.mapper
+		       - com.google.gson,com.google.guava
+		     http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly		       
+		       - dltk
+		     http://download.eclipse.org/egit/updates"
+		       - egit
+		     http://download.eclipse.org/r4e/updates/
+		       - r4e
+		     http://download.eclipse.org/mylyn/releases/latest
+		       - mylyn
+		 To run:
+
+                  $>  ant installRcpTarget -DrcpTargetPath=/tmp/rcp_target
+
+	 -->
+
+	<!-- following properties need to be customized for each release -->
+	<property name="staging.p2.site" value="http://download.eclipse.org/releases/kepler/"/>
+	<property name="orbit.p2.site" value="http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository"/>
+	<property name="dltk.p2.site" value="http://download.eclipse.org/technology/dltk/updates-dev/4.0-nightly"/>
+	<property name="egit.p2.site" value="http://download.eclipse.org/egit/updates"/>
+	<property name="r4e.p2.site" value="http://download.eclipse.org/r4e/updates/"/>
+	<!-- property name="mylyn.p2.site" value="http://download.eclipse.org/mylyn/releases/latest"/ -->
+	<property name="mylyn.p2.site" value="http://download.eclipse.org/mylyn/snapshots/nightly"/>
+	<property name="php.p2.site" value="http://download.eclipse.org/tools/pdt/updates/release"/>
+	<property name="wtp.p2.site" value="http://download.eclipse.org/webtools/repository/juno/"/>
+	<property name="vjet.p2.site" value="http://download.eclipse.org/vjet/updates-0.9"/>
+	<property name="emmet.p2.site" value="http://emmet.io/eclipse/updates/"/>
+
+	<property name="extra.dir" value="${toolsPath}/extra"/>
+
+	<property name="delta.dir" value="${extra.dir}/delta"/>
+	<!-- property name="delta.name" value="eclipse-3.8.2-delta-pack.zip"/ -->
+	<!--property name="delta.url" value="http://download.eclipse.org/eclipse/downloads/drops/R-3.8.2-201301310800/${delta.name}"/-->
+	<property name="delta.name" value="eclipse-4.3M6-delta-pack.zip"/>
+	<property name="delta.url" value="http://download.eclipse.org/eclipse/downloads/drops4/S-4.3M6-201303141330/${delta.name}"/>
+
+	<property name="test.dir" value="${extra.dir}/test"/>
+	<!--property name="test.name" value="eclipse-test-framework-3.8.2.zip"/>
+	<property name="test.url" value="http://download.eclipse.org/eclipse/downloads/drops/R-3.8.2-201301310800/${test.name}"/-->
+	<property name="test.name" value="eclipse-test-framework-4.3M6.zip"/>
+	<property name="test.url" value="http://download.eclipse.org/eclipse/downloads/drops4/S-4.3M6-201303141330/${test.name}"/>
+
+	<property name="svn.plugin.site" value="http://download.eclipse.org/technology/subversive/1.0/update-site/" />
+	<property name="svn.connector.site" value="http://community.polarion.com/projects/subversive/download/eclipse/3.0/update-site" />
+
+	<target name="installAll" description="Install SDK product, deltapack, test and all the features required for build and test RCP">
+		<if>
+			<available file="${rcpTargetPath}/features" />
+			<then>
+				<find dir="${rcpTargetPath}/features" pattern="**/org.eclipse.sdk_*/feature.xml" property="sdk.feature"></find>
+				<if>
+					<or>
+						<not><isset property="sdk.feature"/></not>
+						<equals arg1="${sdk.feature}" arg2=""/>
+					</or>
+					<then>
+						<mkdir dir="${rcpTargetPath}/tmp"/>
+						<getAndUnzipSDK toFolder="${rcpTargetPath}/tmp"/>
+						<move todir="${rcpTargetPath}">
+							<fileset dir="${rcpTargetPath}/tmp/eclipse" />
+						</move>
+						<chmod perm="ugo+rwx" file="${rcpTargetPath}/eclipse" />
+						<delete dir="${rcpTargetPath}/tmp" />
+					</then>
+					<else>
+						<echo message="${sdk.feature} already installed." />
+					</else>
+				</if>
+			</then>
+			<else>
+				<mkdir dir="${rcpTargetPath}/tmp"/>
+				<getAndUnzipSDK toFolder="${rcpTargetPath}/tmp"/>
+				<move todir="${rcpTargetPath}">
+					<fileset dir="${rcpTargetPath}/tmp/eclipse" />
+				</move>
+				<chmod perm="ugo+rwx" file="${rcpTargetPath}/eclipse" />
+				<delete dir="${rcpTargetPath}/tmp" />
+			</else>
+		</if>
+
+		<antcall target="installDelta" />
+		<antcall target="installTest" />
+		<antcall target="installOrbit" />
+		<antcall target="installFeaturesRemote" />
+		<antcall target="installMylyn" />
+		<antcall target="installEGit" />
+		<antcall target="installDltk" />
+		<!-- antcall target="installR4E" / -->
+		<antcall target="installSvn" />
+		<!-- antcall target="installPhp" /-->
+		<!-- antcall target="installWtp" /-->
+		<!-- antcall target="installVjet" /-->
+		<!-- antcall target="installEmmet" /-->
+	</target>
+
+	<target name="checkExtra">
+		<available file="${extra.dir}" property="extra.exists" />
+	</target>
+	
+	<target name="installDelta" description="Copy Deltapack to SDK">
+		<echo message="Downloading delta pack from ${delta.url} to ${delta.dir}, then copy ${delta.dir} to ${rcpTargetPath}"/>
+                <mkdir dir="${extra.dir}/delta"/>
+
+		<find dir="${rcpTargetPath}/features" pattern="**/org.eclipse.equinox.executable_*/feature.xml" property="delta.feature"></find>
+
+		<if>
+			<equals arg1="${delta.feature}" arg2=""/>
+			<then>
+				<get src="${delta.url}" dest="${extra.dir}" />
+				<unzip src="${extra.dir}/${delta.name}" dest="${delta.dir}" />
+				<copy todir="${rcpTargetPath}" overwrite="true">
+					<fileset dir="${delta.dir}/eclipse">
+						<include name="**/*"/>
+					</fileset>
+				</copy>
+			</then>
+			<else>
+				<echo message="${delta.feature} already installed." />
+			</else>
+		</if>
+		
+	</target>
+
+	<target name="installTest" description="Install the PDE test feature to SDK">
+		<echo message="Downloading test framework to ${test.dir}, then use SDK embeded director to install PDE test feature to ${rcpTargetPath}" />
+
+		<find dir="${rcpTargetPath}/features" pattern="**/org.eclipse.test_*/feature.xml" property="test.feature"></find>
+
+		<if>
+			<equals arg1="${test.feature}" arg2=""/>
+			<then>
+				<get src="${test.url}" dest="${extra.dir}" />
+				<unzip src="${extra.dir}/${test.name}" dest="${test.dir}" />
+				<echo/>
+				<echo message="site=file:${test.dir}" />
+				<echo message="dir=${rcpTargetPath}" />
+				<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+					<args>
+						<jvmarg value="-Declipse.p2.mirrors=false" />
+						<arg line="-application org.eclipse.equinox.p2.director" />
+						<arg line="-metadataRepository file:${test.dir}" />
+						<arg line="-artifactRepository file:${test.dir}" />
+						<arg line="-destination file:${rcpTargetPath}" />
+						<arg line="-profileProperties org.eclipse.update.install.features=true" />
+						<arg line="-installIU org.eclipse.test.feature.group" />
+					</args>
+				</launchEclipse>
+			</then>
+			<else>
+				<echo message="${test.feature} already installed." />
+			</else>
+		</if>
+		
+	</target>
+
+	<target name="installFeaturesRemote" description="Install features(remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install birt, cdt, rse features" />
+
+		<echo/>
+		<echo message="site=${staging.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${staging.p2.site}" />
+				<arg line="-artifactRepository ${staging.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.birt.feature.group,org.eclipse.birt.source.feature.group,org.eclipse.cdt.sdk.feature.group,org.eclipse.rse.feature.group
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+
+	<target name="installOrbit" description="Install antlr (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install antlr features" />
+
+		<echo/>
+		<echo message="site=${orbit.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${orbit.p2.site}" />
+				<arg line="-artifactRepository ${orbit.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.antlr.runtime/3.0.0.v200803061811,org.antlr.runtime.source/3.0.0.v200803061811,org.apache.httpcomponents.httpclient,org.apache.httpcomponents.httpcore,org.apache.httpcomponents.httpcore.nio,org.codehaus.jackson.core,org.codehaus.jackson.jaxrs,org.codehaus.jackson.mapper,com.google.gson,com.google.guava,org.apache.commons.collections
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+
+	<target name="installDltk" description="Install dltk (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install dltk features" />
+
+		<echo/>
+		<echo message="site=${dltk.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${dltk.p2.site}" />
+				<arg line="-artifactRepository ${dltk.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.dltk.core.feature.group,org.eclipse.dltk.core.sdk.feature.group,org.eclipse.dltk.python.feature.group,org.eclipse.dltk.python.sdk.feature.group,org.eclipse.dltk.rse.feature.group,org.eclipse.dltk.rse.sdk.feature.group,org.eclipse.dltk.mylyn.feature.group,org.eclipse.dltk.ruby.sdk.feature.group,org.eclipse.dltk.ruby.feature.group
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+	
+	<target name="installEGit" description="Install egit (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install egit features" />
+
+		<echo/>
+		<echo message="site=${egit.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${egit.p2.site}" />
+				<arg line="-artifactRepository ${egit.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.egit.feature.group,org.eclipse.egit.source.feature.group,org.eclipse.egit.import.feature.group,org.eclipse.jgit.source.feature.group,org.eclipse.jgit.pgm.feature.group,org.eclipse.jgit.pgm.source.feature.group,org.eclipse.egit.mylyn.feature.group
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+	
+	<target name="installMylyn" description="Install mylyn for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install mylyne features" />
+
+		<echo/>
+		<echo message="site=${mylyn.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${mylyn.p2.site},${egit.p2.site}" />
+				<arg line="-artifactRepository ${mylyn.p2.site},${egit.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.mylyn.sdk_feature.feature.group,org.eclipse.mylyn.context.sdk.feature.group,org.eclipse.mylyn.versions.sdk.feature.group,org.eclipse.mylyn.builds.sdk.feature.group,org.eclipse.mylyn.commons.sdk.feature.group,org.eclipse.mylyn.wikitext.sdk.feature.group,org.eclipse.mylyn.docs.sdk.feature.group,org.eclipse.mylyn.docs.epub.sdk.feature.group,org.eclipse.mylyn.test_feature.feature.group					
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+
+	<target name="installR4E" description="Install review for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install r4e features" />
+
+		<echo/>
+		<echo message="site=${r4e.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${r4e.p2.site}" />
+				<arg line="-artifactRepository ${r4e.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.mylyn.reviews.r4e.sdk.feature.feature.group					
+					" />
+			</args>
+		</launchEclipse>
+	</target>
+	
+	<target name="installSvn" description="Install SVN plugin (Eclipse) and connector (Polarion)">
+		<echo message="Using SDK embeded director to install SVN features" />
+
+		<echo/>
+		<echo message="site=${svn.plugin.site},${svn.connector.site}" />
+		<echo message="rcpTargetPath=${rcpTargetPath}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<!--jvmarg value="-Declipse.p2.data.area=file:${rcpTargetPath}/p2" /-->
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${svn.plugin.site},${svn.connector.site}" />
+				<arg line="-artifactRepository ${svn.plugin.site},${svn.connector.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.team.svn.feature.group,org.eclipse.team.svn.source.feature.group,org.polarion.eclipse.team.svn.connector.feature.group,org.polarion.eclipse.team.svn.connector.source.feature.group,org.polarion.eclipse.team.svn.connector.svnkit16.feature.group,org.polarion.eclipse.team.svn.connector.svnkit17.feature.group
+                    " />
+			</args>
+		</launchEclipse>
+	</target>
+
+	<target name="installPhp" description="Install php for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install php features" />
+
+		<echo/>
+		<echo message="site=${php.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${r4e.p2.site}" />
+				<arg line="-artifactRepository ${r4e.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.php.feature.group,org.eclipse.php.test.feature.group,org.eclipse.mylyn.feature.group,org.eclipse.php.source.feature.group					
+					" />
+			</args>
+		</launchEclipse>
+	</target>	
+
+	<target name="installWtp" description="Install WTP for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install wtp features" />
+
+		<echo/>
+		<echo message="site=${wtp.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${wtp.p2.site}" />
+				<arg line="-artifactRepository ${wtp.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.wst.jsdt_sdk.feature.feature.group					
+					" />
+			</args>
+		</launchEclipse>
+	</target>	
+
+	<target name="installVjet" description="Install Vjet for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install vjet features" />
+
+		<echo/>
+		<echo message="site=${vjet.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${wtp.p2.site}" />
+				<arg line="-artifactRepository ${wtp.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					org.eclipse.vjet.js.ide.feature.group,org.eclipse.vjet.codegen.feature.group,org.eclipse.vjet.vsf.domkit.feature.group 				
+					" />
+			</args>
+		</launchEclipse>
+	</target>	
+
+	<target name="installEmmet" description="Install Emmet for Eclipse (remote) for build and test to SDK">
+		<echo message="Using SDK embeded director to install Emmet features" />
+
+		<echo/>
+		<echo message="site=${emmet.p2.site}" />
+		<launchEclipse app="director" eclipse.dir="${rcpTargetPath}">
+			<args>
+				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<arg line="-application org.eclipse.equinox.p2.director" />
+				<arg line="-metadataRepository ${wtp.p2.site}" />
+				<arg line="-artifactRepository ${wtp.p2.site}" />
+				<arg line="-destination file:${rcpTargetPath}" />
+				<arg line="-profileProperties org.eclipse.update.install.features=true" />
+				<arg line="-installIU 
+					io.emmet.eclipse.feature.group 				
+					" />
+			</args>
+		</launchEclipse>
+	</target>	
+</project>
+
+<!--  -metadataRepository
+C:\gef.repo,C:\eclipse\p2\org.eclipse.equinox.p2.engine/profileRegistry/SDKProfile.profile -->
+
+<!--
+java -jar plugins/org.eclipse.equinox.launcher_*.jar -application org.eclipse.equinox.p2.director -metadataRepository file:/tmp/abc_feature -artifactRepository file:/tmp/abc_feature -installIU abc.rcp.feature.feature.group -destination /tmp/a -profile AbcProfile -vmArgs -Declipse.p2.data.area=/tmp/a/p2
+-->

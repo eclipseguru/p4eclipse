@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="builders" name="%BuildersExtensionPoint.name" schema="schema/builders.exsd"/>
+   <extension-point id="elements" name="%ElementsExtensionPoint.name" schema="schema/elements.exsd"/>
+   <extension
+         point="com.perforce.team.core.mergequest.builders">
+      <builder
+            class="com.perforce.team.core.mergequest.builder.xml.BranchBuilder"
+            elementClass="com.perforce.team.core.mergequest.model.Branch"
+            tagName="branch">
+      </builder>
+      <builder
+            class="com.perforce.team.core.mergequest.builder.xml.DepotPathMappingBuilder"
+            elementClass="com.perforce.team.core.mergequest.model.DepotPathMapping"
+            tagName="depotPathMapping">
+      </builder>
+      <builder
+            class="com.perforce.team.core.mergequest.builder.xml.BranchSpecMappingBuilder"
+            elementClass="com.perforce.team.core.mergequest.model.BranchSpecMapping"
+            tagName="branchSpecMapping">
+      </builder>
+   </extension>
+   <extension
+         point="com.perforce.team.core.mergequest.elements">
+      <branch
+            firmness="3"
+            label="Release"
+            type="release">
+      </branch>
+      <branch
+            firmness="2"
+            label="Main"
+            type="main">
+      </branch>
+      <branch
+            firmness="1"
+            label="Development"
+            type="development">
+      </branch>
+   </extension>
+</plugin>

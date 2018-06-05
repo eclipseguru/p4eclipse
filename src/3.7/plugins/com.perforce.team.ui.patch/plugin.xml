@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="com.perforce.team.ui.patch.containerContributions"
+            objectClass="org.eclipse.core.resources.IContainer">
+         <filter
+               name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=com.perforce.team.core.PerforceTeamProvider">
+         </filter>
+         <action
+               class="com.perforce.team.ui.patch.actions.CreatePatchAction"
+               id="com.perforce.team.ui.patch.createPatch"
+               label="%CreatePatchAction.label"
+               menubarPath="team.main/group1">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="com.perforce.team.ui.synchronize">
+      <actions
+            class="com.perforce.team.ui.patch.actions.PatchSynchronizePageActionGroup">
+      </actions>
+   </extension>
+
+</plugin>

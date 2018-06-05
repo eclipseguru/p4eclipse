@@ -1,0 +1,58 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Merging and Promoting Using the Merge Quest Tool</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css"></head>
+
+<body>
+<h1>Merging and Promoting Using the Merge Quest Tool</h1>
+<p>The Perforce Merge Quest tool enables you to graph the structure of your Perforce server by defining a  hierarchy that you can use to propagate change between codelines. There are no restrictions on the number of connections a codeline can have or the types of codelines that can be connected. You control the display of codelines by manually arranging  and connecting them on the canvas. After you define a hierarchy, you can export it as an XML file that other users can import and use.
+
+<p><strong>To display the Merge Quest view</strong>, context-click the desired server connection in the P4 Connections view and choose <strong>Open Merge Quest</strong>.
+<h2>Creating the Diagram</h2>
+<p><strong>To define a branching hierarchy, first define the codelines:</strong>
+<ol>
+  <li>Drag a codeline icon from the palette to the Merge Quest canvas. P4Eclipse displays the <strong>New Codeline</strong> dialog. </li>
+  <li>Enter a descriptive name for your codeline and click <strong>Finish</strong>. The canvas displays an icon for the codeline. </li>
+</ol>
+<p><strong>Then, define the relationships:
+</strong>
+<p>To define the relationship between two codelines, you define connections that specify how changes are propagated:
+<ul>
+  <li>&quot;To&quot; connections specify the files and folders that accept changes from the codeline (target).</li>
+  <li>&quot;From&quot; connections specify the files and folders that contribute change to the codeline (source).</li>
+</ul>
+<p>You can connect files using  the following  methods:
+<ul>
+  <li><strong>Add Branch Spec Connector</strong>: Use a Perforce branch specification. Browse to an existing one or create one by clicking <img src="../images/addbranch.png" alt="Add branch spec" width="16" height="16" align="absmiddle">.</li>
+  <li><strong>Add Depot Path Connector</strong>: Specify the depot path for the source or target files and folders. If a target path doesn't exist in the depot, it is created the first time you use the connection to integrate files to the target.</li>
+</ul>
+<p>Alternately, you can click one of the codeline connectors in the palette (Branch Spec or Depot Path), then drag a line from one codeline icon to another. 
+<p><strong>To define the connections:</strong>
+<ol>
+  <li>Context-click the desired codeline and choose the method for specifying the connection (branch spec or depot path). P4Eclipse displays a dialog that enables you to specify the source or target using a path or branch specification. </li>
+  <li>Specify the source or target path. (You can specify a source or target that doesn't exist &#8212; Merge Quest will create it.)</li>
+  <li>To restrict the follow of change to a single direction, click the corresponding arrow in the separator between the Source and Target lists. By default, change can be propagated in either direction. </li>
+  <li>To save your changes, click <strong>Finish</strong>.  </li>
+</ol>
+<h2>Merging and Promoting</h2>
+<p><strong>To propagate change from one codeline to another:</strong>
+<ol>
+  <li>Context-click the source or target codeline and choose <strong>Integrate To...</strong> or <strong>Integrate From...</strong>&nbsp;(or context-click the connector between the source and target and choose the desired integration. Connectors look like this: <img src="../images/connector.png" alt="connector" width="28" height="26" align="absmiddle"> ). P4Eclipse displays the <strong>Integrate</strong> dialog.</li>
+  <li>Specify the desired  options. For details about Perforce integration options, see the <a href="http://www.perforce.com/perforce/doc.current/manuals/cmdref/index.html"><em>Perforce Command Reference</em></a> (p4 integrate command description). P4Eclipse opens the source files for integration to the target in a pending changelist.</li>
+  <li>If necessary, <a href="resolving.html">resolve</a> the files to select the revisions that you want integrates to the target codeline.</li>
+  <li><a href="checkin.html">Submit the  changelist</a> containing the resolved files. </li>
+</ol>
+<h2>Exporting and Importing Merge Quest Diagrams</h2>
+<p>You can export Merge Quest diagrams as XML files, which you can (manually) store on a file system, Web site or in a Perforce depot. Other users can import your files to obtain your diagrams. 
+<p>To export a diagram, click <img src="../images/exportmq.png" alt="export" width="16" height="13"> and specify the location where you want to store it. To import a diagram, click <img src="../images/importmq.png" width="16" height="13"> and browse to the file or specify its location.
+
+<h2>Best Practices for Branching</h2>
+<p>For typical software development, Perforce recommends the <em>mainline model</em>. The mainline, where code is stabilized, resides above softer development codelines and below firmer release codelines. Code is expected to become increasingly stable as change flows from development to mainline to release. 
+</p>
+
+<hr>
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."> </p>
+</body>
+</html>

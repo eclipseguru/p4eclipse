@@ -1,0 +1,34 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+<html>
+<head>
+<title>Deleting a Project from Perforce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="perforcehelp.css">
+</head>
+
+<body>
+<h1>Deleting a Project from the Depot</h1>
+<p>By default, when you delete a project, its files are marked for delete in Perforce 
+  and deleted when you submit the changelist that contains them. If you disable 
+  the <B>Enable support for Workbench edit, 
+delete, rename and refactoring operations </B>preference, 
+  you must manually open the files for delete if you intend to remove them from 
+  the depot</p>
+<p>To delete files that are under Perforce control, you open the files for delete, 
+  then submit the changelist in which they are open. Perforce adds a file revision 
+  marked &quot;deleted&quot; to the depot (but retains all previous revisions), 
+  and deletes the files from your workspace. Note that deleting the files from 
+  the depot does not remove them from WebSphere Studio Application Developer. If 
+  you are getting rid of the project completely, delete it from the Perforce depot 
+  first, then from WebSphere Studio Application Developer.</p>
+<p>To delete a project from the depot:</p>
+<ol>
+  <li>In the Package Explorer view, right-click the project and choose <b>Team&gt;Mark for Delete...</b> Project files are removed from the list.</li> 
+  <li>In the P4 Pending Changelist view, right-click the changelist that contains the files to be deleted and choose <b>Submit...</b> The Perforce Change Specification is displayed.
+  <li>Enter a description and click <B>Submit</B>.
+  </ol>
+<hr>
+
+<p><img src=../images/perforcelogo.png alt="Copyright Perforce Software 2003-2012. All Rights Reserved."></p>
+</body>
+</html>

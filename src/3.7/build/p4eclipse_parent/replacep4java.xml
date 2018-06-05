@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.perforce</groupId>
+	<artifactId>p4eclipse-replacep4java</artifactId>
+	<version>12.2.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<!-- Sample command line:
+	     mvn -f replacep4java.xml process-resources -Dp4java-version="[2012,)"
+	 -->
+	<properties>
+		<!-- p4java version retrieved from  BnR repo -->
+		<p4java-version>[2015.2,2016.1)</p4java-version>
+		<bnr-repo>http://artifactory.bnr.perforce.com:8081/artifactory/repo</bnr-repo>
+		<targetprj>${project.basedir}/../../plugins/com.perforce.team.core</targetprj>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>com.perforce.p4java</id>
+			<url>${bnr-repo}</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>com.perforce</groupId>
+			<artifactId>p4java</artifactId>
+			<version>${p4java-version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${targetprj}/dependency</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeTransitive>true</excludeTransitive>
+							<includeGroupIds>com.perforce</includeGroupIds>
+							<includeArtifactIds>p4java</includeArtifactIds>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<configuration>
+							<tasks>
+								<echo>targetprj=${targetprj}</echo>
+								<!-- p4java jar file pattern: p4java-2011.1.297684.jar -->
+								<path id="p4javaPath">
+									<fileset dir="${targetprj}/dependency">
+										<include name="p4java-*.*.*.jar" />
+									</fileset>
+								</path>
+								<pathconvert property="p4javaFile" refid="p4javaPath">
+								    <globmapper from="*" to="*" />
+								</pathconvert>
+								<basename file="${p4javaFile}" property="p4javaName" />
+								<echo>p4javaName=${p4javaName}</echo>
+								<echo>copying ${targetprj}/dependency/${p4javaName} to ${targetprj}/libraries/${p4javaName}</echo>
+								<echo>deleting ${targetprj}/libraries/p4java-*.jar</echo>
+								<delete>
+								    <fileset dir="${targetprj}/libraries" includes="p4java-*.jar" excludes="${p4javaName}"/>
+								</delete>
+								<copy file="${targetprj}/dependency/${p4javaName}" tofile="${targetprj}/libraries/${p4javaName}"/>
+								<replaceregexp 
+									file="${targetprj}/.classpath" 
+									match="p4java-.*\.jar"
+									flags="m" 
+									replace="${p4javaName}" />
+								<replaceregexp 
+									file="${targetprj}/META-INF/MANIFEST.MF" 
+									match="p4java-.*\.jar"
+									flags="m" 
+									replace="${p4javaName}" />
+								<replaceregexp 
+									file="${targetprj}/build.properties" 
+									match="p4java-.*\.jar"
+									flags="m" 
+									replace="${p4javaName}" />
+								<!-- exec dir="${basedir}" executable="${basedir}/src/main/sh/do-something.sh" 
+									failonerror="true"> <arg line="arg1 arg2 arg3 arg4" /> </exec -->
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<artifactId>jakarta-regexp</artifactId>
+						<groupId>jakarta-regexp</groupId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

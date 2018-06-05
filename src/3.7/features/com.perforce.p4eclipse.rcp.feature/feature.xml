@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.perforce.p4eclipse.rcp.feature"
+      label="Perforce RCP Support"
+      version="11.1.1.qualifier"
+      provider-name="Perforce Software">
+
+   <description>
+      Feature containing internal P4Eclipse RCP plug-ins.
+   </description>
+
+   <url>
+      <update label="Internal P4Eclipse 3.6 Update Site" url="http://eng-jteamlinux-vm.perforce.com/p4eclipse/latest/3.6/update"/>
+   </url>
+
+   <requires>
+      <import feature="com.perforce.team.c.galileo.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.charts.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.folder.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.java.galileo.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.mergequest.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.mylyn.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.patch.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.python.helios.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.ruby.helios.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+      <import feature="com.perforce.team.search.feature" version="0.0.0.qualifier" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="com.perforce.p4eclipse.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.perforce.team.internal"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,161 @@
+<!--
+For Repository management: 
+  http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_repositorytasks.htm 
+-->
+<project name="P2Mirror3.7" default="main">
+	<property file="${basedir}/ant_build.properties" />
+	<property name="repo" value="file:${tools.dir}/p2mirror3.7"/>
+	<property name="repo.name" value="Indigo artifact and metadata repository"/>
+
+	<target name="main">
+		<echo message="start mirroring repos...${ant.project.name}" />
+
+		<p2.mirror description="Mirroring Eclipse platform 3.7 ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/eclipse/updates/3.7"/>
+			</source>
+			<iu id="org.eclipse.platform.ide"/>
+			<iu id="org.eclipse.platform.sdk"/>
+			<iu id="org.eclipse.rcp.feature.group"/>
+			<iu id="org.eclipse.equinox.sdk.feature.group"/>
+			<iu id="org.eclipse.sdk.ide"/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring latest mylyn ..." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<!--repository location="http://download.eclipse.org/mylyn/releases/3.6/"/-->
+				<repository location="http://download.eclipse.org/mylyn/releases/latest"/>
+				<repository location="http://download.eclipse.org/releases/indigo/"/>
+			</source>
+			<iu id="org.eclipse.mylyn.context_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.hudson.feature.group"/>
+			<iu id="org.eclipse.cdt.mylyn.feature.group"/>
+			<iu id="org.eclipse.mylyn.ide_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.java_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.pde_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.team_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.trac_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.cvs.feature.group"/>
+			<iu id="org.eclipse.mylyn.git.feature.group"/>
+			<iu id="org.eclipse.mylyn.builds.feature.group"/>
+			<iu id="org.eclipse.mylyn.commons.feature.group"/>
+			<iu id="org.eclipse.mylyn.htmltext.feature.group"/>
+			<iu id="org.eclipse.mylyn.versions.feature.group"/>
+			<iu id="org.eclipse.mylyn.sdk_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.versions.sdk.feature.group"/>
+			<!--iu id="org.eclipse.mylyn.versions.sdk.feature.group"/>
+			<iu id="org.eclipse.mylyn.test_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.sdk_feature.feature.group"/>
+			<iu id="org.eclipse.mylyn.builds.sdk.feature.group"/>
+			<iu id="org.eclipse.mylyn.docs.sdk.feature.group"/>
+			<iu id="org.eclipse.mylyn.wikitext.sdk.feature.group"/-->
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring birt and cdt ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/releases/indigo/"/>
+			</source>
+			<iu id="org.eclipse.birt.feature.group"/>
+			<iu id="org.eclipse.birt.source.feature.group"/>
+			<iu id="org.eclipse.cdt.feature.group"/>
+			<iu id="org.eclipse.cdt.sdk.feature.group"/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+		
+		<p2.mirror description="Mirroring EGit and SVN ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/releases/indigo/"/>
+				<repository location="http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/" name="SVNKit and Connector for subversive"/>
+				<repository location="http://download.eclipse.org/technology/subversive/0.7/update-site/" name="Subversive plugins"/>
+			</source>
+			<iu id="org.eclipse.mylyn.github.feature.feature.group"/>
+			<iu id="org.eclipse.egit.feature.group"/>
+			<!-- iu id="org.eclipse.egit.source.feature.group"/ -->
+			<iu id="org.eclipse.egit.mylyn.feature.group"/>
+			<iu id="org.eclipse.egit.psf.feature.group"/>
+			<iu id="org.eclipse.jgit.feature.group"/>
+			<!--iu id="org.eclipse.jgit.source.feature.group"/ -->
+			
+			<iu id="org.eclipse.team.svn.feature.group"/>
+			<iu id="org.eclipse.team.svn.source.feature.group"/>
+			<iu id="org.eclipse.team.svn.nl1.feature.group"/>
+			<iu id="org.eclipse.team.svn.mylyn.feature.group"/>
+			<iu id="org.eclipse.team.svn.resource.ignore.rules.jdt.feature.group"/>
+			<iu id="org.polarion.eclipse.team.svn.connector.feature.group"/>
+			<iu id="org.polarion.eclipse.team.svn.connector.svnkit16.feature.group"/>
+			<iu id="org.polarion.eclipse.team.svn.connector.svnkit17.feature.group"/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+		
+		<p2.mirror description="Mirroring missing dependency ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/releases/indigo/"/>
+				<repository location="http://download.eclipse.org/releases/helios/"/>
+			</source>
+			<iu id="org.w3c.css.sac" version="1.3.0.v200805290154"/>
+			<iu id="org.w3c.dom.smil" version="1.0.0.v200806040011"/>
+			<iu id="javax.xml.soap" version="1.2.0.v201005080501"/>
+			<iu id="javax.wsdl" version="1.5.1.v201012040544"/>
+			<iu id="org.apache.lucene" version="1.9.1.v201101211617"/>
+			<!-- iu id="org.eclipse.cdt.dsf.gdb" version="4.0.1.201109151620"/>
+			<iu id="org.eclipse.cdt.debug.mi.core" version="7.1.1.201109151620"/>
+			<iu id="org.eclipse.cdt.gdb" version="7.0.0.201109151620"/>
+			<iu id="org.eclipse.cdt.launch" version="7.0.0.201109151620"/>
+			<iu id="org.eclipse.cdt.core" version="5.3.1.201109151620"/>
+			<iu id="org.eclipse.cdt.ui" version="5.3.1.201109151620"/>
+			<iu id="org.eclipse.birt.chart.reportitem" version="3.7.1.v20110905"/>
+			<iu id="org.w3c.css.sac" version="1.3.0.v200805290154"/>
+			<iu id="org.w3c.dom.smil" version="1.0.0.v200806040011"/>
+			<iu id="javax.wsdl" version="1.5.1.v201012040544"/>
+			<iu id="javax.xml.soap" version="1.2.0.v201005080501"/>
+			<iu id="org.apache.lucene" version="1.9.1.v201101211617"/ -->
+			<iu id="org.junit" version="3.8.2.v3_8_2_v20100427-1100"/>
+			<iu id="org.junit.source" version="3.8.2.v3_8_2_v20100427-1100"/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="true" latestVersionOnly="false"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring antlr ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository"/>
+			</source>
+			<iu id="org.antlr.runtime" version="3.0.0.v200803061811"/>
+			<iu id="org.antlr.runtime.source" version="3.0.0.v200803061811"/>
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<p2.mirror description="Mirroring dltk ...." ignoreerrors="true">
+			<repository location="${repo}" name="${repo.name}" />
+			<source>
+				<!-- repository location="http://download.eclipse.org/technology/dltk/updates"/-->
+				<repository location="http://download.eclipse.org/technology/dltk/updates-dev/3.0-stable"/>
+				<repository location="http://download.eclipse.org/releases/indigo/"/>
+			</source>
+			
+			<iu id="org.eclipse.dltk.core.feature.group"/>
+			<iu id="org.eclipse.dltk.core.sdk.feature.group"/>
+			<iu id="org.eclipse.dltk.python.feature.group"/>
+			<iu id="org.eclipse.dltk.python.sdk.feature.group"/>
+			<iu id="org.eclipse.dltk.rse.feature.group"/>
+			<iu id="org.eclipse.dltk.rse.sdk.feature.group"/>
+			<iu id="org.eclipse.dltk.mylyn.feature.group"/>
+			<iu id="org.eclipse.dltk.mylyn.sdk.feature.group"/>
+			<iu id="org.eclipse.dltk.ruby.feature.group"/>
+			<iu id="org.eclipse.dltk.ruby.sdk.feature.group"/>
+
+			<slicingOptions includeOptional="false" includeNonGreedy="false" includeFeatures="true" followStrict="false" latestVersionOnly="true"/>
+		</p2.mirror>
+
+		<echo message="end mirroring repos...${ant.project.name}" />
+	</target>
+</project>
