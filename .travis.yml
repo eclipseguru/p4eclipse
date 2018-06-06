@@ -1,18 +1,22 @@
 language: java
 sudo: false
-
 jdk:
 - oraclejdk8
-
 cache:
   directories:
-  - $HOME/.m2
-
+  - "$HOME/.m2"
 before_install:
 - cp .travis-maven-settings.xml ~/.m2/settings.xml
-
 install:
-- ./mvnw -f src/3.7/build/p4eclipse_parent/pom.xml package -P p4update
-
+- "./mvnw -f src/3.7/build/p4eclipse_parent/pom.xml package -P p4update"
 script: true
-
+deploy:
+  provider: s3
+  access_key_id: AKIAJUJKBZZZRRL2LRDA
+  secret_access_key:
+    secure: sXaz9pWgzrDGM15pFxanyf5tUjQYpKDxPHqYLm7wPEAucFmANUc7AE6uaWX5/e+vVvmyn63Bda+R1Xl5MEXPdI0mofS0fcFCDodc8zS/0ht6wpzi7GOaeFweGEZcS1N114/v814b+ztXdzk9dGFvZHxpfOuIYAKKtKyIOlCglp7wMdBdcE1IP7vMrGnfm5f2eHPJV0nZWujBer214sKqhrLfDsqfPl1N4fjbdTqFnJRY+jwlrV2kAN5l/RR7GVzWwlak/LEnPKuRt2cfSMLssf2gn9SP6wB8MiCdBXHwR0oyhGUkhlG24x2ObYjc/Fez6JZov8dMQHY4/80tvTRci4RV45NvL/U+8/mVaPNDvClShARb5kYy1XlSL4N/L+korXxZnb0DzVDGnX5KzkvtKQJ+zZ5Ekiidp1L05Nx8PGwh/7GnAl/+yE9f+lOW/Od6W38GEiWUWOePmz9jha/ilBSSLZ6YZiHtkhBn6+MUiZMWjNItbEuj4aHyNOun8VwInHh9W9PVhjqq/dIX8u0L5EuyrmIVqnOmty8lRKeiztF0aWkfr186MAwGjjisOfA0N0LRb+6H1ozhoi0ii57ZRZo4RB+UrWJmHta6NO1Ixo+9elSTvJw7CbSwLL3uoKaYpwrufgnp6l+fPnvV8y1DaQeRN0c9pig10YpgVNfI3ZQ=
+  bucket: public.runolarity.com
+  local-dir: src/3.7/build/p4eclipse_updatesite/target/site
+  upload-dir: p4eclipse
+  on:
+    branch: "master"
