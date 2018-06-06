@@ -20,7 +20,7 @@ import com.perforce.team.ui.timelapse.TimeLapseEditor;
 
 /**
  * @author Sehyo Chang
- * 
+ *
  */
 public class PerforcePreferenceInitializer extends
         AbstractPreferenceInitializer {
@@ -39,13 +39,13 @@ public class PerforcePreferenceInitializer extends
     public void initializeDefaultPreferences() {
 
         store = PerforceUIPlugin.getPlugin().getPreferenceStore();
-        store.setDefault(IPerforceUIConstants.PREF_SHOW_MARKERS, true);
+        store.setDefault(IPerforceUIConstants.PREF_SHOW_MARKERS, false);
         store.setDefault(IPerforceUIConstants.PREF_NEW_OPEN_ADD, false);
         store.setDefault(IPerforceUIConstants.PREF_OPEN_DEFAULT, false);
         store.setDefault(IPerforceUIConstants.PREF_REFACTOR_SUPPORT, true);
         store.setDefault(IPerforceUIConstants.PREF_DELETE_PROJECT_FILES, false);
         store.setDefault(IPerforceUIConstants.PREF_MARK_UNMANAGED_FILES, true);
-        store.setDefault(IPerforceUIConstants.PREF_DISABLE_MARKER_DECORATION, false);
+        store.setDefault(IPerforceUIConstants.PREF_DISABLE_MARKER_DECORATION, true);
 
         store.setDefault(IPerforceUIConstants.PREF_CONSOLE_COMMAND_COLOUR,
                 StringConverter.asString(new RGB(0, 0, 0)));

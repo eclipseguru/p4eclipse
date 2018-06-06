@@ -1272,7 +1272,7 @@
       <decorator
             adaptable="true"
             label="%PerforceDecorator.label"
-            state="true"
+            state="false"
             class="com.perforce.team.ui.decorator.PerforceDecorator"
             id="com.perforce.team.ui.decorator.PerforceDecorator">
          <description>
