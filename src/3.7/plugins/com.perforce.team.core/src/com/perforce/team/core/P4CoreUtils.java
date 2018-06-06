@@ -52,7 +52,7 @@ import com.perforce.team.core.p4java.ProgressMonitorProgressPresenter;
 
 /**
  * P4 Core utility class
- * 
+ *
  * @author Kevin Sawicki (ksawicki@perforce.com)
  */
 public final class P4CoreUtils {
@@ -89,7 +89,7 @@ public final class P4CoreUtils {
 
     /**
      * Get resource action path
-     * 
+     *
      * @param resource
      * @return path that may be null
      */
@@ -117,7 +117,7 @@ public final class P4CoreUtils {
 
     /**
      * Get common path for specified resource paths
-     * 
+     *
      * @param resourcePaths
      * @return common path
      */
@@ -132,7 +132,7 @@ public final class P4CoreUtils {
 
     /**
      * Get common path for specified resource paths
-     * 
+     *
      * @param resourcePaths
      * @return common path
      */
@@ -179,7 +179,7 @@ public final class P4CoreUtils {
 
     /**
      * Get name from depot path
-     * 
+     *
      * @param depotPath
      * @return file name or empty string if not found
      */
@@ -196,7 +196,7 @@ public final class P4CoreUtils {
 
     /**
      * Convert an object to the specified class
-     * 
+     *
      * @param <Converted>
      * @param object
      * @param target
@@ -223,7 +223,7 @@ public final class P4CoreUtils {
 
     /**
      * Is mac os x the os?
-     * 
+     *
      * @return - true if on mac os x
      */
     public static boolean isMac() {
@@ -232,7 +232,7 @@ public final class P4CoreUtils {
 
     /**
      * Is an Eclipse Mac OS X cocoa build being used?
-     * 
+     *
      * @return - true if cocoa, false otherwise
      */
     public static boolean isCocoa() {
@@ -241,7 +241,7 @@ public final class P4CoreUtils {
 
     /**
      * Is windows the os?
-     * 
+     *
      * @return - true if on windows
      */
     public static boolean isWindows() {
@@ -250,7 +250,7 @@ public final class P4CoreUtils {
 
     /**
      * Is linux the os?
-     * 
+     *
      * @return - true if on linux
      */
     public static boolean isLinux() {
@@ -259,7 +259,7 @@ public final class P4CoreUtils {
 
     /**
      * Get resource from object
-     * 
+     *
      * @param obj
      * @return - resource or null if object couldn't be converted
      */
@@ -278,7 +278,7 @@ public final class P4CoreUtils {
 
     /**
      * Sort the changelists in the list
-     * 
+     *
      * @param lists
      */
     public static void sort(IP4Changelist[] lists) {
@@ -296,7 +296,7 @@ public final class P4CoreUtils {
     /**
      * Gets all the files either in the resources array or inside any containers
      * found in the resources array and sub-containers.
-     * 
+     *
      * @param resources
      * @return - non-null list of files
      */
@@ -317,7 +317,7 @@ public final class P4CoreUtils {
     /**
      * Gets all the children at all depths inside this container and
      * sub-containers
-     * 
+     *
      * @param container
      * @return - non-null list of files
      */
@@ -338,7 +338,7 @@ public final class P4CoreUtils {
 
     /**
      * Copy the contents from one file to another
-     * 
+     *
      * @param source
      * @param destination
      * @throws Exception
@@ -418,7 +418,7 @@ public final class P4CoreUtils {
 
     /**
      * Create a temp file from an input stream
-     * 
+     *
      * @param stream
      * @return - temp file with contents of stream
      */
@@ -469,7 +469,7 @@ public final class P4CoreUtils {
 
     /**
      * Get all files contained within a resource.
-     * 
+     *
      * @param resource
      *            the resource to check for files
      * @param files
@@ -494,7 +494,7 @@ public final class P4CoreUtils {
 
     /**
      * Get all files contained within an array of resources.
-     * 
+     *
      * @param resources
      *            the resources to check for files
      * @return the array of files contained with the resources
@@ -511,7 +511,7 @@ public final class P4CoreUtils {
      * Removes any characters that have a decimal char value that is less than
      * 32. This method will return the empty string for the case where the
      * specified string is null.
-     * 
+     *
      * @param value
      * @return - fixed string, non-null but possibly empty
      */
@@ -527,29 +527,29 @@ public final class P4CoreUtils {
         }
         return buffer.toString().trim();
     }
-    
+
     public static boolean isEmpty(Collection<?> c){
         return c==null || c.isEmpty();
     }
 
     /**
      * delete the parent dir if it is empty.
-     * 
+     *
      * @param file the file which has been deleted before this call.
      */
     public static void deleteEmptyParentDir(File file) {
         if(file==null)
             return;
-        
+
         String p = file.getParent();
-        
+
         if(p!=null){
             File d = new File(p);
             if(!d.exists()){ // parent may be delete, but we keep going in case parent'parent not
                 deleteEmptyParentDir(d);
                 return;
             }
-            
+
             String[] c = d.list();
             if (c!=null && c.length==0) {
                 if(d.delete())
@@ -568,7 +568,7 @@ public final class P4CoreUtils {
 		if(results!=null){
 			for(Map<String, Object> map:results){
 				IFileSpec spec=extractFileSpec(map, connection);
-				if(spec!=null) 
+				if(spec!=null)
 					specList.add(spec);
 			}
 		}
@@ -581,13 +581,13 @@ public final class P4CoreUtils {
 		if(results!=null){
 			for(Map<String, Object> map:results){
 				IFileSpec spec=extractFileSpec(map, connection);
-				if(spec!=null) 
+				if(spec!=null)
 					specList.add(spec);
 			}
 		}
 		return specList;
 	}
-	
+
 	public static IFileSpec extractFileSpec(Map<String, Object> map, IP4Connection connection) throws P4JavaException {
 		if (map.get("submittedChange") != null) { // see Changelist.java::submit(SubmitOptions opts) line 476-487
 			Integer id = new Integer((String) map.get("submittedChange"));
@@ -613,7 +613,7 @@ public final class P4CoreUtils {
 		handler.setPresenter(presenter);
 		return handler;
 	}
-	
+
 	public static String printMap(Map<String, Object> map) {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{"); //$NON-NLS-1$
@@ -636,7 +636,7 @@ public final class P4CoreUtils {
 				summary.put(action, summary.get(action)+1);
 			}
 		}
-		
+
 		final StringBuilder sb=new StringBuilder();
 		for(FileAction act: FileAction.values()){
 			if(summary.containsKey(act)){
@@ -645,11 +645,11 @@ public final class P4CoreUtils {
 		}
 		if(sb.length()>0)
 			sb.deleteCharAt(sb.length()-1);
-		
+
 		return sb.toString();
 	}
 
-    
+
     /**
      * P4D/LINUX26X86_64/2011.1.MAIN-TEST_ONLY/370818 (2011/10/19)
      * @return Major and minor array, for example, return  int[]{2011,1} for server info P4D/LINUX26X86_64/2011.1/370818 (2011/10/19).
@@ -666,25 +666,27 @@ public final class P4CoreUtils {
         }
         return result;
     }
-    
-    public static Charset charsetForName(String name){
-    	try {
-    		return Charset.forName(name);
-		} catch (Exception e) {
-			PerforceProviderPlugin.logWarning(e);
-			return CharsetDefs.DEFAULT;
+
+	public static Charset charsetForName(String name) {
+		if (name != null && name.trim().length() > 0) {
+			try {
+				return Charset.forName(name);
+			} catch (Exception e) {
+				PerforceProviderPlugin.logWarning(e);
+			}
 		}
-    }
-    
+		return CharsetDefs.DEFAULT;
+	}
+
 	// these should be in Java 7 java.util.Objects. But since we also need
 	// support java 6, so we recreate these here.
     public static int hashCode(Object obj){
     	if(obj ==null)
     		return 0;
-    	
+
     	return obj.hashCode();
     }
-    
+
     public static boolean equals(Object obj1, Object obj2) {
     	if(obj1==null || obj2==null)
     		return obj1==obj2;
