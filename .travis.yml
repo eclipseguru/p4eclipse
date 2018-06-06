@@ -1,15 +1,25 @@
 language: java
 sudo: false
+
+branches:
+  only:
+    - master
+
 jdk:
 - oraclejdk8
+
 cache:
   directories:
   - "$HOME/.m2"
+
 before_install:
 - cp .travis-maven-settings.xml ~/.m2/settings.xml
+
 install:
 - "./mvnw -f src/3.7/build/p4eclipse_parent/pom.xml package -P p4update"
+
 script: true
+
 deploy:
   provider: s3
   access_key_id: AKIAJUJKBZZZRRL2LRDA
