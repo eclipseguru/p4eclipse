@@ -57,7 +57,7 @@ public class FileModificationValidatorManager extends FileModificationValidator 
                     .getResource(files[0]);
             IP4Connection connection = getConnection(p4Resource, files[0]);
             if (connection != null && !connection.isOffline()) {
-                if (!editFile(new StructuredSelection(files))) {
+                if (!editFile(files)) {
                     return Status.CANCEL_STATUS;
                 }
             } else {
@@ -74,26 +74,7 @@ public class FileModificationValidatorManager extends FileModificationValidator 
                                                 .format(Messages.FileModificationValidatorManager_Overwrite,
                                                         new Object[] { file
                                                                 .getName(), }))) {
-
-                            SafeRunner.run(new ISafeRunnable() {
-
-                                public void handleException(Throwable exception) {
-                                    PerforceUIPlugin.log(new Status(
-                                            IStatus.ERROR, PerforceUIPlugin.ID,
-                                            IStatus.ERROR, exception
-                                                    .getMessage(), exception));
-
-                                }
-
-                                public void run() throws Exception {
-                                    ResourceAttributes attr = file
-                                            .getResourceAttributes();
-                                    attr.setReadOnly(false);
-                                    file.setResourceAttributes(attr);
-
-                                }
-                            });
-
+                            makeWritrable(file);
                         }
                     }
                 }
@@ -102,6 +83,27 @@ public class FileModificationValidatorManager extends FileModificationValidator 
         }
         return Status.CANCEL_STATUS;
     }
+
+	private void makeWritrable(final IFile file) {
+		SafeRunner.run(new ISafeRunnable() {
+
+		    public void handleException(Throwable exception) {
+		        PerforceUIPlugin.log(new Status(
+		                IStatus.ERROR, PerforceUIPlugin.ID,
+		                IStatus.ERROR, exception
+		                        .getMessage(), exception));
+
+		    }
+
+		    public void run() throws Exception {
+		        ResourceAttributes attr = file
+		                .getResourceAttributes();
+		        attr.setReadOnly(false);
+		        file.setResourceAttributes(attr);
+
+		    }
+		});
+	}
 
     private IP4Connection getConnection(IP4Resource resource, IFile file) {
         if (resource != null) {
@@ -114,15 +116,20 @@ public class FileModificationValidatorManager extends FileModificationValidator 
 
     /**
      * Edit the file
-     * 
-     * @param selection
+     *
+     * @param files
      * @return - false if the dialog was cancelled or no files were selected
      *         from the dialog, true otherwise
      */
-    private boolean editFile(ISelection selection) {
+    private boolean editFile(IFile[] files) {
+    	// make them writeable first
+        for (IFile file : files) {
+        	makeWritrable(file);
+		}
+        // do the remaining work async
         EditAction action = new EditAction();
-        action.setAsync(false);
-        action.selectionChanged(null, selection);
+        action.setAsync(true);
+        action.selectionChanged(null, new StructuredSelection(files));
         action.run(null);
         return !action.wasDialogCancelled();
     }
@@ -139,7 +146,7 @@ public class FileModificationValidatorManager extends FileModificationValidator 
                 if (p4Resource instanceof IP4File
                         && ((IP4File) p4Resource).isRemote()
                         && !((IP4File) p4Resource).isOpened()) {
-                    editFile(new StructuredSelection(file));
+                    editFile(new IFile[] {file});
                 }
             }
         }
