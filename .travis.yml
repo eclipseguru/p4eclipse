@@ -12,7 +12,7 @@ before_install:
 - cp .travis-maven-settings.xml ~/.m2/settings.xml
 
 install:
-- mvn -f src/3.7/build/p4eclipse_parent/pom.xml package -P p4update
+- ./mvnw -f src/3.7/build/p4eclipse_parent/pom.xml package -P p4update
 
 script: true
 
