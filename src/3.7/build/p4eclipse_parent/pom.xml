@@ -37,9 +37,11 @@
 		<jacoco.version>0.6.3.201306030806</jacoco.version>
 		<sonarHost>localhost</sonarHost>
 
-		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
-		<forceContextQualifier>v${maven.build.timestamp}</forceContextQualifier>
-		<!-- forceContextQualifier>${qualifier}</forceContextQualifier -->
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+        <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+        <buildType>I</buildType>
+        <buildId>${buildType}${buildTimestamp}</buildId>
+        <buildLabel>${buildType}-${buildId}-${buildTimestamp}</buildLabel>
 
 		<!-- The p2 repositories url to build against -->
 		<p2repo.url>file:/home/ali/build/tools/p2repo3.7</p2repo.url>
@@ -61,6 +63,15 @@
 
 		<test.vmargs.default>-Xmx2048m -XX:MaxPermSize=256m -Dcom.perforce.team.ui.SUPPRESS_ERROR_DIALOGS=true -Dp4Path=${p4Path}</test.vmargs.default>
 		<targetPlatform>p4e-48</targetPlatform>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- property for generating Eclipse source reference bundle headers -->
+        <!-- (note, this needs to be overridden by module poms in other Git repos) -->
+        <tycho.scmUrl>scm:git:https://github.com/eclipseguru/p4eclipse.git</tycho.scmUrl>
+
+        <!-- allow to build with dirty working tree -->
+        <jgit.dirtyWorkingTree>warning</jgit.dirtyWorkingTree>
 
 	</properties>
 
@@ -178,7 +189,43 @@
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
-				<plugin>
+                <plugin>
+                  <groupId>org.eclipse.tycho</groupId>
+                  <artifactId>tycho-packaging-plugin</artifactId>
+                  <version>${tycho-version}</version>
+                  <dependencies>
+                    <dependency>
+                      <groupId>org.eclipse.tycho.extras</groupId>
+                      <artifactId>tycho-buildtimestamp-jgit</artifactId>
+                      <version>${tycho-version}</version>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.eclipse.tycho.extras</groupId>
+                      <artifactId>tycho-sourceref-jgit</artifactId>
+                      <version>${tycho-version}</version>
+                    </dependency>
+                  </dependencies>
+                  <configuration>
+                    <!-- generate bundle .qualifier from Git tags/commits -->
+                    <timestampProvider>jgit</timestampProvider>
+                    <format>'v'yyyyMMdd-HHmm</format>
+                    <additionalFileSets>
+                      <fileSet>
+                        <directory>${project.build.directory}</directory>
+                        <includes>
+                          <include>.api_description</include>
+                          <include>about.mappings</include>
+                        </includes>
+                      </fileSet>
+                    </additionalFileSets>
+                    <!-- generate bundle Eclipse-SourceReferences header -->
+                    <sourceReferences>
+                      <generate>true</generate>
+                    </sourceReferences>
+                    <jgit.dirtyWorkingTree>${jgit.dirtyWorkingTree}</jgit.dirtyWorkingTree>
+                  </configuration>
+                </plugin>
+   				<plugin>
 					<groupId>${tycho-groupid}</groupId>
 					<artifactId>tycho-source-plugin</artifactId>
 					<version>${tycho-version}</version>
@@ -194,10 +241,32 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.4.1</version>
+					<version>2.6</version>
 					<configuration>
 						<encoding>ISO-8859-1</encoding>
 					</configuration>
+                    <executions>
+                      <execution>
+                        <id>process-about.mappings</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                          <outputDirectory>${project.build.directory}</outputDirectory>
+                          <overwrite>true</overwrite>
+                          <resources>
+                            <resource>
+                              <directory>${basedir}</directory>
+                              <includes>
+                                <include>about.mappings</include>
+                              </includes>
+                              <filtering>true</filtering>
+                            </resource>
+                          </resources>
+                        </configuration>
+                        <goals>
+                          <goal>copy-resources</goal>
+                        </goals>
+                      </execution>
+                    </executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
