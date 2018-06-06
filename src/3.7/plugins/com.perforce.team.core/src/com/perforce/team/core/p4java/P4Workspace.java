@@ -206,7 +206,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get Perforce style version string of core plugin bundle
-     * 
+     *
      * @return non-null string
      */
     public String getVersion() {
@@ -305,7 +305,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get scheduling rule used by {@link #asyncGetResource(IResource)}
-     * 
+     *
      * @return - scheduling rule
      */
     public ISchedulingRule getRule() {
@@ -314,7 +314,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Helper method to test if a server is reachable
-     * 
+     *
      * @param serverAddress
      * @return - true if the server is reachable
      * @throws P4JavaException
@@ -375,7 +375,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the client spec for the specified client name
-     * 
+     *
      * @param serverAddress
      * @param user
      * @param client
@@ -389,7 +389,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the client spec for the specified client name
-     * 
+     *
      * @param serverAddress
      * @param user
      * @param client
@@ -403,7 +403,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
         try {
             String serverUri = "p4java://" + serverAddress; //$NON-NLS-1$
             IServer server = createServer(serverUri);
-            
+
             if (server != null) {
                 server.setUserName(user);
                 server.setAuthTicket(authTicket);
@@ -420,7 +420,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the raw p4java user objects
-     * 
+     *
      * @param host
      * @param port
      * @param max
@@ -434,7 +434,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
         try {
             String serverUri = "p4java://" + host + ":" + port; //$NON-NLS-1$ //$NON-NLS-2$
             IServer server = createServer(serverUri);
-            
+
             if (server != null) {
                 server.connect();
                 users = server.getUsers(usernames, max);
@@ -449,7 +449,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the raw p4java user objects
-     * 
+     *
      * @param host
      * @param port
      * @return - array of p4j user objects
@@ -526,7 +526,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the callback instance
-     * 
+     *
      * @return - p4j command callback
      */
     public P4JavaCallback getCallback() {
@@ -535,7 +535,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the sso callback instance
-     * 
+     *
      * @return - p4j sso callback
      */
     ISSOCallback getSSOCallback() {
@@ -569,7 +569,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Add a connection listener to this workspace
-     * 
+     *
      * @param listener
      */
     public void addConnectionListener(IP4ConnectionListener listener) {
@@ -580,7 +580,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Remove a connection listener from this workspace
-     * 
+     *
      * @param listener
      */
     public void removeConnectionListener(IP4ConnectionListener listener) {
@@ -628,7 +628,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
     private IP4Resource findResource(IResource resource)
             throws IllegalArgumentException {
         IP4Resource p4Resource = null;
-        if (resource != null) {
+        if (resource != null && resource.getLocation() != null) {
             IProject project = resource.getProject();
             if (project != null) {
                 PerforceTeamProvider provider = PerforceProviderPlugin
@@ -658,7 +658,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
      * Asynchronously fetches a resource if not current in the cache. This
      * method will return null if the resource is not in the cache and will fire
      * an ADDED event when it is retrieved.
-     * 
+     *
      * @param resource
      * @return - p4 resource if found, null if fetching
      */
@@ -685,7 +685,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets a resource from the cache
-     * 
+     *
      * @param resource
      * @return - p4 resource
      */
@@ -695,7 +695,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the current connection being used by the specified project
-     * 
+     *
      * @param project
      * @return - p4 connection
      */
@@ -720,7 +720,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
     /**
      * Gets a connection from the cache or creates one if it isn't currently in
      * the cache
-     * 
+     *
      * @param parameters
      * @return - new or cached connection
      */
@@ -761,7 +761,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Does the workspace contain a connection?
-     * 
+     *
      * @param parameters
      * @return - true if the connection exists for the parameters, false
      *         otherwise
@@ -772,7 +772,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the connections in the cache
-     * 
+     *
      * @return - array of cached connections
      */
     public IP4Connection[] getConnections() {
@@ -781,7 +781,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get number of connections in workspace
-     * 
+     *
      * @return number of connections
      */
     public int size() {
@@ -790,7 +790,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Removes a connection from the cache
-     * 
+     *
      * @param parameters
      * @throws ConnectionMappedException
      *             - connection still mapped to projects
@@ -843,7 +843,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Removes a connection from the cache
-     * 
+     *
      * @param connection
      * @throws ConnectionMappedException
      *             - connection still mapped to projects
@@ -864,7 +864,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the connection cache
-     * 
+     *
      * @return - connection cache instance
      */
     public static synchronized P4Workspace getWorkspace() {
@@ -888,7 +888,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Adds a command listener
-     * 
+     *
      * @param listener
      */
     public void addCommandListener(IP4CommandListener listener) {
@@ -899,7 +899,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Removes a command listener
-     * 
+     *
      * @param listener
      */
     public void removeCommandListener(IP4CommandListener listener) {
@@ -910,7 +910,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Gets the server properties to use
-     * 
+     *
      * @return - server properties
      */
     public Properties getServerProperties() {
@@ -919,7 +919,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Does the specified connection have any mapped projects?
-     * 
+     *
      * @param connection
      * @return - true if projects are map to the specified connection
      */
@@ -933,7 +933,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the mapped projects for the specified connection parameters
-     * 
+     *
      * @param parameters
      * @return - non-null array of project
      */
@@ -948,7 +948,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Get the mapped projects for the specified connection
-     * 
+     *
      * @param connection
      * @return - non-null array of project
      */
@@ -962,7 +962,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
     /**
      * Does the specified connection parameters have any mapped projects?
-     * 
+     *
      * @param parameters
      * @return - true if projects are map to the specified connection parameters
      */
@@ -978,7 +978,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
     /**
      * Edit the connection. This will updated the settings of any project
      * current mapped to this connection
-     * 
+     *
      * @param connection
      * @param newParameters
      * @return - new connection
@@ -1095,7 +1095,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
     /**
      * Get the advanced properties that override any properties set via
      * modifying {@link #getServerProperties()}
-     * 
+     *
      * @return - advanced properties
      */
     public Properties getAdvancedProperties() {
@@ -1151,17 +1151,17 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
                 .getWorkspace().getServerProperties();
         return createServer(serverUri,props);
 	}
-	
+
 	public static IServer createServer(String serverUri, Properties props) throws ConnectionException, NoSuchObjectException, ConfigException, ResourceException, URISyntaxException{
 		props.put("enableProgress", "true"); // enable progress reporting
-		
+
 		UsageOptions opts=new UsageOptions(props);
         opts.setHostName(getP4HOST());
 
         IServer newServer = ServerFactory.getOptionsServer(serverUri, props, opts);
 		return newServer;
 	}
-	
+
 	public static String getP4HOST(){
         Properties props = P4Workspace
                 .getWorkspace().getServerProperties();
@@ -1171,5 +1171,5 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
         }
         return hostname;
 	}
-	
+
 }
