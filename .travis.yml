@@ -28,5 +28,6 @@ deploy:
   bucket: public.runolarity.com
   local-dir: src/3.7/build/p4eclipse_updatesite/target/site
   upload-dir: p4eclipse
+  skip_cleanup: true
   on:
     branch: "master"
