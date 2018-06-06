@@ -20,7 +20,7 @@ public class ChangelistLabelProvider extends DiffLabelProvider {
 
     /**
      * Create a changelist label provider
-     * 
+     *
      * @param decorateResources
      */
     public ChangelistLabelProvider(boolean decorateResources) {
@@ -35,7 +35,13 @@ public class ChangelistLabelProvider extends DiffLabelProvider {
     public String getColumnText(Object element, int columnIndex) {
         IP4File file = P4CoreUtils.convert(element, IP4File.class);
         if (file != null) {
-            return file.getRemotePath();
+        	String name = file.getName();
+        	String remotePath = file.getRemotePath();
+        	if (name != null && remotePath != null) {
+        		return name + " - " + remotePath.substring(0, remotePath.length() - (name.length() +1));
+        	} else {
+        		return remotePath;
+        	}
         } else {
             IP4Changelist list = P4CoreUtils.convert(element,
                     IP4Changelist.class);
