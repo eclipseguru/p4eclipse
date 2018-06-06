@@ -1,4 +1,5 @@
 # Instructions for building P4Eclipse
+[![Build Status](https://travis-ci.org/eclipseguru/p4eclipse.svg?branch=master)](https://travis-ci.org/eclipseguru/p4eclipse)
 
 ## Prerequisites:
 
