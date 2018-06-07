@@ -3,24 +3,29 @@
  */
 package com.perforce.team.ui.p4java.actions;
 
-import com.perforce.team.core.p4java.IP4Connection;
-import com.perforce.team.core.p4java.IP4File;
-import com.perforce.team.core.p4java.IP4PendingChangelist;
-import com.perforce.team.core.p4java.IP4Resource;
-import com.perforce.team.core.p4java.IP4Runnable;
-import com.perforce.team.core.p4java.P4Collection;
-import com.perforce.team.core.p4java.P4Runnable;
-import com.perforce.team.ui.IPerforceUIConstants;
-import com.perforce.team.ui.P4UIUtils;
-import com.perforce.team.ui.PerforceUIPlugin;
-import com.perforce.team.ui.p4java.dialogs.OpenDialog;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import com.perforce.p4java.core.file.IFileSpec;
+import com.perforce.p4java.exception.P4JavaException;
+import com.perforce.team.core.p4java.IErrorHandler;
+import com.perforce.team.core.p4java.IP4Connection;
+import com.perforce.team.core.p4java.IP4File;
+import com.perforce.team.core.p4java.IP4PendingChangelist;
+import com.perforce.team.core.p4java.IP4Resource;
+import com.perforce.team.core.p4java.IP4Runnable;
+import com.perforce.team.core.p4java.P4Collection;
+import com.perforce.team.core.p4java.P4LoginException;
+import com.perforce.team.core.p4java.P4Runnable;
+import com.perforce.team.ui.IPerforceUIConstants;
+import com.perforce.team.ui.P4ConnectionManager;
+import com.perforce.team.ui.P4UIUtils;
+import com.perforce.team.ui.PerforceUIPlugin;
+import com.perforce.team.ui.p4java.dialogs.OpenDialog;
 
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
@@ -34,21 +39,21 @@ public abstract class OpenAction extends P4Action {
 
     /**
      * Get the dialog title to show when the pref to open with dialog is set
-     * 
+     *
      * @return - open dialog title
      */
     public abstract String getDialogTitle();
 
     /**
      * Get the combo title to show next to the changelist combo
-     * 
+     *
      * @return - combo title
      */
     public abstract String getComboTitle();
 
     /**
      * Was the changelist selection dialog cancelled or were no items checked?
-     * 
+     *
      * @return - true if the changelist selection dialog was cancelled or no
      *         items were checked
      */
@@ -59,7 +64,7 @@ public abstract class OpenAction extends P4Action {
     /**
      * Should the specified file be show in the dialog and be part of the adding
      * being run?
-     * 
+     *
      * @param file
      * @return - true if valid file
      */
@@ -67,14 +72,14 @@ public abstract class OpenAction extends P4Action {
 
     /**
      * Get job title when looking for files to open
-     * 
+     *
      * @return - non-null string for job title
      */
     protected abstract String getJobTitle();
 
     /**
      * Get default pending changelist description when new option is selected
-     * 
+     *
      * @return - non-null default description
      */
     protected abstract String getDefaultDescription();
@@ -176,6 +181,21 @@ public abstract class OpenAction extends P4Action {
                         P4Collection subCollection = new P4Collection(
                                 resources.toArray(new IP4Resource[resources
                                         .size()]));
+                        subCollection.setErrorHandler(new IErrorHandler() {
+
+							@Override
+							public boolean shouldRetry(IP4Connection connection, P4JavaException exception) {
+								return P4ConnectionManager.getManager().shouldRetry(connection, exception);
+							}
+
+							@Override
+							public void handleErrorSpecs(IFileSpec[] specs) {
+								for (IFileSpec spec : specs) {
+									if(P4ConnectionManager.isLoginError(spec.getStatusMessage()))
+										throw new P4LoginException(spec.getStatusMessage());
+								}
+							}
+						});
                         runModifyAction(0, subCollection);
                     }
 
@@ -189,7 +209,7 @@ public abstract class OpenAction extends P4Action {
     /**
      * Runs an open action for the specified changelist and collection of p4
      * resources
-     * 
+     *
      * @param changelist
      * @param collection
      */
@@ -200,7 +220,7 @@ public abstract class OpenAction extends P4Action {
     /**
      * Runs an open action for the specified changelist and collection of p4
      * resources
-     * 
+     *
      * @param changelist
      * @param description
      * @param collection
@@ -213,7 +233,7 @@ public abstract class OpenAction extends P4Action {
     /**
      * Runs an open action for the specified changelist and collection of p4
      * resources
-     * 
+     *
      * @param changelist
      * @param description
      * @param collection
@@ -224,7 +244,7 @@ public abstract class OpenAction extends P4Action {
 
     /**
      * Is the show dialog preference set?
-     * 
+     *
      * @return - true if show dialog on open pref is set, false otherwise
      */
     protected boolean showDialog() {

@@ -112,7 +112,11 @@ public class P4Collection extends P4Resource implements IP4Container {
             while (retry && client != null) {
                 retry = false;
                 try {
-                    operation.run(client);
+                    try {
+						operation.run(client);
+					} catch (P4LoginException e) {
+						throw new P4JavaException(e.getMessage(), e);
+					}
                 } catch (P4JavaException e) {
                     retry = handleError(connection, e);
                     if (retry) {
