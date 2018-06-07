@@ -111,7 +111,7 @@ import com.perforce.team.ui.views.SessionManager;
 
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
- * 
+ *
  */
 public class P4HistoryPage extends HistoryPage {
 
@@ -578,7 +578,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Create a new p4 history page
-     * 
+     *
      * @param input
      */
     public P4HistoryPage(Object input) {
@@ -604,7 +604,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Get the tree viewer
-     * 
+     *
      * @return - tree viewer
      */
     public Viewer getViewer() {
@@ -613,7 +613,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Is branching being displayed (checks the preference in the store)
-     * 
+     *
      * @return - true is displaying branching history
      */
     public boolean isBranchingDisplayed() {
@@ -628,11 +628,11 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Shows the history from a p4 file
-     * 
+     *
      * @param file
      */
     private void showHistory(final IP4File file) {
-        if (!okToUse()) {
+        if (!okToUse() || file == null) {
             return;
         }
         this.isLoading = true;
@@ -871,7 +871,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Is this view's main control not disposed
-     * 
+     *
      * @return - true if not disposed
      */
     public boolean okToUse() {
@@ -881,7 +881,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Compare two revisions
-     * 
+     *
      * @param revision1
      * @param revision2
      */
@@ -1215,12 +1215,16 @@ public class P4HistoryPage extends HistoryPage {
     }
 
     private boolean isBranchRevision(IP4Revision revision) {
-        return !getFileInput().getRemotePath().equals(revision.getRemotePath());
+        IP4File file = getFileInput();
+        if(file == null)
+        	return false;
+
+        return !file.getRemotePath().equals(revision.getRemotePath());
     }
 
     /**
      * Compares the currently selected revisions
-     * 
+     *
      * @param async
      */
     public void compareSelection(boolean async) {
@@ -1244,7 +1248,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Is this view loading?
-     * 
+     *
      * @return - true if loading, false otherwise
      */
     public boolean isLoading() {
@@ -1264,7 +1268,7 @@ public class P4HistoryPage extends HistoryPage {
 
     /**
      * Get file input for this p4 history page
-     * 
+     *
      * @return - p4 file, may be null
      */
     public IP4File getFileInput() {
@@ -1375,7 +1379,7 @@ public class P4HistoryPage extends HistoryPage {
 			public int getHyperlinkStateMask(ISourceViewer viewer) {
 				return SWT.NONE;
 			}
-        	
+
         });
 
         boolean wrap = PerforceUIPlugin.getPlugin().getPreferenceStore()
@@ -1399,14 +1403,22 @@ public class P4HistoryPage extends HistoryPage {
      * @see org.eclipse.team.ui.history.IHistoryPage#getDescription()
      */
     public String getDescription() {
-        return getFileInput().getRemotePath();
+        IP4File file = getFileInput();
+        if(file == null)
+        	return "";
+
+		return file.getRemotePath();
     }
 
     /**
      * @see org.eclipse.team.ui.history.IHistoryPage#getName()
      */
     public String getName() {
-        return getFileInput().getName();
+        IP4File file = getFileInput();
+        if(file == null)
+        	return "";
+
+        return file.getName();
     }
 
     /**
