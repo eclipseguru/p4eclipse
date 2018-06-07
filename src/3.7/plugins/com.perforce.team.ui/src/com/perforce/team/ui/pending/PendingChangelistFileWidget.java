@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4File;
 import com.perforce.team.core.p4java.IP4Resource;
@@ -43,7 +42,7 @@ import com.perforce.team.ui.preferences.IPreferenceConstants;
 
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
- * 
+ *
  */
 public class PendingChangelistFileWidget extends ChangelistFileWidget implements
         ICheckable {
@@ -111,7 +110,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
     }
 
     /**
-     * 
+     *
      * @param small
      * @param includeFilesLabel
      * @param includeSelectButtons
@@ -280,7 +279,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
                         getChecked(resource));
 
             }
-            
+
             @Override
             public boolean hasChildren(Object element) {
             	if(element instanceof IP4File)
@@ -305,7 +304,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Set all elements checked or unchecked
-     * 
+     *
      * @param checked
      */
     public void setAllChecked(boolean checked) {
@@ -324,32 +323,30 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Set the checked elements
-     * 
+     *
      * @param elements
      */
     public void setCheckedElements(final Object[] elements) {
-    	Tracing.printExecTime(Policy.DEBUG, "SUBMIT", getClass().getSimpleName()+":setCheckedElement()", new Runnable() {
-			public void run() {
-				// DO NOT use this, it slows down for large set (e.g.,5000) of elements.
-//				getCheckViewer().setCheckedElements(elements);
-		    	TreeItem[] items = getCheckViewer().getTree().getItems();
-		    	for(TreeItem item:items){
-		    		for(Object obj:elements)
-		    			if(item.getData()==obj){
-		    				item.setChecked(true);
-		    				break;
-		    			}
-		    	}
-
+		Tracing.printExecTime(() -> {
+			// DO NOT use this, it slows down for large set (e.g.,5000) of elements.
+            // getCheckViewer().setCheckedElements(elements);
+			TreeItem[] items = getCheckViewer().getTree().getItems();
+			for (TreeItem item : items) {
+				for (Object obj : elements)
+					if (item.getData() == obj) {
+						item.setChecked(true);
+						break;
+					}
 			}
-		});
+
+		}, "SUBMIT", getClass().getSimpleName() + ":setCheckedElement()");
         syncMovedFiles();
         updateCheckedCount();
     }
 
     /**
      * Get checked files
-     * 
+     *
      * @return - non-null array of p4 files
      */
     public IP4File[] getCheckedFiles() {
@@ -364,7 +361,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Get unchecked files
-     * 
+     *
      * @return - non-null array of p4 files
      */
     public IP4File[] getUncheckedFiles() {
@@ -385,7 +382,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Get checked elements in tree
-     * 
+     *
      * @return - checked elements
      */
     public Object[] getCheckedElements() {
@@ -423,7 +420,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Set input of changelist file widget
-     * 
+     *
      * @param files
      * @param checked
      */
@@ -466,7 +463,7 @@ public class PendingChangelistFileWidget extends ChangelistFileWidget implements
 
     /**
      * Create a toolbar
-     * 
+     *
      * @param parent
      */
     @Override

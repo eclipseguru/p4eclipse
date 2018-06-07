@@ -17,10 +17,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
+import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
-import com.perforce.team.core.Tracing.IRunnable;
-import com.perforce.team.core.p4java.IP4Changelist;
 import com.perforce.team.core.p4java.IP4Connection;
 import com.perforce.team.core.p4java.IP4Container;
 import com.perforce.team.core.p4java.IP4File;
@@ -97,7 +96,7 @@ public class SubmitAction extends P4Action {
 
     /**
      * Gets the selected elements that were reverted
-     * 
+     *
      * @return - collection of reverted resources
      */
     public P4Collection getSelected() {
@@ -113,7 +112,7 @@ public class SubmitAction extends P4Action {
 
     /**
      * Submits the specified files and jobs as part of the specified list
-     * 
+     *
      * @param list
      * @param uncheckedJobs jobs previous associated with list but removed
      * @param checkedJobs jobs associated with list
@@ -145,26 +144,16 @@ public class SubmitAction extends P4Action {
 
                         final int[] ids=new int[1];
                         try {
-							Tracing.printExecTime2(Policy.DEBUG_TIME, "SUBMIT", "Submitting pendinglist...", new IRunnable() { //$NON-NLS-1$ //$NON-NLS-2$
-								
-								public void run() throws Throwable {
-							        ids[0] = list.submit(reopen, description, files, checkedJobs,
-							                status, new SubProgressMonitor(monitor, 700));
-								}
-							});
-						} catch (Throwable e) {
-							if(e instanceof CoreException)
-								throw (CoreException)e;
-							else if(e instanceof InvocationTargetException)
-								throw (InvocationTargetException) e;
-							else if(e instanceof InterruptedException)
-								throw (InterruptedException) e;
-							e.printStackTrace();
+							Tracing.printExecTime2(() -> {
+								ids[0] = list.submit(reopen, description, files, checkedJobs, status,
+										new SubProgressMonitor(monitor, 700));
+							}, "SUBMIT", "Submitting pendinglist...");
+						} catch (CoreException | InvocationTargetException | InterruptedException e) {
+							throw e;
+						} catch(Exception e) {
+							PerforceProviderPlugin.logError(e);
 						}
-//                        int id = list.submit(reopen, description, files, checkedJobs,
-//                                status);
                         int id=ids[0];
-//                        monitor.worked(888);
 
                         // Fix for job037435, refresh local resources to handle
                         // ktext types
@@ -266,7 +255,7 @@ public class SubmitAction extends P4Action {
                             			.get(list);
                             	if(list.needsRefresh())
                             		list.refresh();
-                            	
+
                             	List<IP4File> files = findCheckedFiles(
                             			(IP4Container) resource, list);
                             	if (existing == null){
@@ -359,12 +348,8 @@ public class SubmitAction extends P4Action {
                     for (final IP4PendingChangelist list : lists.keySet()) {
                         final IP4File[] files = lists.get(list).toArray(
                                 new IP4File[0]);
-                    	Tracing.printExecTime3(Policy.DEBUG, "SUBMIT", "SubmitAction.saveDirtyResources()", new IRunnable() {//$NON-NLS-1$ //$NON-NLS-2$,$NON-NLS-2$
-							public void run() throws Throwable {
-								PerforceUIPlugin.saveDirtyResources(getTargetPage(),
-										files);
-							}
-						});
+						Tracing.printExecTime(() -> PerforceUIPlugin.saveDirtyResources(getTargetPage(), files),
+								"SUBMIT", "SubmitAction.saveDirtyResources()");
 
                         if (showDialog) {
                             boolean listValid = validateList(list);
@@ -392,19 +377,11 @@ public class SubmitAction extends P4Action {
                                 }
                             }
                         } else if (description != null) {
-                        	Tracing.printExecTime3(Policy.DEBUG, "SUBMIT", "SubmitAction.submit()", new IRunnable() { //$NON-NLS-1$ //$NON-NLS-2$
-								public void run() throws Throwable {
-									submit(list, null, null, files, description, reopen,
-											status);
-								}
-							});
+							Tracing.printExecTime(() -> submit(list, null, null, files, description, reopen, status),
+									"SUBMIT", "SubmitAction.submit()");
                         }
                     }
-                	Tracing.printExecTime3(Policy.DEBUG, "SUBMIT", "SubmitAction.resetStateValidation()", new IRunnable() { //$NON-NLS-1$ //$NON-NLS-2$
-						public void run() throws Throwable {
-							resetStateValidation();
-						}
-					});
+                	Tracing.printExecTime(() -> resetStateValidation(), "SUBMIT", "SubmitAction.resetStateValidation()");
                 } else {
                     P4ConnectionManager.getManager().openInformation(
                             getShell(),
@@ -418,7 +395,7 @@ public class SubmitAction extends P4Action {
     /**
      * Runs the submit and optionally shows it as a dialog or just submits with
      * the current collection and settings
-     * 
+     *
      * @param showDialog
      */
     public void runAction(boolean showDialog) {

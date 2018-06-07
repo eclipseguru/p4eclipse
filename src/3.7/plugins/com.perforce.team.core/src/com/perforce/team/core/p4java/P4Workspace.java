@@ -55,7 +55,6 @@ import com.perforce.team.core.IConstants;
 import com.perforce.team.core.P4JavaCallback;
 import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.PerforceTeamProvider;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.P4Event.EventType;
 
@@ -595,19 +594,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
     public void notifyListeners(final P4Event event) {
     	Tracing.printTrace(getClass().getSimpleName()+":notifyListners()", event.toString());//$NON-NLS-1$
         for (final Object listener : listeners.getListeners()) {
-        	Tracing.printExecTime(Policy.DEBUG, getClass().getSimpleName()+":notifyListeners()", MessageFormat.format("{0}",((IP4Listener)listener).getName()), new Runnable() {//$NON-NLS-1$,$NON-NLS-2$
-        		public void run() {
-        			try {
-        				((IP4Listener) listener).resoureChanged(event);
-        			} catch (Exception e) {
-        				// Prevent exceptions from affecting other listeners
-        				PerforceProviderPlugin.logError(e);
-        			} catch (Error e) {
-        				// Prevent errors from affecting other listeners
-        				PerforceProviderPlugin.logError(e);
-        			}
-        		}
-        	});
+			Tracing.printExecTime(()-> ((IP4Listener) listener).resoureChanged(event), getClass().getSimpleName()+":notifyListeners()", "{0}", ((IP4Listener)listener).getName());
         }
     }
 

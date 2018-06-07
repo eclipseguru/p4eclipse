@@ -57,7 +57,6 @@ import org.eclipse.ui.progress.UIJob;
 
 import com.perforce.team.core.ConnectionParameters;
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Connection;
 import com.perforce.team.core.p4java.IP4Container;
@@ -97,46 +96,41 @@ public class DepotView extends ViewPart {
     private IP4Listener p4Listener = new IP4Listener() {
 
         public void resoureChanged(final P4Event event) {
-            UIJob job = new UIJob(Messages.DepotView_RefreshingDepotViewTree) {
+			UIJob job = new UIJob(Messages.DepotView_RefreshingDepotViewTree) {
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					Tracing.printExecTime(() -> {
 
-                @Override
-                public IStatus runInUIThread(IProgressMonitor monitor) {
-                	Tracing.printExecTime(Policy.DEBUG, DepotView.this.getClass().getSimpleName()+":resourceChanged()", event.toString(), new Runnable() {
+						if (okToUse()) {
+							switch (event.getType()) {
 
-						public void run() {
-							
-							if (okToUse()) {
-								switch (event.getType()) {
-
-								case ADDED:
-									handleAdded(event);
-									break;
-								case AVAILABLE:
-									handleAvailable(event);
-									break;
-								case CHANGED:
-									handleChanged(event);
-									break;
-								case REFRESHED:
-									handleRefresh(event);
-									break;
-								case REMOVED:
-									handleRemoved(event);
-									break;
-								default:
-									break;
-								}
+							case ADDED:
+								handleAdded(event);
+								break;
+							case AVAILABLE:
+								handleAvailable(event);
+								break;
+							case CHANGED:
+								handleChanged(event);
+								break;
+							case REFRESHED:
+								handleRefresh(event);
+								break;
+							case REMOVED:
+								handleRemoved(event);
+								break;
+							default:
+								break;
 							}
 						}
-					});
-                    return Status.OK_STATUS;
-                }
-
-            };
+					}, DepotView.this.getClass().getSimpleName() + ":resourceChanged()", "{0}", event);
+					return Status.OK_STATUS;
+				}
+			};
             job.setSystem(true);
             job.schedule();
         }
-        
+
 		public String getName() {
 			return DepotView.this.getClass().getSimpleName();
 		}
@@ -177,7 +171,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Is this view's main control not disposed
-     * 
+     *
      * @return - true if not disposed
      */
     public boolean okToUse() {
@@ -187,7 +181,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Initialise this view
-     * 
+     *
      * @param site
      * @param memento
      * @throws PartInitException
@@ -200,7 +194,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Get the Depot view
-     * 
+     *
      * @return - depot view
      */
     public static DepotView getView() {
@@ -209,7 +203,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Shows the depot view
-     * 
+     *
      * @return - shown view
      */
     public static DepotView showView() {
@@ -277,7 +271,7 @@ public class DepotView extends ViewPart {
      * Fix for job034259, remove any file(s) from this view if it is not remote
      * and not opened. Files opened for add should appear in this view but when
      * reverted should be removed.
-     * 
+     *
      * @param file
      */
     private void handleRemove(IP4File[] files) {
@@ -310,7 +304,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Save the state of this view
-     * 
+     *
      * @param memento
      */
     @Override
@@ -470,7 +464,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Create everything for this view
-     * 
+     *
      * @param parent
      */
     @Override
@@ -496,14 +490,14 @@ public class DepotView extends ViewPart {
         noServersDefined.setBackground(viewer.getTree().getBackground());
         noServersArea.setBackground(viewer.getTree().getBackground());
         contentProvider = new PerforceContentProvider(viewer) {
-        	
+
         	@Override
         	public Object[] getElements(Object inputElement) {
         		return P4ConnectionManager.getManager().getConnections();
         	}
-        	
+
         };
-        viewer.setContentProvider(contentProvider);        
+        viewer.setContentProvider(contentProvider);
         viewer.setLabelProvider(P4DecoratedLabelProvider.create());
         addContextMenu();
         viewer.setComparator(ViewUtil.getViewComparator());
@@ -549,7 +543,7 @@ public class DepotView extends ViewPart {
                     IP4File file = (IP4File) element;
                     selected= !file.isHeadActionDelete();
                 }
-                
+
                 if(selected && filterClientFiles) {
                     if (element instanceof IP4Connection) {
                         selected=true;
@@ -644,7 +638,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Show deleted depot files in view?
-     * 
+     *
      * @return returns true if deleted files are shown
      */
     public boolean getShowDeletedFiles() {
@@ -653,7 +647,7 @@ public class DepotView extends ViewPart {
 
     /**
      * filter directories under client spec
-     * 
+     *
      * @return - true if show filter client
      */
     public boolean getShowFilterClient() {
@@ -879,7 +873,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Add "Open" context menu entry
-     * 
+     *
      * @param menu
      */
     private void addOpenMenu(IMenuManager menu) {
@@ -926,7 +920,7 @@ public class DepotView extends ViewPart {
 
     /**
      * Gets the underlying treeviewer in this view
-     * 
+     *
      * @return - depot tree viewer
      */
     public TreeViewer getViewer() {

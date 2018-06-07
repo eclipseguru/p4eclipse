@@ -46,14 +46,12 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.progress.UIJob;
 
 import com.perforce.p4java.core.IDepot.DepotType;
-import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 import com.perforce.p4java.core.file.IFileSpec;
 import com.perforce.p4java.exception.P4JavaException;
 import com.perforce.p4java.option.server.GetDirectoriesOptions;
 import com.perforce.p4java.server.IOptionsServer;
 import com.perforce.team.core.ConnectionParameters;
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.ErrorHandler;
 import com.perforce.team.core.p4java.IErrorHandler;
@@ -65,6 +63,7 @@ import com.perforce.team.core.p4java.IP4Resource;
 import com.perforce.team.core.p4java.P4BrowsableConnection;
 import com.perforce.team.core.p4java.P4Connection;
 import com.perforce.team.core.p4java.P4Depot;
+import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 import com.perforce.team.ui.IPerforceUIConstants;
 import com.perforce.team.ui.P4ConnectionManager;
 import com.perforce.team.ui.P4UIUtils;
@@ -84,7 +83,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
     private Composite displayArea;
 
     private P4DepotContainerCheckedTreeViewer depotViewer;
-    
+
 	private ListViewer projectsViewer; // for preview projects to import only
 
     private Label descLabel;
@@ -100,7 +99,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 
     private boolean isOptional = false;
     private boolean errorShown = false;
-    
+
     private boolean selectFromDepotViewer=false; // to prevent inf loop
 
     private IErrorHandler errorHandler = new ErrorHandler() {
@@ -171,7 +170,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
                     monitor.worked(1);
                     connection.setShowClientOnly(connection.clientExists());
                     connection.setShowFoldersWIthOnlyDeletedFiles(false);
-                    
+
                     if (monitor.isCanceled()) {
                         return;
                     }
@@ -221,7 +220,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 
     /**
      * Is the import option selected
-     * 
+     *
      * @return - true if import selected or required
      */
     public boolean isImportSelected() {
@@ -230,7 +229,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 
     /**
      * Get imported folders
-     * 
+     *
      * @return - array of p4 folders
      */
     public IP4Folder[] getImportedFolders() {
@@ -273,7 +272,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
         left.setLayout(new GridLayout());
         Composite right = new Composite(sash, SWT.NONE);
         right.setLayout(new GridLayout(2,false));
-        
+
         SWTUtils.createLabel(left,Messages.ImportProjectsWizardPage_RemoteFolders);
         SWTUtils.createLabel(right,Messages.ImportProjectsWizardPage_EclipseProjectFolders);
         totalLink = new Link(right, SWT.PUSH);
@@ -287,14 +286,14 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
         depotViewer.setAutoExpandLevel(2);
         PerforceContentProvider provider = new PerforceContentProvider(
                 depotViewer);
-        provider.setLoadAsync(false); // This is to avoid lazy loading, since this can cause inaccurate checked item counting when import an unexpanded node's sub folders as projects. 
+        provider.setLoadAsync(false); // This is to avoid lazy loading, since this can cause inaccurate checked item counting when import an unexpanded node's sub folders as projects.
         depotViewer.setContentProvider(provider);
         depotViewer.setLabelProvider(new PerforceLabelProvider());
         depotViewer.addCheckStateListener(new ICheckStateListener() {
 
             public void checkStateChanged(final CheckStateChangedEvent event) {
             	Object element = event.getElement();
-            	if (!(element instanceof IP4Folder) 
+            	if (!(element instanceof IP4Folder)
                         && event.getChecked()) {
 					if ((element instanceof P4Depot)) {
 						DepotType depotType = ((P4Depot) element).getType();
@@ -306,12 +305,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
                 }
             	depotViewer.removeChildOnlyNode(element);
             	Tracing.printTrace("ImportProjects",MessageFormat.format("removeChildOnlyNode {0}, childOnlySet={1}",element,depotViewer.getChildOnlySet()));//$NON-NLS-1$ //$NON-NLS-2$,$NON-NLS-2$
-            	Tracing.printExecTime(Policy.DEBUG, "ImportProjects", "TREE: collect children", new Runnable() {//$NON-NLS-1$ //$NON-NLS-2$
-					
-					public void run() {
-						updateSelectedFolders(event.getElement());
-					}
-				});
+            	Tracing.printExecTime(() -> updateSelectedFolders(event.getElement()), "ImportProjects", "TREE: collect children");
                 validateStreamDirectories(folders);
             }
         });
@@ -360,11 +354,11 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 					depotViewer.setSelection(event.getSelection(), true);
 			}
 		});
-        
+
         descLabel = new Label(displayArea, SWT.WRAP);
         descLabel.setText(Messages.ImportProjectsWizardPage_ImportProjectsHelpMessage);
         descLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
-        
+
         setControl(displayArea);
         if (!isOptional) {
             setPageComplete(false);
@@ -403,13 +397,9 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 							boolean checked = depotViewer.getChecked(sel);
 							boolean grayed = depotViewer.getGrayed(sel);
 							if(!expanded){
-								Tracing.printExecTime(Policy.DEBUG, "ImortProjects", MessageFormat.format("expandCollapseNode {0}", sel), new Runnable() {//$NON-NLS-1$ //$NON-NLS-2$,$NON-NLS-2$
-									public void run() {
-										depotViewer.setExpandedState(sel, true);										
-									}
-								});
+								Tracing.printExecTime(() -> depotViewer.setExpandedState(sel, true), "ImortProjects", "expandCollapseNode {0}", sel);
 							}
-							
+
 			            	if(hasSubfolders((IP4Container) sel)){
 			            		depotViewer.addChildOnlyNode(sel);
 			            		Tracing.printTrace("ImportProjects",MessageFormat.format("addChildOnlyNode {0}, childOnlySet={1}",sel,depotViewer.getChildOnlySet()));//$NON-NLS-1$ //$NON-NLS-2$
@@ -438,7 +428,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
     		collectChildren(item,result);
     	}
     	folders=result.toArray(new IP4Folder[0]);
-    	
+
 		totalLink.setText(folders.length+"");//("<a>"+folders.length+"</a>");//$NON-NLS-1$ //$NON-NLS-2$
 		totalLink.getParent().layout();
 
@@ -502,7 +492,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
                             monitor = new NullProgressMonitor();
                         }
                         monitor.beginTask(Messages.ImportProjectsWizardPage_ValidatingFolders,folders.length);
-                        
+
                         final List<IP4Folder> invalidFolders=new ArrayList<IP4Folder>();
                         for(IP4Folder folder: folders){
                             IOptionsServer server = (IOptionsServer) folder.getConnection().getServer();
@@ -528,7 +518,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
                             }
                         }
                         monitor.done();
-                        
+
                         UIJob job = new UIJob(Messages.ImportProjectsWizardPage_UpdateStatus) {
 
                             @Override
@@ -560,7 +550,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
             }
 
         }
-        
+
     }
 
 }

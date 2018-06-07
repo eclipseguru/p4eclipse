@@ -160,7 +160,7 @@ public class ChangeSpecDialog extends PerforceDialog {
     }
 
     /**
-     * 
+     *
      * @param connection
      * @param files
      * @param jobs
@@ -211,7 +211,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get changelist description entered by user.
-     * 
+     *
      * @return changelist description
      */
     public String getDescription() {
@@ -232,7 +232,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Sets the description in the dialog
-     * 
+     *
      * @param description
      *            - description field value
      */
@@ -244,7 +244,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get files selected by user.
-     * 
+     *
      * @return selected changelist files
      */
     public IP4File[] getCheckedFiles() {
@@ -253,7 +253,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get the unchecked files
-     * 
+     *
      * @return - p4 files
      */
     public IP4File[] getUncheckedFiles() {
@@ -262,7 +262,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get the checked jobs
-     * 
+     *
      * @return - p4 jobs
      */
     public IP4Job[] getCheckedJobs() {
@@ -271,7 +271,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get the unchecked jobs
-     * 
+     *
      * @return - p4 jobs
      */
     public IP4Job[] getUncheckedJobs() {
@@ -280,7 +280,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Is re open files selected?
-     * 
+     *
      * @return - true if selected, false otherwise
      */
     public boolean reopenFiles() {
@@ -478,18 +478,13 @@ public class ChangeSpecDialog extends PerforceDialog {
         filesViewer.createControl(filesGroup);
 		filesViewer.getViewer().setInput(new Object[]{new PerforceContentProvider.Loading()});
 
-		getShell().getDisplay().asyncExec(new Runnable() {
-					
-			public void run() {
-				Tracing.printExecTime(Policy.DEBUG, "SUBMIT", getClass().getSimpleName()+":"+filesViewer.getClass().getSimpleName()+".setInput", new Runnable() {
-					public void run() {
-						if(!filesViewer.getControl().isDisposed()){
-							filesViewer.setInput(files, ChangeSpecDialog.this.startingCheckedFiles);
-							updateCheckState();
-						}
-					}
-				});
-			}
+		getShell().getDisplay().asyncExec(() -> {
+			Tracing.printExecTime(() -> {
+				if (!filesViewer.getControl().isDisposed()) {
+					filesViewer.setInput(files, ChangeSpecDialog.this.startingCheckedFiles);
+					updateCheckState();
+				}
+			}, "SUBMIT", getClass().getSimpleName() + ":" + filesViewer.getClass().getSimpleName() + ".setInput");
 		});
         checkedFiles = filesViewer.getCheckedFiles();
         filesViewer.addCheckStateListener(new ICheckStateListener() {
@@ -644,10 +639,10 @@ public class ChangeSpecDialog extends PerforceDialog {
 
         Tracing.printTrace(Policy.DEBUG,"SUBMIT", getClass().getSimpleName()+":createDescriptionArea");
         createDescriptionArea(composite, this.changeFiles, this.changeJobs);
-        
+
         Tracing.printTrace(Policy.DEBUG,"SUBMIT", getClass().getSimpleName()+":createFileArea");
         createFilesArea(composite, this.changeFiles);
-        
+
         Tracing.printTrace(Policy.DEBUG,"SUBMIT", getClass().getSimpleName()+":createJobArea");
         createJobsArea(composite, this.changeJobs);
 
@@ -666,7 +661,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Create buttons.
-     * 
+     *
      * @param parent
      */
     @Override
@@ -711,7 +706,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Add jobs to the dialog
-     * 
+     *
      * @param jobs
      */
     public void addJobs(IP4Job[] jobs) {
@@ -727,7 +722,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Remove jobs from the dialog
-     * 
+     *
      * @param jobs
      */
     public void removeJobs(final IP4Job[] jobs) {
@@ -744,7 +739,7 @@ public class ChangeSpecDialog extends PerforceDialog {
 
     /**
      * Get the job status selected
-     * 
+     *
      * @return - status
      */
     public String getStatus() {

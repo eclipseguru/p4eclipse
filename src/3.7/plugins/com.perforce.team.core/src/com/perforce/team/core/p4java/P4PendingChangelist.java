@@ -31,9 +31,7 @@ import com.perforce.p4java.server.CmdSpec;
 import com.perforce.p4java.server.IServer;
 import com.perforce.team.core.P4CoreUtils;
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
-import com.perforce.team.core.Tracing.IRunnable;
 import com.perforce.team.core.p4java.P4Event.EventType;
 import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 
@@ -343,36 +341,33 @@ public class P4PendingChangelist extends P4Changelist implements
 
                         final List<IFileSpec> submittedSpecs = new ArrayList<IFileSpec>();
                         final IChangelist cl=created;
-                        Tracing.printExecTime3(Policy.DEBUG, "SUBMIT", "P4 submit", new IRunnable() { //$NON-NLS-1$ //$NON-NLS-2$
-							
-							@Override
-							public void run() throws Throwable {
-								int key = P4CoreUtils.getRandomInt();
-								SubmitOptions opt = new SubmitOptions();
-								opt.setReOpen(reopen);
-								P4ProgressListener handler = P4CoreUtils.createStreamCallback(connection, CmdSpec.SUBMIT,new SubProgressMonitor(monitor, 100));
-		                        if (jobs == null || jobs.length == 0) {
-		                			cl.submit(opt, handler, key);
-		                            submittedSpecs.addAll(handler.getFileSpecs());
-//		                        	 submittedSpecs.addAll(cl.submit(reopen));
-		                        } else {
-		                            List<String> jobIds = new ArrayList<String>();
-		                            for (IP4Job job : jobs) {
-		                                String id = job.getId();
-		                                if (id != null) {
-		                                    jobIds.add(job.getId());
-		                                }
-		                            }
-//		                            submittedSpecs.addAll(cl.submit(reopen, jobIds,
-//		                            		jobStatus));
-		                			opt.setJobStatus(jobStatus);
-		                			opt.setJobIds(jobIds);
-		                			cl.submit(opt, handler, key);
-		                            submittedSpecs.addAll(handler.getFileSpecs());
-		                        }
+						Tracing.printExecTime(() -> {
+							int key = P4CoreUtils.getRandomInt();
+							SubmitOptions opt = new SubmitOptions();
+							opt.setReOpen(reopen);
+							P4ProgressListener handler = P4CoreUtils.createStreamCallback(connection, CmdSpec.SUBMIT,
+									new SubProgressMonitor(monitor, 100));
+							if (jobs == null || jobs.length == 0) {
+								cl.submit(opt, handler, key);
+								submittedSpecs.addAll(handler.getFileSpecs());
+//	                        	 submittedSpecs.addAll(cl.submit(reopen));
+							} else {
+								List<String> jobIds = new ArrayList<String>();
+								for (IP4Job job : jobs) {
+									String id = job.getId();
+									if (id != null) {
+										jobIds.add(job.getId());
+									}
+								}
+//	                            submittedSpecs.addAll(cl.submit(reopen, jobIds,
+//	                            		jobStatus));
+								opt.setJobStatus(jobStatus);
+								opt.setJobIds(jobIds);
+								cl.submit(opt, handler, key);
+								submittedSpecs.addAll(handler.getFileSpecs());
 							}
-						});
-                        
+						}, "SUBMIT", "P4 submit");
+
 //                        List<IFileSpec> submittedSpecs = null;
 //                        if (jobs == null || jobs.length == 0) {
 //                            submittedSpecs = created.submit(reopen);
@@ -434,7 +429,7 @@ public class P4PendingChangelist extends P4Changelist implements
                                             .add(P4PendingChangelist.this);
                                 }
                                 submittedLists.add(submittedList);
-                                
+
                                 monitor.setTaskName(Messages.P4PendingChangelist_SendSubmitChangelistEvent);
                                 monitor.worked(100);
                                 sendSubmitChangelistEvent(submittedLists);
@@ -443,7 +438,7 @@ public class P4PendingChangelist extends P4Changelist implements
                                         .getInvalidFileSpecs(submittedSpecs);
                                 for (IFileSpec spec : changelistSpecs) {
                                     String message = spec.getStatusMessage();
-                                    if (message != null 
+                                    if (message != null
                                             && message.startsWith("Submitted")) { //$NON-NLS-1$ // see Changelist.java:476
                                         int lastSpace = message
                                                 .lastIndexOf(' ');
@@ -1013,7 +1008,7 @@ public class P4PendingChangelist extends P4Changelist implements
             super.removeJob(job);
         }
     }
-    
+
     @Override
     public String toString() {
     	return ("P4PendingChangelist:["+getDescription()+"]").replaceAll("[\n|\r]", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-4$

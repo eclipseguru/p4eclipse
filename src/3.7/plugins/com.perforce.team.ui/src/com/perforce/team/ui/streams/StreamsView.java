@@ -8,7 +8,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.progress.UIJob;
 
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Connection;
 import com.perforce.team.core.p4java.IP4Listener;
@@ -22,7 +21,7 @@ import com.perforce.team.ui.views.PerforceProjectView;
 
 /**
  * A view showing streams as flat list or tree.
- * 
+ *
  * @author chengdong
  *
  */
@@ -55,26 +54,22 @@ public class StreamsView extends PerforceProjectView{
 
                 @Override
                 public IStatus runInUIThread(IProgressMonitor monitor) {
-                	Tracing.printExecTime(Policy.DEBUG, StreamsView.this.getClass().getSimpleName()+":resourceChanged()", event.toString(), new Runnable() {
+					Tracing.printExecTime(() -> {
+						if (okToUse()) {
+							switch (event.getType()) {
 
-						public void run() {
-							
-							if (okToUse()) {
-								switch (event.getType()) {
-
-								case REFRESHED:
-									for(IP4Resource r:event.getResources()){
-										if(r instanceof IP4Connection && r==getPerforceViewControl().getConnection()){
-											getPerforceViewControl().refresh();
-										}
+							case REFRESHED:
+								for (IP4Resource r : event.getResources()) {
+									if (r instanceof IP4Connection && r == getPerforceViewControl().getConnection()) {
+										getPerforceViewControl().refresh();
 									}
-									break;
-								default:
-									break;
 								}
+								break;
+							default:
+								break;
 							}
 						}
-					});
+					}, StreamsView.this.getClass().getSimpleName() + ":resourceChanged()", "{0}", event);
                     return Status.OK_STATUS;
                 }
 
@@ -82,7 +77,7 @@ public class StreamsView extends PerforceProjectView{
             job.setSystem(true);
             job.schedule();
         }
-        
+
 		public String getName() {
 			return StreamsView.this.getClass().getSimpleName();
 		}
@@ -100,17 +95,17 @@ public class StreamsView extends PerforceProjectView{
         super.dispose();
         P4ConnectionManager.getManager().removeListener(p4Listener);
     }
-    
+
     @Override
     protected StreamsViewControl createViewControl(IPerforceView view) {
         return new StreamsViewControl(view);
     }
-    
+
     @Override
     public StreamsViewControl getPerforceViewControl() {
         return (StreamsViewControl) super.getPerforceViewControl();
     }
-    
+
     public void refresh(boolean clearCache, boolean retrieve){
         getPerforceViewControl().refresh(clearCache,retrieve);
     }
@@ -118,7 +113,7 @@ public class StreamsView extends PerforceProjectView{
     public void expandAll(){
         getPerforceViewControl().expandAll();
     }
-    
+
     public void collapseAll(){
         getPerforceViewControl().collapseAll();
     }

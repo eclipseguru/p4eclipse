@@ -50,7 +50,6 @@ import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.progress.UIJob;
 
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Changelist;
 import com.perforce.team.core.p4java.IP4Connection;
@@ -122,7 +121,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Save the state of this view
-     * 
+     *
      * @param memento
      */
     public void saveState(IMemento memento) {
@@ -140,7 +139,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
         viewer = new TreeViewer(parent);
         viewer.getTree().setLayoutData(
                 new GridData(SWT.FILL, SWT.FILL, true, true));
-        viewer.setComparator(ViewUtil.getViewComparator()); 
+        viewer.setComparator(ViewUtil.getViewComparator());
         viewer.setUseHashlookup(true);
         provider = new PerforceContentProvider(viewer, true) {
 
@@ -482,7 +481,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
             tbm.add(diffAction);
             tbm.add(collapseAction);
             tbm.update(false);
-    
+
             // Create the pulldown menu
             IMenuManager pulldown = bars.getMenuManager();
             pulldown.add(otherAction);
@@ -492,7 +491,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Add "Properties" context menu entry
-     * 
+     *
      * @param menu
      */
     private void addPropertiesMenu(IMenuManager menu) {
@@ -521,7 +520,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Add "Open" context menu entry
-     * 
+     *
      * @param menu
      */
     private void addOpenMenu(IMenuManager menu) {
@@ -577,7 +576,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Gets the underlying tree viewer showing the pending changelists
-     * 
+     *
      * @return - tree viewer
      */
     public TreeViewer getViewer() {
@@ -586,7 +585,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Show other changes
-     * 
+     *
      * @param show
      *            - true to show other changes, false to not
      */
@@ -613,7 +612,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Sets this view's actions as enable or disabled
-     * 
+     *
      * @param enabled
      */
     public void setActionEnabled(boolean enabled) {
@@ -648,7 +647,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
                     if (connection != p4Connection) {
                         return;
                     }
-                    final IP4PendingChangelist[] lists =connection.getPendingChangelists(showOtherChanges); 
+                    final IP4PendingChangelist[] lists =connection.getPendingChangelists(showOtherChanges);
                     PlatformUI.getWorkbench().getDisplay()
                             .syncExec(new Runnable() {
 
@@ -674,7 +673,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Is this view's main control not disposed
-     * 
+     *
      * @return - true if not disposed
      */
     public boolean okToUse() {
@@ -704,7 +703,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
             	}
             }
         }
-        
+
     }
 
     private void handleUpdateEvent(Object[] elements) {
@@ -743,17 +742,17 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
     	if(removedList.size()>0){ // root level elements for virtual tree viewer
         	viewer.setInput(getConnection().getPendingChangelists(showOtherChanges));
     	}
-    	
+
     	if(removedObjs.size()>0)
     		viewer.remove(removedObjs.toArray());
     }
 
     private void handleSubmitChangelistEvent(IP4PendingChangelist[] lists) {
         if (lists.length > 0) {
-        	
+
 //            viewer.remove(lists);
         	handleRemoveEvent(Arrays.asList(lists).toArray(new Object[0]));
-        	
+
             List<IP4Changelist> processed = new ArrayList<IP4Changelist>();
             for (IP4PendingChangelist list : lists) {
                 IP4Connection connection = list.getConnection();
@@ -847,59 +846,58 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-            	Tracing.printExecTime(Policy.DEBUG, PendingViewControl.this.getClass().getSimpleName()+":resourceChanged()", event.toString(), new Runnable() {
-            		public void run() {
-                if (okToUse() && viewer.getInput() != null && !isLoading()) {
-                    EventType type = event.getType();
-                    switch (type) {
-                    case REFRESHED:
-                    case DELETE_SHELVE:
-                    case UPDATE_SHELVE:
-                    case CREATE_SHELVE:
-                        handleRefresh(event.getResources());
-                        break;
-                    case CHANGED:
-                        handleUpdateEvent(event.getPending());
-                        break;
-                    case FIXED:
-                        handleJobEvent(event.getResources(), true);
-                        break;
-                    case UNFIXED:
-                        handleJobEvent(event.getResources(), false);
-                        break;
-                    case CREATE_CHANGELIST:
-                        addLists(event.getResources());
-                        break;
-                    case DELETE_CHANGELIST:
-                        handleRemoveEvent(event.getPending());
-                        break;
-                    case SUBMIT_CHANGELIST:
-                        handleSubmitChangelistEvent(event.getPending());
-                        break;
-                    case SUBMIT_FAILED:
-                        refresh();
-                        break;
-                    case SUBMITTED:
-                        handleRemoveEvent(event.getUnopenedFiles());
-                        break;
-                    case REVERTED:
-                        handleRefresh(lists);
-                        handleRemoveEvent(event.getFiles());
-                        break;
-                    case OPENED:
-                        handleOpened(event.getFiles());
-                        break;
-                    case MOVE_ADDED:
-                    	refresh();
-                        break;
-                    case SUBMIT_SHELVEDCHANGELIST:
-                    	refresh();
-                        break;
-                    default:
-                        break;
-                    }
-                }
-            	}});
+				Tracing.printExecTime(() -> {
+					if (okToUse() && viewer.getInput() != null && !isLoading()) {
+						EventType type = event.getType();
+						switch (type) {
+						case REFRESHED:
+						case DELETE_SHELVE:
+						case UPDATE_SHELVE:
+						case CREATE_SHELVE:
+							handleRefresh(event.getResources());
+							break;
+						case CHANGED:
+							handleUpdateEvent(event.getPending());
+							break;
+						case FIXED:
+							handleJobEvent(event.getResources(), true);
+							break;
+						case UNFIXED:
+							handleJobEvent(event.getResources(), false);
+							break;
+						case CREATE_CHANGELIST:
+							addLists(event.getResources());
+							break;
+						case DELETE_CHANGELIST:
+							handleRemoveEvent(event.getPending());
+							break;
+						case SUBMIT_CHANGELIST:
+							handleSubmitChangelistEvent(event.getPending());
+							break;
+						case SUBMIT_FAILED:
+							refresh();
+							break;
+						case SUBMITTED:
+							handleRemoveEvent(event.getUnopenedFiles());
+							break;
+						case REVERTED:
+							handleRefresh(lists);
+							handleRemoveEvent(event.getFiles());
+							break;
+						case OPENED:
+							handleOpened(event.getFiles());
+							break;
+						case MOVE_ADDED:
+							refresh();
+							break;
+						case SUBMIT_SHELVEDCHANGELIST:
+							refresh();
+							break;
+						default:
+							break;
+						}
+					}
+				}, PendingViewControl.this.getClass().getSimpleName() + ":resourceChanged()", "{0}", event);
                 return Status.OK_STATUS;
             }
 
@@ -910,7 +908,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
 
     /**
      * Is this view currently loading pending changelists?
-     * 
+     *
      * @return true is loading the pending changelists, false otherwise
      */
     public boolean isLoading() {
@@ -924,7 +922,7 @@ public class PendingViewControl extends AbstractPerforceViewControl implements I
     protected String getSelectedName() {
         return Messages.PendingView_PendingChangelists;
     }
-    
+
 	public String getName() {
 		return getClass().getSimpleName();
 	}
@@ -972,13 +970,13 @@ class PendingViewContentProvider extends PerforceContentProvider implements ILaz
 		    }
 		}
 	}
-	
+
 	protected void updateContainerNode(TreeViewer viewer, IP4Container container,
 			int index) {
 		IP4Resource[] members = getMembers(container);
 		viewer.setChildCount(container, members.length);
 		viewer.refresh(container);
-		
+
 	}
 
 }

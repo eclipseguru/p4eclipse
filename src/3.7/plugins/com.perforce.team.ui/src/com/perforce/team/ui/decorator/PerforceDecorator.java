@@ -34,7 +34,6 @@ import com.perforce.team.core.IProjectSettingsChangeListener;
 import com.perforce.team.core.P4CoreUtils;
 import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.PerforceTeamProvider;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Changelist;
 import com.perforce.team.core.p4java.IP4Connection;
@@ -74,7 +73,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Remove trailing whitespace from string
-     * 
+     *
      * @param str
      * @return - string without trailing whitespace
      */
@@ -254,7 +253,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get decoration text for a project
-     * 
+     *
      * @param text project name
      * @param connection
      * @return - the decorated project name
@@ -271,7 +270,7 @@ public class PerforceDecorator extends LabelProvider implements
             bindings.put(P4Decoration.CHARSET_VARIABLE,
                     params.getCharsetNoNone());
             bindings.put(P4Decoration.NAME_VARIABLE, name);
-            
+
             updateSandBoxAndStreamDecoration(bindings,connection);
 
             decorated = P4Decoration.decorate(projectDecoration, bindings)
@@ -304,7 +303,7 @@ public class PerforceDecorator extends LabelProvider implements
 
 	/**
      * Add the current ignored text decoration to the specified string
-     * 
+     *
      * @param text
      * @return - decorated text
      */
@@ -327,9 +326,9 @@ public class PerforceDecorator extends LabelProvider implements
      * against 3.3 and therefore injects a reference to BaseLabelProvider when
      * compiling that then causes {@link NoClassDefFoundError} exceptions when
      * the plugin is installed on Eclipse 3.2.
-     * 
+     *
      * Fixes job032543.
-     * 
+     *
      * @see org.eclipse.jface.viewers.LabelProvider#fireLabelProviderChanged(org.eclipse.jface.viewers.LabelProviderChangedEvent)
      */
     @Override
@@ -351,7 +350,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Decorator constructor.
-     * 
+     *
      * @param resourceDecorator
      *            set to false if this is to be the decorator for the pending
      *            changelist or depot view.
@@ -363,7 +362,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get the active Perforce decorator
-     * 
+     *
      * @return the active Perforce decorator. Returns null if not active
      */
     public static PerforceDecorator getActivePerforceDecorator() {
@@ -401,7 +400,7 @@ public class PerforceDecorator extends LabelProvider implements
     /**
      * Capture when projects are managed or unmanaged or connection settings are
      * changed.
-     * 
+     *
      * @param project
      * @param params
      */
@@ -446,7 +445,7 @@ public class PerforceDecorator extends LabelProvider implements
      * PREF_MARK_UNMANAGED_FILES event here as they're properly handled in the
      * same icon cache code. This will <i>definitely</i> need revisiting later
      * -- HR.
-     * 
+     *
      * @param event
      *            the property change event
      */
@@ -466,7 +465,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * This method is called if resources have changed or need to be refreshed
-     * 
+     *
      * @param resources
      *            the list of resources which have changed
      */
@@ -501,7 +500,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Provide image decoration for this object
-     * 
+     *
      * @param image
      *            the image to decorate
      * @param o
@@ -549,7 +548,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Decorated a project
-     * 
+     *
      * @param text
      * @param project
      * @return - decorated text or null
@@ -566,7 +565,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Decorate sync element
-     * 
+     *
      * @param text
      * @param element
      * @return - decorated text or null
@@ -612,7 +611,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Decorate resource
-     * 
+     *
      * @param text
      * @param resource
      * @return - decorated text or null
@@ -637,16 +636,16 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Decorate a connection
-     * 
+     *
      * @param text
      * @param connection
      * @return - decorated text or original text if no decoration
      */
     private String decorateConnection(String text, IP4Connection connection) {
         Map<String, String> bindings = new HashMap<String, String>();
-        
+
         updateSandBoxAndStreamDecoration(bindings, connection);
-        
+
         if(bindings.isEmpty())
         	return text;
 
@@ -662,7 +661,7 @@ public class PerforceDecorator extends LabelProvider implements
      * only have, type, name, and action are currently added. This method still
      * honors the current decoration preferences for files for the text
      * decorations supported.
-     * 
+     *
      * @param text
      * @param shelvedFile
      * @return - decorated text or null
@@ -714,7 +713,7 @@ public class PerforceDecorator extends LabelProvider implements
      * so only head, type, name, and action are currently added. This method
      * still honors the current decoration preferences for files for the text
      * decorations supported.
-     * 
+     *
      * @param text
      * @param submittedFile
      * @return - decorated text or null
@@ -762,7 +761,7 @@ public class PerforceDecorator extends LabelProvider implements
     /**
      * Decorate a folder. The only possible decoration is for folders which are
      * the root of a stream, which are decorated with the stream name.
-     * 
+     *
      * @param text
      * @param folder
      * @return - decorated text or null
@@ -792,7 +791,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Provide text decoration for this object
-     * 
+     *
      * @param text
      *            the text to decorate
      * @param o
@@ -834,7 +833,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get decoration text for projects
-     * 
+     *
      * @param text
      *            the text to decorate
      * @param project
@@ -852,7 +851,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get the decorated file text
-     * 
+     *
      * @param text
      * @param file
      * @return - decorated file text
@@ -863,7 +862,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get the decorated file text
-     * 
+     *
      * @param text
      * @param file
      * @param ignored
@@ -875,7 +874,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Get the decorated file text
-     * 
+     *
      * @param text
      * @param file
      * @param showChangelist
@@ -889,7 +888,7 @@ public class PerforceDecorator extends LabelProvider implements
 
     /**
      * Fire event to say that resource labels need to be updated
-     * 
+     *
      * @param event
      *            the event to broadcast
      */
@@ -905,7 +904,7 @@ public class PerforceDecorator extends LabelProvider implements
     /**
      * Append text to buffer, put in seperator if there is already content in
      * the buffer
-     * 
+     *
      * @param buffer
      *            the string buffer
      * @param text
@@ -964,18 +963,13 @@ public class PerforceDecorator extends LabelProvider implements
      * @see com.perforce.team.core.p4java.IP4Listener#resoureChanged(com.perforce.team.core.p4java.P4Event)
      */
     public void resoureChanged(final P4Event event) {
-		Tracing.printExecTime(Policy.DEBUG, PerforceDecorator.this.getClass().getSimpleName()+":resourceChanged()", event.toString(), new Runnable(){//$NON-NLS-1$
-			
-			public void run() {
-				if (resourceDecorator) {
-					postLabelEvent(new LabelProviderChangedEvent(PerforceDecorator.this,
-							event.getLocalResources()));
-				} else {
-					postLabelEvent(new LabelProviderChangedEvent(PerforceDecorator.this,
-							event.getResources()));
-				}
+		Tracing.printExecTime(() -> {
+			if (resourceDecorator) {
+				postLabelEvent(new LabelProviderChangedEvent(PerforceDecorator.this, event.getLocalResources()));
+			} else {
+				postLabelEvent(new LabelProviderChangedEvent(PerforceDecorator.this, event.getResources()));
 			}
-		});
+		}, PerforceDecorator.this.getClass().getSimpleName() + ":resourceChanged()", "{0}", event);
     }
 
 	public String getName() {

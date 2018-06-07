@@ -44,9 +44,7 @@ import com.perforce.p4java.server.IServer;
 import com.perforce.team.core.P4CoreUtils;
 import com.perforce.team.core.PerforceConnectionFactory;
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
-import com.perforce.team.core.Tracing.IRunnable;
 import com.perforce.team.core.p4java.P4Event.EventType;
 import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 
@@ -55,7 +53,7 @@ import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
  * run a single command against a group of p4 resources that are selected by the
  * user. If the resources added span multiple clients then the action methods
  * will be executed once per client.
- * 
+ *
  * @author Kevin Sawicki (ksawicki@perforce.com)
  */
 public class P4Collection extends P4Resource implements IP4Container {
@@ -81,7 +79,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Creates a collection of resources from the connection and list of valid
      * files specs specified
-     * 
+     *
      * @param connection
      * @param specs
      * @return - collection
@@ -151,7 +149,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Creates a collection from an array of files
-     * 
+     *
      * @param resources
      */
     public P4Collection(IP4Resource[] resources) {
@@ -164,7 +162,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Creates a p4 collection from a standard collection
-     * 
+     *
      * @param resources
      */
     public P4Collection(Collection<IP4Resource> resources) {
@@ -177,7 +175,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Creates a p4 collection from a specified p4 collection
-     * 
+     *
      * @param collection
      */
     public P4Collection(P4Collection collection) {
@@ -188,7 +186,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Add all the resources in the specified collection
-     * 
+     *
      * @param collection
      */
     public void addAll(P4Collection collection) {
@@ -199,7 +197,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Convert collection to array
-     * 
+     *
      * @param <T>
      * @param array
      * @return - array containing elements in collection
@@ -217,7 +215,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Reopens the files in this collection in the specified changelist
-     * 
+     *
      * @param changelist
      */
     public void reopen(final IP4PendingChangelist changelist) {
@@ -335,7 +333,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Fixes the jobs in this collection with the specified changelist
-     * 
+     *
      * @param changelist
      */
     public void fix(IP4Changelist changelist) {
@@ -359,7 +357,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Un-fixes the jobs in this collection with the specified changelist
-     * 
+     *
      * @param changelist
      */
     public void unfix(IP4Changelist changelist) {
@@ -396,7 +394,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Resolves this collection
-     * 
+     *
      * @param type
      * @param preview
      * @return - array of resources that were resolved
@@ -454,12 +452,12 @@ public class P4Collection extends P4Resource implements IP4Container {
      * stream. This method is generally used for collections with one object
      * since it is uncommon to resolve multiple files with the same merge file
      * specified as an input stream.
-     * 
+     *
      * If useTextual merge is true, binary files will be resolved as text.
-     * 
+     *
      * If startFromRev and endFromRev are not -1, resolve will be restricted
      * to that range of source revisions.
-     * 
+     *
      * @param stream
      * @param useTextualMerge
      * @param startFromRev
@@ -507,7 +505,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Adds a file to this collection
-     * 
+     *
      * @param file
      */
     public void add(IP4Resource file) {
@@ -518,7 +516,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Adds the resources in the specified collection to this collection
-     * 
+     *
      * @param collection
      */
     public void add(P4Collection collection) {
@@ -531,7 +529,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Does this collection contain the specified file?
-     * 
+     *
      * @param file
      * @return - true if contained in this collection, false otherwise
      */
@@ -545,7 +543,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Generates a client spec mapping where {@link IClient} objects map to
      * lists of {@link IP4Resource}
-     * 
+     *
      * @param items
      * @return - map of clients to p4 resource lists
      */
@@ -570,7 +568,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Gets the valid specs as p4 resources put into a p4 collection
-     * 
+     *
      * @param connection
      * @param specs
      * @param type
@@ -630,7 +628,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Gets the valid specs as p4 resources put into a p4 collection
-     * 
+     *
      * @param connection
      * @param specs
      * @param type
@@ -682,7 +680,7 @@ public class P4Collection extends P4Resource implements IP4Container {
             List<? extends IFileSpec> specs) {
         P4Collection collection = new P4Collection();
         List<IP4Resource> resources=new ArrayList<IP4Resource>();
-        
+
         if (specs != null) {
             for (IFileSpec spec : specs) {
                 if (FileSpecOpStatus.VALID == spec.getOpStatus()) {
@@ -739,7 +737,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Generates a client spec mapping where {@link IClient} objects map to
      * lists of {@link String} that are the action path of {@link IP4Resource}
-     * 
+     *
      * @param items
      * @return - map of clients to action path lists
      */
@@ -751,7 +749,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Generates a client spec mapping where {@link IClient} objects map to
      * lists of {@link String} that are the action path of {@link IP4Resource}
-     * 
+     *
      * @param items
      * @param formatted
      * @return - map of clients to action path lists
@@ -784,7 +782,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Generated a mapping of p4 connections to string action paths
-     * 
+     *
      * @param items
      * @return - map of connection to string action paths
      */
@@ -795,7 +793,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Generated a mapping of p4 connections to string action paths
-     * 
+     *
      * @param items
      * @param formatted
      * @return - map of connection to string action paths
@@ -828,7 +826,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Generated a mapping of p4 connections to p4 resources
-     * 
+     *
      * @return - map of connections to resources
      */
     public Map<IP4Connection, List<IP4Resource>> toResourceMap() {
@@ -851,7 +849,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Generated a mapping of p4 connections to p4 resources
-     * 
+     *
      * @return - map of connections to resources
      */
     public Map<IP4Connection, List<IP4File>> toFileMap() {
@@ -895,7 +893,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Gets direct members and sub-members at all depths for items in this
      * collection that are {@link IP4Container} objects
-     * 
+     *
      * @return - array of p4 resources
      */
     public IP4Resource[] allMembers() {
@@ -988,7 +986,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Add this collection the specified pending changelist's model
-     * 
+     *
      * @param list
      */
     public void addToChangelistModel(IP4PendingChangelist list) {
@@ -1011,7 +1009,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Opens for add the files in this collection
-     * 
+     *
      * @param changelist
      * @return - collection of opened for add files
      */
@@ -1021,7 +1019,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Opens for add the files in this collection
-     * 
+     *
      * @param changelist
      * @param setActive
      *            - set changelist as active pending changelist for connection
@@ -1033,7 +1031,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Opens for add the files in this collection
-     * 
+     *
      * @param changelist
      * @param description
      * @param setActive
@@ -1107,7 +1105,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Open files for delete and optionally set active changelist on connection
-     * 
+     *
      * @see #delete(int)
      * @param changelist
      * @param setActive
@@ -1118,7 +1116,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Open files for delete and optionally set active changelist on connection
-     * 
+     *
      * @see #delete(int)
      * @param changelist
      * @param description
@@ -1187,7 +1185,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Open the files for edit and optionally set active changelist on
      * connection
-     * 
+     *
      * @see #edit(int)
      * @param changelist
      * @param setActive
@@ -1199,7 +1197,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Revert (-k) file and then edit and optionally set active changelist on
      * connection
-     * 
+     *
      * @see #edit(int)
      * @param changelist
      * @param description
@@ -1208,7 +1206,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     public void revertThenEdit(int changelist, String description, boolean setActive) {
         Map<IP4Connection, List<String>> items = generateConnectionSpecMapping(this.resources);
         for (Map.Entry<IP4Connection, List<String>> entry : items.entrySet()) {
-        	final IP4Connection connection=entry.getKey();        			
+        	final IP4Connection connection=entry.getKey();
             List<String> clientResources = entry.getValue();
             IClient client = connection.getClient();
             if (client != null && clientResources.size() > 0) {
@@ -1260,7 +1258,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Open the files for edit and optionally set active changelist on
      * connection
-     * 
+     *
      * @see #edit(int)
      * @param changelist
      * @param description
@@ -1320,7 +1318,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Get a p4 collection of all the files in the collection that would be
      * reverted due to the fact that they are unchanged.
-     * 
+     *
      * @return - collection of unchanged files that would have been reverted
      */
     public P4Collection previewUnchangedRevert() {
@@ -1330,7 +1328,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Get a p4 collection of all the files in the collection that would be
      * reverted
-     * 
+     *
      * @param preview
      * @param unchangedOnly
      * @return - collection of files returned from the revert command
@@ -1356,20 +1354,16 @@ public class P4Collection extends P4Resource implements IP4Container {
                             }
                             final List<IFileSpec> reverted=new ArrayList<IFileSpec>();
                             try {
-                            	Tracing.printExecTime2(Policy.DEBUG_TIME, "revert", "list-"+list.getId(),new IRunnable() { //$NON-NLS-1$ //$NON-NLS-2$
-                            		public void run() throws Throwable {
-                            			List<IFileSpec> rlist = client.revertFiles(
-                            					specs, preview, list.getId(),
-                            					unchangedOnly, false);
-                            			reverted.addAll(rlist);
-                            		}
-                            	}); 
-							} catch (P4JavaException e) {
+                    			Tracing.printExecTime2(() -> {
+                        			List<IFileSpec> rlist = client.revertFiles(
+                        					specs, preview, list.getId(),
+                        					unchangedOnly, false);
+                        			reverted.addAll(rlist);
+                        		}, "revert", "list-{0}", list.getId());
+							} catch (P4JavaException | P4JavaError e) {
 								throw e;
-							} catch (P4JavaError e){
-								throw e;
-							} catch (Throwable e) {
-								e.printStackTrace();
+							} catch (Exception e){
+								PerforceProviderPlugin.logError(e);
 							}
 
 //                            List<IFileSpec> reverted = client.revertFiles(
@@ -1437,7 +1431,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Get a p4 collection of files that would be reverted in this collection.
-     * 
+     *
      * @return - collection of files that would be reverted
      */
     public P4Collection previewRevert() {
@@ -1479,7 +1473,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Syncs the collection to a specific revision
-     * 
+     *
      * @param revision
      * @param monitor
      */
@@ -1489,7 +1483,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Gets the file in this collection that are unresolved.
-     * 
+     *
      * @return - array of unresolved files
      */
     public IP4Resource[] getUnresolved() {
@@ -1498,7 +1492,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Syncs the collection. This is a long time slow operation.
-     * 
+     *
      * @param force
      * @param preview
      * @param revision
@@ -1532,11 +1526,11 @@ public class P4Collection extends P4Resource implements IP4Container {
                             .makeFileSpecList(clientResources
                                     .toArray(new String[0]));
                     IP4ClientOperation operation = new P4ClientOperation() {
-    
+
                         public void run(IClient client) throws P4JavaException,
                                 P4JavaError {
                         	List<String> oplist=new ArrayList<String>();
-    
+
                         	// Previously, we use -q is to avoid to many out put to
                         	// pollute the console. But then use may loose the ablility
                         	// to preview. So we remove the -q option.
@@ -1544,7 +1538,7 @@ public class P4Collection extends P4Resource implements IP4Container {
                         	// if(serverVer>=IP4ServerConstants.PROGRESS_SERVERID_VERSION){
                         	// 	oplist.add("-q"); //$NON-NLS-1$
                         	// }
-    
+
                         	if(force)
                         		oplist.add("-f"); //$NON-NLS-1$
                         	if(preview)
@@ -1561,11 +1555,11 @@ public class P4Collection extends P4Resource implements IP4Container {
                         		client.sync(specList, opt, cb, key);
                         		syncSpecs = cb.getFileSpecs();
                         	}
-    
+
                             specs.addAll(syncSpecs);
                             P4Collection syncedResources = getValidSyncedCollection(
                                     connection, syncSpecs);
-                            
+
                             monitor.setTaskName(Messages.P4Collection_RefreshResourceAfterSync);
                             monitor.worked(100);
                             if (!preview && !syncedResources.isEmpty()) {
@@ -1585,7 +1579,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Changes the type of the files in this collection
-     * 
+     *
      * @param newType
      */
     public void changeType(final String newType) {
@@ -1632,7 +1626,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Is this collection empty
-     * 
+     *
      * @return - true if empty, false otherwise
      */
     public boolean isEmpty() {
@@ -1673,7 +1667,7 @@ public class P4Collection extends P4Resource implements IP4Container {
     /**
      * Refreshes the local resource that are associated with the p4 resources in
      * this collection
-     * 
+     *
      * @param depth
      */
     public void refreshLocalResources(int depth) {
@@ -1705,7 +1699,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Tag the resources in this collection with the specified label
-     * 
+     *
      * @param label
      */
     public void tag(String label) {
@@ -1714,7 +1708,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Tag the resources in this collection with the specified label
-     * 
+     *
      * @param label
      * @param revision
      */
@@ -1724,7 +1718,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * Tag the resources in this collection with the specified label
-     * 
+     *
      * @param label
      * @param revision
      * @param delete
@@ -1821,10 +1815,10 @@ public class P4Collection extends P4Resource implements IP4Container {
                                             .getServer().getExtendedFiles(
                                                     specList, 0, -1, -1, null,
                                                     null);
-                                    
+
                                     List<IP4File> validFiles = new ArrayList<IP4File>();
                                     List<IExtendedFileSpec> validSpecs = new ArrayList<IExtendedFileSpec>();
-                                    
+
                                     for (IExtendedFileSpec spec : specs) {
                                         if (FileSpecOpStatus.VALID == spec
                                                 .getOpStatus()) {
@@ -1840,7 +1834,7 @@ public class P4Collection extends P4Resource implements IP4Container {
                                     if(!validFiles.isEmpty()){
                                     	batchMoveFilesToSubmittedChangelist(validFiles, validSpecs, refreshCollection);
                                     }
-                                    
+
                                     handleErrors(specs
                                             .toArray(new IFileSpec[specs.size()]));
                                 }
@@ -1877,7 +1871,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 	        file.setFileSpec(spec,
 	                refreshCollection,false);
 	        int newChangelist = file.getChangelistId();
-	        
+
 			IP4Connection connection = file.getConnection();
 			if (connection != null) {
 				if (previousChangelist > -1 && previousChangelist != newChangelist) {
@@ -1888,16 +1882,16 @@ public class P4Collection extends P4Resource implements IP4Container {
 						submap=new HashMap<Integer, List<IP4Resource>>();
 						removeMap.put(connection, submap);
 					}
-					
+
 					List<IP4Resource> flist = submap.get(previousChangelist);
 					if(flist==null){
 						flist=new ArrayList<IP4Resource>();
 						submap.put(previousChangelist, flist);
 					}
 					flist.add(file);
-					
+
 				}
-				
+
 				if (newChangelist > -1 && newChangelist!=previousChangelist) {
 					// construct add map
 					Map<Integer, List<IP4Resource>> submap = addMap.get(connection);
@@ -1905,7 +1899,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 						submap=new HashMap<Integer, List<IP4Resource>>();
 						addMap.put(connection, submap);
 					}
-					
+
 					List<IP4Resource> flist = submap.get(newChangelist);
 					if(flist==null){
 						flist=new ArrayList<IP4Resource>();
@@ -1916,7 +1910,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 				}
 			}
 		}
-		
+
 		// remove files from changelist and batch update the old change list
 		for(Map.Entry<IP4Connection, Map<Integer, List<IP4Resource>>> outerEntry: removeMap.entrySet()){
 			IP4Connection connection=outerEntry.getKey();
@@ -1929,7 +1923,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 				if(oldList!=null){
 					for(IP4Resource file: flist)
 						oldList.removeFile((IP4File) file);
-	
+
 					// auto refresh oldList
 	                if (refreshCollection != null) {
 	                	refreshCollection.add(oldList);
@@ -1957,23 +1951,23 @@ public class P4Collection extends P4Resource implements IP4Container {
 				}
 			}
 		}
-		
+
 	}
 
 	/*
-     * Remove files from changelist. This better is called on reverting large set of files. 
+     * Remove files from changelist. This better is called on reverting large set of files.
      * @param files files originally in some changelists and to be removed
      */
     private void batchRemoveFilesFromChangelist(Set<IP4Resource> files) {
 		Map<IP4Connection, Map<Integer, List<IP4Resource>>> removeMap=new HashMap<IP4Connection, Map<Integer,List<IP4Resource>>>();
-		
+
 		// now batch update the changelist.
-		
+
 		// update file spec, and categorized the changes per changelist
 		for(IP4Resource f: files){
 			IP4File file=(IP4File) f;
 	        int previousChangelist = file.getChangelistId();
-	        file.setFileSpec(null,null,false); // update file spec without notifying listeners 
+	        file.setFileSpec(null,null,false); // update file spec without notifying listeners
 
 			IP4Connection connection = file.getConnection();
 			if (connection != null) {
@@ -1984,7 +1978,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 						submap=new HashMap<Integer, List<IP4Resource>>();
 						removeMap.put(connection, submap);
 					}
-					
+
 					List<IP4Resource> flist = submap.get(previousChangelist);
 					if(flist==null){
 						flist=new ArrayList<IP4Resource>();
@@ -2019,7 +2013,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
 	/**
      * Sets the local files in this collection to the read only state specified
-     * 
+     *
      * @param readOnly
      */
     public void setReadOnly(boolean readOnly) {
@@ -2045,7 +2039,7 @@ public class P4Collection extends P4Resource implements IP4Container {
 
     /**
      * @see #getAllLocalFiles()
-     * 
+     *
      * @param monitor
      * @return - all local files
      */

@@ -36,9 +36,7 @@ import com.perforce.p4java.impl.generic.core.Changelist;
 import com.perforce.p4java.impl.generic.core.file.FileSpec;
 import com.perforce.p4java.server.IServer;
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
-import com.perforce.team.core.Tracing.IRunnable;
 import com.perforce.team.core.p4java.P4Event.EventType;
 import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 
@@ -49,7 +47,7 @@ public class P4File extends P4Resource implements IP4File {
 
     /**
      * Is the specified file action a delete action?
-     * 
+     *
      * @param action
      * @return - true if delete, false otherwise
      */
@@ -59,7 +57,7 @@ public class P4File extends P4Resource implements IP4File {
 
     /**
      * Is the specified file action an edit action?
-     * 
+     *
      * @param action
      * @return - true if edit, false otherwise
      */
@@ -68,7 +66,7 @@ public class P4File extends P4Resource implements IP4File {
     }
 
     /**
-     * 
+     *
      * @param action
      * @return - true if add, false otherwise
      */
@@ -84,7 +82,7 @@ public class P4File extends P4Resource implements IP4File {
 
     /**
      * Creates a new p4 file.
-     * 
+     *
      * @param connection
      * @param localPath
      */
@@ -97,7 +95,7 @@ public class P4File extends P4Resource implements IP4File {
 
     /**
      * Creates a new p4 file from a P4Java file spec and container parent
-     * 
+     *
      * @param fileSpec
      * @param parent
      * @param readOnly
@@ -109,7 +107,7 @@ public class P4File extends P4Resource implements IP4File {
 
     /**
      * Creates a new p4 file from a P4Java file spec and container parent
-     * 
+     *
      * @param fileSpec
      * @param parent
      */
@@ -824,25 +822,21 @@ public class P4File extends P4Resource implements IP4File {
                 }
             }
         } else if (this.fileSpec != null) {
-			Tracing.printExecTime3(Policy.DEBUG_TIME, "P4File", "setFileSpec ", new IRunnable() {
-				
-				public void run() throws Throwable {
-					P4File.this.fileSpec = null;
-			        int newChangelist = getChangelistId();
-	                if(updateChangelist){
-				        updateChangelists(previousChangelist, newChangelist,
-				                refreshEventContainer);
-	                }
-			        IP4Connection connection = getConnection();
-			        if (connection != null) {
-			            connection.removeFileFromChangelists(P4File.this);
-			        }
-			        notifyListeners(new P4Event(EventType.REFRESHED, P4File.this));
+			Tracing.printExecTime(() -> {
+				P4File.this.fileSpec = null;
+				int newChangelist = getChangelistId();
+				if (updateChangelist) {
+					updateChangelists(previousChangelist, newChangelist, refreshEventContainer);
 				}
-			});
+				IP4Connection connection = getConnection();
+				if (connection != null) {
+					connection.removeFileFromChangelists(P4File.this);
+				}
+				notifyListeners(new P4Event(EventType.REFRESHED, P4File.this));
+			}, "P4File", "setFileSpec ");
         }
     }
-    
+
     /**
      * @see com.perforce.team.core.p4java.IP4File#setParent(com.perforce.team.core.p4java.IP4Container)
      */

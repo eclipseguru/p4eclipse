@@ -20,7 +20,6 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
 import com.perforce.team.core.PerforceProviderPlugin;
-import com.perforce.team.core.Policy;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Changelist;
 import com.perforce.team.core.p4java.IP4Container;
@@ -71,7 +70,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
         /**
          * Creates a new resource rule
-         * 
+         *
          * @param resource
          */
         public ResourceRule(IP4Resource resource) {
@@ -107,7 +106,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Creates a new content provider for a structured viewer
-     * 
+     *
      * @param viewer
      */
     public PerforceContentProvider(StructuredViewer viewer) {
@@ -116,7 +115,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param async
      */
@@ -127,7 +126,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param context
      */
@@ -137,7 +136,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param async
      * @param context
@@ -149,7 +148,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Get members of a container, sub-classes may override.
-     * 
+     *
      * @param container
      * @return - array of members
      */
@@ -159,7 +158,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 
     /**
      * Generate the rule to use for loading the container
-     * 
+     *
      * @param container
      * @return - scheduling rule or null to use no rule
      */
@@ -182,7 +181,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
                     asyncUpdateContainer(container);
                     return new Object[] { loading };
                 } else {
-                	if (container.needsRefresh()) 
+                	if (container.needsRefresh())
                         container.refresh();
                     return container.members();
                 }
@@ -194,14 +193,14 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 	protected void asyncUpdateContainer(final IP4Container container) {
 		ISchedulingRule rule = generateRule(container);
 		P4Runner.schedule(new P4Runnable() {
-			
+
 			@Override
 			public String getTitle() {
 				return MessageFormat
 						.format(com.perforce.team.ui.Messages.PerforceContentProvider_FetchingChildren,
 								container.getName());
 			}
-			
+
 			@Override
 			public void run(IProgressMonitor monitor) {
 				// Check container again to ensure it wasn't already
@@ -210,12 +209,12 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 					container.refresh();
 				}
 				P4UIUtils.getDisplay().syncExec(new Runnable() {
-					
+
 					public void run() {
 						if (P4UIUtils.okToUse(viewer)) {
 							// keep the check state. In case of ContainerCheckboxTreeViewer, this will
 							// a. restore container's check state
-							// b. set children's check state based on container's 
+							// b. set children's check state based on container's
 							if(viewer instanceof ICheckable){
 								// save container's old state
 								boolean checkState = ((ICheckable) viewer).getChecked(container);
@@ -233,12 +232,12 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 								viewer.refresh(container);
 						}
 					}
-					
+
 				});
 			}
-			
+
 		}, rule);
-		
+
 	}
 
     /**
@@ -328,52 +327,44 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 		if(viewer instanceof TreeViewer){
 			//Tracing.printTrace("updateElement", MessageFormat.format("parent={0}, index={1}",parent,index));//$NON-NLS-1$,$NON-NLS-2$
 			if(parent==roots){
-				Tracing.printExecTime(Policy.DEBUG, "updateElement", MessageFormat.format("index={0},parent={1}",index,Arrays.toString(roots)),new Runnable() {//$NON-NLS-1$,$NON-NLS-2$ 
-					public void run() {
-						if(index>=0 && index<roots.length){
-							Object el=roots[index];
-							((TreeViewer) viewer).replace(parent, index, el);
-							updateChildCount(el, -1);
-						}else{
-							PerforceProviderPlugin.logError("index outof bound of roots");
-						}
+				Tracing.printExecTime(() -> {
+					if (index >= 0 && index < roots.length) {
+						Object el = roots[index];
+						((TreeViewer) viewer).replace(parent, index, el);
+						updateChildCount(el, -1);
+					} else {
+						PerforceProviderPlugin.logError("index outof bound of roots");
 					}
-				});
+				}, "updateElement", "index={0},parent={1}", index, roots);
 			}else if (parent instanceof IP4Container) {
 				final IP4Container container = (IP4Container) parent;
 				if (!container.needsRefresh()) {
-					Tracing.printExecTime(Policy.DEBUG, "updateElement", MessageFormat.format("P4ContainerNeedsNoRefresh,index={0}, parent={1}",index, parent), new Runnable() {//$NON-NLS-1$,$NON-NLS-2$
-						public void run() {
-							IP4Resource[] members = getMembers((IP4Container) parent);
-							if(members.length>index){
-								Object element=members[index];
-								((TreeViewer) viewer).replace(parent, index, element);
-								updateChildCount(element, -1);
-							}
+					Tracing.printExecTime(() -> {
+						IP4Resource[] members = getMembers((IP4Container) parent);
+						if (members.length > index) {
+							Object element = members[index];
+							((TreeViewer) viewer).replace(parent, index, element);
+							updateChildCount(element, -1);
 						}
-					});
+					}, "updateElement", "P4ContainerNeedsNoRefresh,index={0}, parent={1}", index, parent);
 				} else {
 					if (isLoadAsync()) {
-						Tracing.printExecTime(Policy.DEBUG, "updateElement", MessageFormat.format("AsyncLoad, index={0}, parent={1}",index, parent), new Runnable() {//$NON-NLS-1$,$NON-NLS-2$
-							public void run() {
-								Loading loading = new Loading();
-								((TreeViewer) viewer).replace(container, 0, loading);
-								updateChildCount(container, 1);
-								asyncUpdateContainer(container,index);
-							}
-						});
+						Tracing.printExecTime(() -> {
+							Loading loading = new Loading();
+							((TreeViewer) viewer).replace(container, 0, loading);
+							updateChildCount(container, 1);
+							asyncUpdateContainer(container, index);
+						}, "updateElement", "AsyncLoad, index={0}, parent={1}", index, parent);
 					} else {
-						Tracing.printExecTime(Policy.DEBUG, "updateElement", MessageFormat.format("SyncLoad, index={0}, parent={1}",index, parent), new Runnable() {//$NON-NLS-1$,$NON-NLS-2$
-							public void run() {
-								container.refresh();
-								IP4Resource[] members = getMembers((IP4Container) container);
-								if(members.length>index && index>=0){
-									Object element=members[index];
-									((TreeViewer) viewer).replace(container, index, element);
-									updateChildCount(element, -1);
-								}
+						Tracing.printExecTime(()->{
+							container.refresh();
+							IP4Resource[] members = getMembers((IP4Container) container);
+							if(members.length>index && index>=0){
+								Object element=members[index];
+								((TreeViewer) viewer).replace(container, index, element);
+								updateChildCount(element, -1);
 							}
-						});
+						}, "updateElement", "SyncLoad, index={0}, parent={1}",index, parent);
 					}
 				}
 			}
@@ -411,32 +402,28 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 		Tracing.printTrace("asyncUpdateContainer", "AsyncUpdateContainer + "+index+ ", container="+container);//$NON-NLS-1$,$NON-NLS-2$;
 		ISchedulingRule rule = generateRule(container);
 		P4Runner.schedule(new P4Runnable() {
-			
+
 			@Override
 			public String getTitle() {
 				return MessageFormat
 						.format(com.perforce.team.ui.Messages.PerforceContentProvider_FetchingChildren,
 								container.getName());
 			}
-			
+
 			@Override
 			public void run(IProgressMonitor monitor) {
 				// Check container again to ensure it wasn't already
 				// refreshed on another thread successfully
 				if (container.needsRefresh()) {
-					Tracing.printExecTime(Policy.DEBUG, "AsyncUpdateContainer:refreshContainer()", index+ ", container="+container, new Runnable() {
-						public void run() {
-							refreshContainer(container);
-						}
-					});
+					Tracing.printExecTime(()-> refreshContainer(container), "AsyncUpdateContainer:refreshContainer()", "{0}, container={1}", index, container);
 				}
 				P4UIUtils.getDisplay().syncExec(new Runnable() {
-					
+
 					public void run() {
 						if (P4UIUtils.okToUse(viewer)) {
 							// keep the check state. In case of ContainerCheckboxTreeViewer, this will
 							// a. restore container's check state
-							// b. set children's check state based on container's 
+							// b. set children's check state based on container's
 							if(viewer instanceof ICheckable){
 								// save container's old state
 								boolean checkState = ((ICheckable) viewer).getChecked(container);
@@ -452,22 +439,18 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 								}
 							}else{
 								if(viewer instanceof TreeViewer && viewer.getContentProvider() instanceof ILazyTreeContentProvider){
-									Tracing.printExecTime(Policy.DEBUG, "AsyncUpdateContainer:updateContainerNode", index+ ", container="+container, new Runnable() {
-										public void run() {
-											updateContainerNode((TreeViewer)viewer, container,index);
-										}
-									});
+									Tracing.printExecTime(()-> updateContainerNode((TreeViewer)viewer, container,index), "AsyncUpdateContainer:updateContainerNode()", "{0}, container={1}", index, container);
 								} else
 									viewer.refresh(container);
 							}
 						}
 					}
-					
+
 				});
 			}
-			
+
 		}, rule);
-		
+
 	}
 
 	synchronized private void refreshContainer(IP4Container container) {
@@ -488,7 +471,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 //		viewer.setChildCount(container, members.length);
 //		if(index<members.length)
 //			((TreeViewer)viewer).replace(container, index, members[index]);
-		
+
 	}
 
 }

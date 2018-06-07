@@ -68,4 +68,4 @@ Require-Bundle: org.eclipse.team.core,
  org.eclipse.core.filebuffers,
  org.eclipse.equinox.security;visibility:=reexport,
  org.eclipse.core.databinding
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
