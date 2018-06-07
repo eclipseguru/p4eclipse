@@ -33,6 +33,7 @@ import com.perforce.team.core.P4CoreUtils;
 import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.p4java.IP4File;
 import com.perforce.team.core.p4java.IP4Resource;
+import com.perforce.team.core.p4java.P4Runner;
 import com.perforce.team.ui.P4UIUtils;
 import com.perforce.team.ui.actions.stub.TeamActionCopy;
 
@@ -47,24 +48,24 @@ import com.perforce.team.ui.actions.stub.TeamActionCopy;
  * <p/>
  * The common pattern for using this action is to use it as command handler,
  * or use it as an action delegate:
- * 
+ *
  * <pre>
  *      SyncRevisionAction action = new SyncRevisionAction();
  *      action.selectionChanged(null, new StructuredSelection(file));
  *      action.runAction(revision.getRevision());
  *      ...or
- *          
+ *
  *      EditJobAction edit = new EditJobAction();
  *      edit.selectionChanged(null, new StructuredSelection(selected));
  *      edit.doubleClick(null);
  *      ...or
- *         
+ *
  *      AddAction add = new AddAction();
  *      add.setAsync(false);
  *      add.selectionChanged(null, new StructuredSelection(file));
  *      add.run(null);
  * </pre>
- *   
+ *
  */
 public abstract class PerforceTeamAction extends TeamActionCopy {
 
@@ -97,7 +98,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 
 //    /**
 //     * Returns the selected projects.
-//     * 
+//     *
 //     * @return the selected projects
 //     */
 //    protected IProject[] getSelectedProjects() {
@@ -131,7 +132,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 //
 //    /**
 //     * Returns the selected resources.
-//     * 
+//     *
 //     * @return the selected resources
 //     */
 //    protected IResource[] getSelectedResources() {
@@ -156,7 +157,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 
     /**
      * Get resource from object
-     * 
+     *
      * @param obj
      * @return - resource or null if object couldn't be converted
      */
@@ -166,7 +167,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 
     /**
      * Get file from object
-     * 
+     *
      * @param obj
      * @return - resource or null if object couldn't be converted
      */
@@ -176,7 +177,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 
     /**
      * Get resource from object
-     * 
+     *
      * @param obj
      * @return - resource or null if object couldn't be converted
      */
@@ -186,7 +187,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 
     /**
      * Convenience method for getting the current shell.
-     * 
+     *
      * @return the shell
      */
 	@Override
@@ -198,7 +199,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
         	s=P4UIUtils.getShell();
         	if(s!=null)
         		return s;
-        	
+
         	// check if we are running inside UI thread
         	if(Display.getCurrent()!=null)
         		return Display.getCurrent().getActiveShell();
@@ -225,16 +226,16 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 		// TODO Auto-generated method stub
 		return super.getSelectedResources();
 	}
-	
+
 	@Override
 	protected IWorkbenchPage getTargetPage() {
 		// TODO Auto-generated method stub
 		return super.getTargetPage();
 	}
-	
+
 //    /**
 //     * sets shell for action
-//     * 
+//     *
 //     * @param shell
 //     */
 //    public void setShell(Shell shell) {  //can use super also
@@ -245,7 +246,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
      * This function is required for the Perforce main menu as the enablement
      * state is not refreshed unless the selection is changed. Therefore when an
      * action is carried out this needs to be called to refresh the state.
-     * 
+     *
      */
     public static void refreshActionState() {
         for (Iterator<IAction> it = storedActions.keySet().iterator(); it
@@ -265,7 +266,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
     	super.selectionChanged(action, selection);
     	if(action!=null)
             storedActions.put(action, this);
-    	
+
 //        if (selection instanceof IStructuredSelection) {
 //            this.selection = (IStructuredSelection) selection;
 //            if (action != null) {
@@ -281,33 +282,37 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
      * <code>selection</code> will contain the latest selection so the methods
      * <code>getSelectedResources()</code> and
      * <code>getSelectedProjects()</code> will provide the proper objects.
-     * 
+     *
      * This method can be overridden by subclasses but should not be invoked by
      * them.
-     * 
+     *
      * @param action
      */
     protected void setActionEnablement(IAction action) {
-        try {
-            action.setEnabled(isEnabledEx());
-        } catch (TeamException e) {
-            if (e.getStatus().getCode() == IResourceStatus.OUT_OF_SYNC_LOCAL) {
-                // Enable the action to allow the user to discover the problem
-                action.setEnabled(true);
-            } else {
-                action.setEnabled(false);
-                // We should not open a dialog when determining menu enablements
-                // so log it instead
-                PerforceProviderPlugin.log(e.getStatus());
+    	action.setEnabled(false);
+    	P4Runner.schedule( (monitor) ->  {
+    		try {
+                action.setEnabled(isEnabledEx());
+            } catch (TeamException e) {
+                if (e.getStatus().getCode() == IResourceStatus.OUT_OF_SYNC_LOCAL) {
+                    // Enable the action to allow the user to discover the problem
+                    action.setEnabled(true);
+                } else {
+                    action.setEnabled(false);
+                    // We should not open a dialog when determining menu enablements
+                    // so log it instead
+                    PerforceProviderPlugin.log(e.getStatus());
+                }
             }
-        }
+    	});
+
     }
 
     /**
      * Convenience method that maps the selected resources to their providers.
      * The returned Hashtable has keys which are ITeamProviders, and values
      * which are Lists of IResources that are shared with that provider.
-     * 
+     *
      * @return a hashtable mapping providers to their selected resources
      */
     protected Hashtable<RepositoryProvider, List<IResource>> getProviderMapping() {
@@ -318,7 +323,7 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
      * Convenience method that maps the given resources to their providers. The
      * returned Hashtable has keys which are ITeamProviders, and values which
      * are Lists of IResources that are shared with that provider.
-     * 
+     *
      * @param resources
      * @return a hashtable mapping providers to their resources
      */
@@ -344,16 +349,16 @@ public abstract class PerforceTeamAction extends TeamActionCopy {
 		run(action);
 	}
 
-	
+
     /**
      * Concrete action enablement code. Subclasses must implement.
-     * 
+     *
      * @return whether the action is enabled
      * @throws TeamException
      *             if an error occurs during enablement detection
      */
     protected abstract boolean isEnabledEx() throws TeamException;
-    
+
     /**
      * Enable/disable the action, and execute the concrete delegate impl code.
      * When used as a handler, the action is null.

@@ -3,6 +3,12 @@
  */
 package com.perforce.team.ui.p4java.actions;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.team.core.TeamException;
+
 import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.p4java.IP4Connection;
 import com.perforce.team.core.p4java.IP4Resource;
@@ -10,12 +16,6 @@ import com.perforce.team.core.p4java.P4Runnable;
 import com.perforce.team.core.p4java.P4Runner;
 import com.perforce.team.ui.P4ConnectionManager;
 import com.perforce.team.ui.PerforceUIPlugin;
-
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.team.core.TeamException;
 
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
@@ -28,7 +28,7 @@ public abstract class AsyncEnablementAction extends P4Action {
      * Determine if any elements in the selection are associated with a
      * connection that is non-offline and non-connection. This determines
      * whether the {@link #isEnabledEx()} should be run on the UI-thread.
-     * 
+     *
      * @return true to run {@link #isEnabledEx()} off the ui-thread, false to run
      *         off UI-thread
      */
@@ -59,7 +59,7 @@ public abstract class AsyncEnablementAction extends P4Action {
 
     private boolean isConnected(IP4Connection connection) {
         return connection != null && !connection.isOffline()
-                && !connection.isConnected();
+                && connection.isConnected();
     }
 
     /**

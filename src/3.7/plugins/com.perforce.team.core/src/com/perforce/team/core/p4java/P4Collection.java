@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 import com.perforce.p4java.client.IClient;
@@ -2067,6 +2068,8 @@ public class P4Collection extends P4Resource implements IP4Container {
                 locals.add((IP4File) resource);
             }
             monitor.worked(1);
+            if(monitor.isCanceled())
+            	throw new OperationCanceledException();
         }
 
         // Refresh any files found in the current collection
