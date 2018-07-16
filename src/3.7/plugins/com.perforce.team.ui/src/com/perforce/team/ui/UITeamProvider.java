@@ -19,14 +19,14 @@ public class UITeamProvider extends PerforceTeamProvider {
 
 	private static P4HistoryPageSource historyPageSourceSingleton = new P4HistoryPageSource();
 
-    @Override
-    public <T> T getAdapter(Class<T> adapter) {
-        if (IHistoryPageSource.class == adapter) {
-        	// use singleton to avoid unnecessary refreshes in History view
-            return adapter.cast(historyPageSourceSingleton);
-        }
-        return super.getAdapter(adapter);
-    }
-
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (IHistoryPageSource.class == adapter) {
+			// use singleton to avoid unnecessary refreshes in History view
+			return adapter.cast(historyPageSourceSingleton);
+		}
+		return super.getAdapter(adapter);
+	}
 
 }
