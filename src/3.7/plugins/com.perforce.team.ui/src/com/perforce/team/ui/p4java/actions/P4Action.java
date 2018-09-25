@@ -26,6 +26,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import com.perforce.p4java.core.file.IFileSpec;
 import com.perforce.team.core.P4CoreUtils;
 import com.perforce.team.core.PerforceProviderPlugin;
+import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Connection;
 import com.perforce.team.core.p4java.IP4Container;
 import com.perforce.team.core.p4java.IP4File;
@@ -37,7 +38,6 @@ import com.perforce.team.core.p4java.P4Runner;
 import com.perforce.team.ui.IgnoredFiles;
 import com.perforce.team.ui.P4ConnectionManager;
 import com.perforce.team.ui.actions.PerforceTeamAction;
-import com.perforce.team.ui.parts.OperationProgressMonitorDialog;
 
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
@@ -619,8 +619,8 @@ public abstract class P4Action extends PerforceTeamAction implements IWorkbenchW
 			if (isAsync()) {
 				P4Runner.schedule(runnable);
 			} else {
-				final OperationProgressMonitorDialog dialog = new OperationProgressMonitorDialog(getShell());
-				dialog.runInBackground((monitor) -> runnable.run(monitor));
+				Tracing.printTrace(this.getClass().getSimpleName(), "Running synchronously: {0}", runnable);
+				runnable.run(getMonitor());
 			}
 		}
 	}
