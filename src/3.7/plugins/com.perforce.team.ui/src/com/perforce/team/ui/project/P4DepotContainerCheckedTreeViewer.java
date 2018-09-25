@@ -1,12 +1,10 @@
 package com.perforce.team.ui.project;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.commands.util.Tracing;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -18,21 +16,22 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
+import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Container;
 
 /**
- * CheckboxTreeViewer with special behaviour of the checked / gray state on 
+ * CheckboxTreeViewer with special behaviour of the checked / gray state on
  * container (IP4Container) nodes:
- * 
+ *
  * The grayed state is used to visualize the checked state of its children.
  * Containers are checked and non-gray if all contained children are checked. The
  * container is grayed if some but not all children are checked.
- * 
- * For container which has Leaf (IP4File) nodes, no matter container node is 
- * checked or not, its children leaf nodes will not checked. 
+ *
+ * For container which has Leaf (IP4File) nodes, no matter container node is
+ * checked or not, its children leaf nodes will not checked.
  */
 public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
-	
+
 	private Set<Object> childrenOnlySet=new HashSet<Object>();
 	public boolean addChildOnlyNode(Object obj){
 		return childrenOnlySet.add(obj);
@@ -100,7 +99,7 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
             updateParentItems(treeItem.getParentItem());
         }
     }
-    
+
     /**
      * Updates the check state of all created children
      */
@@ -135,7 +134,7 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
             boolean hasContainerChildren = false;
             for (int i = 0; i < children.length; i++) {
                 TreeItem curr = (TreeItem) children[i];
-                if(curr.getData() instanceof IP4Container){ 
+                if(curr.getData() instanceof IP4Container){
                 	hasContainerChildren=true;
 	                containsChecked |= curr.getChecked();
 	                containsUnchecked |= !curr.getChecked();
@@ -145,7 +144,7 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
                 }
             }
             if(hasContainerChildren){
-            	Tracing.printTrace(getClass().getSimpleName(), MessageFormat.format("updateParentItems(): chlidrenOnlySet= {0}",getChildOnlySet())); //$NON-NLS-1$
+            	Tracing.printTrace(getClass().getSimpleName(), "updateParentItems(): chlidrenOnlySet= {0}",getChildOnlySet()); //$NON-NLS-1$
             	item.setChecked(containsChecked); // must setChecked to notify listeners
             	if(!containsUnchecked && children.length==1){
             		item.setGrayed(containsChecked);
@@ -159,14 +158,14 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
     }
 
     /**
-     * The item has expanded. Updates the checked state of its children. 
+     * The item has expanded. Updates the checked state of its children.
      */
     private void initializeItem(TreeItem item) {
         if (item.getChecked() && !item.getGrayed()) {
             updateChildrenItems(item);
         }
     }
-    
+
     /* (non-Javadoc)
      * @see org.eclipse.jface.viewers.ICheckable#setChecked(java.lang.Object, boolean)
      */
@@ -189,7 +188,7 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
         return false;
     }
 
- 
+
     /* (non-Javadoc)
      * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
      */
@@ -211,7 +210,7 @@ public class P4DepotContainerCheckedTreeViewer extends CheckboxTreeViewer {
         }
     }
 
-   
+
     /* (non-Javadoc)
      * @see org.eclipse.jface.viewers.CheckboxTreeViewer#getCheckedElements()
      */

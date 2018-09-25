@@ -376,22 +376,22 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 //    		Tracing.printTrace("updateChildCount", "Element="+element);
 		    if (element instanceof IP4Container){
 		    	if(!((IP4Container) element).needsRefresh()) {
-		    		Tracing.printTrace("updateChildCount", MessageFormat.format("Element=IP4Container[{0}], NoRefresh, children={1}",element,getMembers((IP4Container) element).length));//$NON-NLS-1$,$NON-NLS-2$
+		    		Tracing.printTrace("updateChildCount", "Element=IP4Container[{0}], NoRefresh, children={1}",element,getMembers((IP4Container) element).length);//$NON-NLS-1$,$NON-NLS-2$
 		    		((TreeViewer) viewer).setChildCount(element, getMembers((IP4Container) element).length);
 		    	}else {// always assume there is a PENDING child for the container
-		    		Tracing.printTrace("updateChildCount", MessageFormat.format("Element=IP4Container[{0}], Refresh, children={1}",element,1));//$NON-NLS-1$,$NON-NLS-2$
+		    		Tracing.printTrace("updateChildCount", "Element=IP4Container[{0}], Refresh, children={1}",element,1);//$NON-NLS-1$,$NON-NLS-2$
 		    		((TreeViewer) viewer).setChildCount(element, 1);
 		    	}
 		    } else if (element instanceof Loading) {
 	    		Tracing.printTrace("updateChildCount", "Element=Loading");//$NON-NLS-1$,$NON-NLS-2$
 		    	((TreeViewer) viewer).setChildCount(element, 0);
 		    } else if (element == roots){
-	    		Tracing.printTrace("updateChildCount", MessageFormat.format("Element=roots{0}, NoRefresh",roots.length>1000?Arrays.toString(new int[]{roots.length}):Arrays.toString(roots)));//$NON-NLS-1$,$NON-NLS-2$
+	    		Tracing.printTrace("updateChildCount", "Element=roots{0}, NoRefresh",roots.length>1000?Arrays.toString(new int[]{roots.length}):Arrays.toString(roots));//$NON-NLS-1$,$NON-NLS-2$
 		    	((TreeViewer) viewer).setChildCount(element, roots.length);
 		    }else {
 		    	if(element!=null){
 			    	int length = super.getChildren(element).length;
-		    		Tracing.printTrace("updateChildCount", MessageFormat.format("Element=[{0}], length={1}",element,length));//$NON-NLS-1$,$NON-NLS-2$
+		    		Tracing.printTrace("updateChildCount", "Element=[{0}], length={1}",element,length);//$NON-NLS-1$,$NON-NLS-2$
 		    		((TreeViewer) viewer).setChildCount(element, length);
 		    	}
 		    }
@@ -399,7 +399,7 @@ public class PerforceContentProvider extends BaseWorkbenchContentProvider
 	}
 
 	protected void asyncUpdateContainer(final IP4Container container, final int index) {
-		Tracing.printTrace("asyncUpdateContainer", "AsyncUpdateContainer + "+index+ ", container="+container);//$NON-NLS-1$,$NON-NLS-2$;
+		Tracing.printTrace("asyncUpdateContainer", "AsyncUpdateContainer + {0}, container={1}", index, container);//$NON-NLS-1$,$NON-NLS-2$;
 		ISchedulingRule rule = generateRule(container);
 		P4Runner.schedule(new P4Runnable() {
 

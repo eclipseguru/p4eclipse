@@ -16,7 +16,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IExecutionListener;
 import org.eclipse.core.commands.NotHandledException;
-import org.eclipse.core.commands.util.Tracing;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -53,6 +52,7 @@ import com.perforce.team.core.ConnectionParameters;
 import com.perforce.team.core.P4SecureStore;
 import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.PerforceTeamProvider;
+import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4File;
 import com.perforce.team.core.p4java.synchronize.P4ChangeSetManager;
 import com.perforce.team.ui.decorator.PerforceDecorator;
@@ -63,7 +63,7 @@ import com.perforce.team.ui.refactor.MoveDeleteManager;
  * Perforce UI plugin class
  * <ul> Updated by ali:
  *   <li>Lazy loading images</li>
- * </ul>  
+ * </ul>
  */
 public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
@@ -98,12 +98,12 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 	              Object returnValue) {
 	          if (IWorkbenchCommandConstants.FILE_REFRESH.equals(commandId)) {
 	        	  final ISelection selection = getActiveWorkbenchWindow().getSelectionService().getSelection();
-		    	  Tracing.printTrace("REFRESH:postExec","Selection= "+getActiveWorkbenchWindow().getSelectionService().getSelection());
+		    	  Tracing.printTrace("REFRESH:postExec","Selection= {0}", getActiveWorkbenchWindow().getSelectionService().getSelection());
 
 		    	  try {
 		    		  if(refreshRevisionOnRefresh()){
 			    		  getDisplay().asyncExec(new Runnable() {
-			    			  
+
 			    			  public void run() {
 			    				  try {
 			    					  RefreshAction refresh = new RefreshAction();
@@ -124,7 +124,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 	      }
 
 	      public void preExecute(String commandId, ExecutionEvent event) {
-	    	  Tracing.printTrace("REFRESH:preExec","Selection= "+getActiveWorkbenchWindow().getSelectionService().getSelection());
+	    	  Tracing.printTrace("REFRESH:preExec","Selection= {0}", getActiveWorkbenchWindow().getSelectionService().getSelection());
 	      }
 
 	  };
@@ -139,7 +139,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get image descriptor from the plugin instance
-     * 
+     *
      * @param id
      * @return - image descriptor
      */
@@ -175,7 +175,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * update decorator based on resource events
-     * 
+     *
      * @param event
      */
     private void updateDecorator(IResourceChangeEvent event) {
@@ -209,14 +209,14 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
         PerforceTeamProvider.registerFileModicationsValidator(null);
 
         P4ChangeSetManager.getChangeSetManager().dispose();
-        
+
         removeRefreshListener();
         super.stop(context);
     }
 
     /**
      * Get the plugin instance
-     * 
+     *
      * @return - plugin instance
      */
     public static PerforceUIPlugin getPlugin() {
@@ -225,7 +225,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get the display
-     * 
+     *
      * @return - display
      */
     public static Display getDisplay() {
@@ -238,7 +238,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Is the current calling thread the UI thread?
-     * 
+     *
      * @return - true if current thread is UI thread, false otherwise
      */
     public static boolean isUIThread() {
@@ -251,7 +251,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
     /**
      * Run the runnable code asynchronously on the display returned from
      * {@link #getDisplay()}
-     * 
+     *
      * @param code
      */
     public static void asyncExec(Runnable code) {
@@ -261,7 +261,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
     /**
      * Run the runnable code synchronously on the display returned from
      * {@link #getDisplay()}
-     * 
+     *
      * @param code
      */
     public static void syncExec(Runnable code) {
@@ -270,7 +270,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get active workbench window
-     * 
+     *
      * @return - workbench window
      */
     public static IWorkbenchWindow getActiveWorkbenchWindow() {
@@ -279,7 +279,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get active page
-     * 
+     *
      * @return - workbench page
      */
     public static IWorkbenchPage getActivePage() {
@@ -289,7 +289,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get current label decorator
-     * 
+     *
      * @return - label decorator
      */
     public static ILabelDecorator getLabelDecorator() {
@@ -299,12 +299,12 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Save any resources currently being edited
-     * 
+     *
      * @param page
      *            the page containing the resources
      * @param paths
      *            the paths to the resources
-     * 
+     *
      */
     public static void saveDirtyResources(IWorkbenchPage page, String[] paths) {
         IEditorPart[] editors = page.getDirtyEditors();
@@ -329,7 +329,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
     /**
      * Save the dirty resources for the p4 files specified that may be in an
      * open dirty editor
-     * 
+     *
      * @param page
      * @param p4Files
      */
@@ -343,7 +343,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Save dirty resources
-     * 
+     *
      * @param page
      * @param files
      */
@@ -365,14 +365,14 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Convenience method for logging statuses to the plugin log
-     * 
+     *
      * @param status
      *            the status to log
      */
     public static void log(IStatus status) {
         getPlugin().getLog().log(status);
     }
-    
+
 	/**
 	 * Handle an error. The error is logged. If <code>show</code> is
 	 * <code>true</code> the error is shown to the user.
@@ -416,7 +416,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 
     /**
      * Get image descriptor
-     * 
+     *
      * @param id
      * @return - image descriptor or null if none for specified id
      */
@@ -427,7 +427,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
     	}
         return imageDescriptors.get(id);
     }
-    
+
 	public static Image getImage( String pluginRelativePath )
 	{
 		ImageRegistry registry = JFaceResources.getImageRegistry( );
@@ -446,7 +446,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 				registry.put( resourcePath, image );
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 		return image;
 	}
@@ -475,14 +475,14 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
 	public void earlyStartup() {
 		registerRefreshListener();
 	}
-	
+
     private void registerRefreshListener() {
     	// Add listener to monitor Refresh commands
     	ICommandService commandService = (ICommandService) PlatformUI
     	      .getWorkbench().getAdapter(ICommandService.class);
     	if (commandService != null) {
     	  commandService.addExecutionListener(refreshListener);
-    	}		
+    	}
 	}
 
     private void removeRefreshListener() {
@@ -491,7 +491,7 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
     			.getWorkbench().getAdapter(ICommandService.class);
     	if (commandService != null) {
     		commandService.removeExecutionListener(refreshListener);
-    	}		
+    	}
 	}
 
 	public static boolean refreshRevisionOnRefresh() {

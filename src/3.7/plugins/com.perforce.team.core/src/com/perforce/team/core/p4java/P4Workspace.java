@@ -592,7 +592,7 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
      * @see com.perforce.team.core.p4java.IEventObject#notifyListeners(com.perforce.team.core.p4java.P4Event)
      */
     public void notifyListeners(final P4Event event) {
-    	Tracing.printTrace(getClass().getSimpleName()+":notifyListners()", event.toString());//$NON-NLS-1$
+    	Tracing.printTrace(getClass().getSimpleName()+":notifyListners()", "{0}", event);//$NON-NLS-1$
         for (final Object listener : listeners.getListeners()) {
 			Tracing.printExecTime(()-> ((IP4Listener) listener).resoureChanged(event), getClass().getSimpleName()+":notifyListeners()", "{0}", ((IP4Listener)listener).getName());
         }

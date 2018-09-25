@@ -947,22 +947,22 @@ class PendingViewContentProvider extends PerforceContentProvider implements ILaz
 
 	public void updateChildCount(Object element, int currentChildCount) {
 		if(viewer instanceof TreeViewer){
-    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", MessageFormat.format("Element={0}",element));//$NON-NLS-1$,$NON-NLS-2$
+    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount","Element={0}",element);//$NON-NLS-1$,$NON-NLS-2$
 		    if (element instanceof IP4Changelist){
 		    	if(!((IP4Changelist) element).needsRefresh()) {// must use getMembers() instead of calling Conainter.memebers().
 		    		IP4Resource[] members = getMembers((IP4Changelist) element);
-		    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", MessageFormat.format("Element=IP4Container[{0}], NoRefresh, children={1}",element,members.length));//$NON-NLS-1$,$NON-NLS-2$
+		    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", "Element=IP4Container[{0}], NoRefresh, children={1}",element,members.length);//$NON-NLS-1$,$NON-NLS-2$
 		    		if(currentChildCount!=members.length)
 		    			((TreeViewer) viewer).setChildCount(element, members.length);
 		    	}else{// always assume there is a PENDING child for the container
-		    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", MessageFormat.format("Element=IP4Container[{0}], Refresh, children={1}",element,1));//$NON-NLS-1$,$NON-NLS-2$
+		    		Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", "Element=IP4Container[{0}], Refresh, children={1}",element,1);//$NON-NLS-1$,$NON-NLS-2$
 		    		((TreeViewer) viewer).setChildCount(element, 1);
 		    	}
 		    } else if (element instanceof Loading) {
 		    	Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", "Element=Loading");//$NON-NLS-1$,$NON-NLS-2$
 		    	((TreeViewer) viewer).setChildCount(element, 0);
 		    } else if (element == roots){
-		    	Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", MessageFormat.format("Element=roots{0}, NoRefresh",roots.length>1000?Arrays.toString(new int[]{roots.length}):Arrays.toString(roots)));//$NON-NLS-1$,$NON-NLS-2$
+		    	Tracing.printTrace(getClass().getSimpleName()+":updateChildCount", "Element=roots{0}, NoRefresh", (Object)roots);//$NON-NLS-1$,$NON-NLS-2$
 		    	if(currentChildCount!=roots.length)
 		    		((TreeViewer) viewer).setChildCount(element, roots.length);
 		    } else {

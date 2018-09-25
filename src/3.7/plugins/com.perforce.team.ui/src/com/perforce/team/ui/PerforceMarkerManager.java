@@ -7,9 +7,7 @@ package com.perforce.team.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -38,8 +36,6 @@ import com.perforce.team.core.PerforceProviderPlugin;
 import com.perforce.team.core.PerforceTeamProvider;
 import com.perforce.team.core.Tracing;
 import com.perforce.team.core.p4java.IP4Connection;
-import com.perforce.team.core.p4java.IP4Container;
-import com.perforce.team.core.p4java.P4Resource;
 import com.perforce.team.core.p4java.builder.P4FileSpecBuilder;
 import com.perforce.team.ui.decorator.PerforceDecorator;
 import com.perforce.team.ui.operations.RetryableOperation;
@@ -128,7 +124,7 @@ public class PerforceMarkerManager implements IProjectSettingsChangeListener,
         if (disableMarkerDecoration) {
         	return;
         }
-        
+
         IResourceDelta root = event.getDelta();
         IResourceDelta[] projectDeltas = root.getAffectedChildren();
 
@@ -182,8 +178,8 @@ public class PerforceMarkerManager implements IProjectSettingsChangeListener,
                             List<IFile> managedList = new ArrayList<IFile>();
                             List<IFile> managedUndeleteList = new ArrayList<IFile>();
 
-                            // we use the fstat instead of have to include the status in 
-                            // pending changelist, then check the status to make sure 
+                            // we use the fstat instead of have to include the status in
+                            // pending changelist, then check the status to make sure
                             // there is no existing file spec before we add.
                             // In case pending changelists contains a just branched file,
                             // an add could change the action from branch to add.
@@ -217,12 +213,12 @@ public class PerforceMarkerManager implements IProjectSettingsChangeListener,
                             IFile[] resourcesToRefresh = managedList
                                     .toArray(new IFile[managedList.size()]);
                             IFile[] resourcesToUndelete = managedUndeleteList.toArray(new IFile[managedUndeleteList.size()]);
-                            
+
                             if(resourcesToUndelete.length>0){
                                 final Display currentDisplay = PerforceUIPlugin
                                         .getDisplay();
                                 final IFile[] undeleteResourcesCopy = resourcesToUndelete;
-                                
+
                                 currentDisplay.syncExec(new Runnable() {
 
                                     public void run() {
@@ -312,7 +308,7 @@ public class PerforceMarkerManager implements IProjectSettingsChangeListener,
      */
     public boolean visit(IResourceDelta delta) {
         IResource resource = delta.getResource();
-        Tracing.printTrace("VISIT DELTA","deltaType="+delta.getKind()+", "+resource.getName());
+        Tracing.printTrace("VISIT DELTA","deltaType={0}, {1}", delta.getKind(), resource.getName());
         if ((delta.getKind() == IResourceDelta.ADDED || delta.getKind()==IResourceDelta.CHANGED)
                 && resource instanceof IFile) {
             if (!(PerforceProviderPlugin.isIgnoredHint(resource) || IgnoredFiles

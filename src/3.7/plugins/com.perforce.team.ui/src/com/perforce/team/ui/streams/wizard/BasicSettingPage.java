@@ -4,7 +4,6 @@ package com.perforce.team.ui.streams.wizard;
 import java.text.MessageFormat;
 
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.core.commands.util.Tracing;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.validation.ValidationStatus;
@@ -34,6 +33,8 @@ import com.perforce.p4java.core.IStream;
 import com.perforce.p4java.core.IStreamSummary;
 import com.perforce.p4java.core.IStreamSummary.Type;
 import com.perforce.team.core.IConstants;
+import com.perforce.team.core.Policy;
+import com.perforce.team.core.Tracing;
 import com.perforce.team.ui.IPerforceUIConstants;
 import com.perforce.team.ui.PerforceUIPlugin;
 import com.perforce.team.ui.SWTUtils;
@@ -45,7 +46,7 @@ import com.perforce.team.ui.streams.wizard.StreamParentSelectionWidget.TaskStrea
 
 /**
  * Basic setting page.
- * 
+ *
  * @author ali
  *
  */
@@ -58,7 +59,7 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
     private Text descText;
 //    private Button createWorkspaceBtn;
     private Button populateBtn;
-    
+
     public BasicSettingPage() {
         super(BasicSettingPage.class.getName());
         setImageDescriptor(PerforceUIPlugin.getPlugin().getImageDescriptor(
@@ -70,17 +71,17 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
     public void createControl(Composite parent) {
 
         IStreamSummary sum=getStream();
-        
+
         FixedWidthScrolledComposite scroll = new FixedWidthScrolledComposite(parent, SWT.V_SCROLL);
         scroll.setLayout(new FillLayout());
         Composite composite = new Composite(scroll, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(composite);
-        
+
         SWTUtils.createLabel(composite, com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_StreamName);
         nameText=SWTUtils.createText(composite);
         if(sum!=null && sum.getName()!=null)
             nameText.setText(sum.getName());
-        
+
         SWTUtils.createLabel(composite, com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_StreamType);
         typeCombo=new StreamTypeComboViewer(composite);
         GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(typeCombo.getControl());
@@ -103,11 +104,11 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
         	// this does not make selection visible, i.e., typeCombo.getSelection() is empty
         	typeCombo.setSelection(new StructuredSelection(sum.getType()));
         }
-        
+
         SWTUtils.createLabel(composite, com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_ChangePropagation);
         propWidget=new PropagationOptionWidget(composite,SWT.NONE, getStream());
         GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(propWidget);
-        
+
         parentWidget=new StreamParentSelectionWidget(composite, SWT.NONE, getConnection(), getWizard().getContainer());
         GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(parentWidget);
         parentWidget.init(getConnection(),getStream());
@@ -118,7 +119,7 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
         if(sum!=null && sum.getDescription()!=null){
             descText.setText(sum.getDescription());
         }
-        
+
 //        createWorkspaceBtn=SWTUtils.createButton(composite, com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_CreateWorkspace, SWT.CHECK, 1);
 //        GridData gd=(GridData) createWorkspaceBtn.getLayoutData();
 //        gd.exclude=getWizard().isEditMode();
@@ -155,17 +156,18 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
 	public boolean canFlipToNextPage() {
 		if(getWizard().isStreamLocked())
 			return true;
-		
+
 		return super.canFlipToNextPage();
 	}
-	
+
     protected void validateAndUpdate() {
         if((getWizard().isEditMode())&&getWizard().isStreamLocked()){
         	applyToStatusLine(ValidationStatus.warning(getWizard().getStreamLockMessage()));
         	return;
         }
 
-        Tracing.printTrace("StreamWizard>>", StreamUtil.print(getStream())); //$NON-NLS-1$
+        if(Policy.DEBUG)
+        	Tracing.printTrace("StreamWizard>>", StreamUtil.print(getStream())); //$NON-NLS-1$
         IStatus status = validate();
         applyToStatusLine(status);
         getWizard().getContainer().updateButtons();
@@ -182,14 +184,14 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
                 }
             }
         });
-        
+
         nameText.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 getStream().setName(nameText.getText());
                 if(!getWizard().isEditMode()){
                     String depot=StreamUtil.getDepot(getStream());
                     if(StringUtils.isEmpty(depot)){
-                       depot=StreamUtil.getParentDepot(getStream()); 
+                       depot=StreamUtil.getParentDepot(getStream());
                     }
                     if(!StringUtils.isEmpty(depot) && !getWizard().rootFolderChanged){
                         StreamUtil.updateStream(getStream(), getStream().getName(), depot);
@@ -212,20 +214,20 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
 			}
 		});
         descText.addModifyListener(new ModifyListener() {
-            
+
             public void modifyText(ModifyEvent e) {
                 getStream().setDescription(descText.getText());
             }
         });
-        
+
         SWTUtils.addContentListener(new Control[]{nameText,typeCombo.getControl(),descText, propWidget}, new Runnable() {
             public void run() {
                 validateAndUpdate();
             }
         });
-        
+
         parentWidget.getLocationValue().addValueChangeListener(new IValueChangeListener() {
-            
+
             public void handleValueChange(ValueChangeEvent event) {
                 Object newValue = event.diff.getNewValue();
                 String btnText=""; //$NON-NLS-1$
@@ -233,7 +235,7 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
                 	String stream=null;
                     SelectionModel value=(SelectionModel) newValue;
                   if(value!=null){
-                      Object obj = value.getSelection(); 
+                      Object obj = value.getSelection();
                       if(obj instanceof IStreamSummary){
                           stream=((IStreamSummary) obj).getStream();
                       }
@@ -271,7 +273,7 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
                 	}else{
                 		String stream=null;
                         if(sm!=null){
-                            Object obj = sm.getSelection(); 
+                            Object obj = sm.getSelection();
                             if(obj instanceof IStreamSummary){
                                 stream=((IStreamSummary) obj).getStream();
                             }
@@ -315,7 +317,7 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
 	protected void enableParentWidget() {
 		if(getWizard().isEditMode()){
 			parentWidget.setEnabled(getWizard().getOriginalStream().getType()!=Type.TASK);
-		}		
+		}
 	}
 
 	@Override
@@ -325,11 +327,11 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
         if(StringUtils.isEmpty(stream.getName())){
             return ValidationStatus.error(com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_NameEmptyError);
         }
-        
+
         if(stream.getType()==null){
             return ValidationStatus.error(com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_TypeEmptyError);
         }
-        
+
         if(stream.getType()!=IStreamSummary.Type.MAINLINE && stream.getType()!=IStreamSummary.Type.TASK){
             if(StreamUtil.isParentEmpty(stream))
                 return ValidationStatus.error(com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_ParentStreamNotExistError);
@@ -338,11 +340,11 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
             if(StringUtils.isEmpty(depot) || IConstants.UNKNOWN.equals(depot))
                 return ValidationStatus.error(com.perforce.team.ui.streams.wizard.Messages.BasicSettingPage_StreamDepotNotSet);
         }
-        
+
         if(stream.getStream()!=null && stream.getStream().equals(stream.getParent())){
             return ValidationStatus.error(Messages.AdvancedSettingPage_CannotCreateSelfParentStream);
         }
-        
+
         if(!StreamUtil.isValidStreamFormat(stream))
             return ValidationStatus.error(MessageFormat.format(Messages.AdvancedSettingPage_StreamFormatIncorrect,stream.getStream()));
 
@@ -357,5 +359,5 @@ public class BasicSettingPage extends AbstractEditStreamWizardPage {
 		}
 		return false;
 	}
-    
+
 }

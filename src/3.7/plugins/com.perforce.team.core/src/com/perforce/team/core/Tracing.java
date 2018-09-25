@@ -36,22 +36,21 @@ public final class Tracing {
 	 * <pre>
 	 *        BINDINGS &gt;&gt; There are 4 deletion markers
 	 * </pre>
-	 *
 	 * @param component The component for which this tracing applies; may be
 	 *                  <code>null</code>
-	 * @param message   The message to print to standard out; may be
+	 * @param messageFormat   The message to print to standard out; may be
 	 *                  <code>null</code>.
+	 * @param messageArguments TODO
 	 */
-	public static final void printTrace(final boolean debug, final String component, final String message) {
+	public static final void printTrace(final boolean debug, final String component, final String messageFormat, Object... messageArguments) {
 		if (debug) {
-			String output = constructMessage(component, message);
+			String output = constructMessage(component, messageFormat, messageArguments);
 			System.out.println("TRACE " + output);//$NON-NLS-1$
-//			PerforceProviderPlugin.logInfo(getTimestamp()+" "+output);
 		}
 	}
 
-	public static final void printTrace(final String component, final String message) {
-		printTrace(Policy.DEBUG, component, message);
+	public static final void printTrace(final String component, final String messageFormat, Object... messageArguments) {
+		printTrace(Policy.DEBUG, component, messageFormat, messageArguments);
 	}
 
 	private static String constructMessage(String component, String messageFormat, Object... messageArguments) {

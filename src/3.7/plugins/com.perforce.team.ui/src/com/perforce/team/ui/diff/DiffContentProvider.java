@@ -3,17 +3,6 @@
  */
 package com.perforce.team.ui.diff;
 
-import com.perforce.team.core.P4CoreUtils;
-import com.perforce.team.core.Policy;
-import com.perforce.team.core.Tracing;
-import com.perforce.team.core.p4java.IP4File;
-import com.perforce.team.core.p4java.IP4Resource;
-import com.perforce.team.core.p4java.P4Runnable;
-import com.perforce.team.core.p4java.P4Runner;
-import com.perforce.team.ui.P4UIUtils;
-import com.perforce.team.ui.PerforceContentProvider;
-import com.perforce.team.ui.PerforceUIPlugin;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +17,20 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 
+import com.perforce.team.core.P4CoreUtils;
+import com.perforce.team.core.Policy;
+import com.perforce.team.core.Tracing;
+import com.perforce.team.core.p4java.IP4File;
+import com.perforce.team.core.p4java.IP4Resource;
+import com.perforce.team.core.p4java.P4Runnable;
+import com.perforce.team.core.p4java.P4Runner;
+import com.perforce.team.ui.P4UIUtils;
+import com.perforce.team.ui.PerforceContentProvider;
+import com.perforce.team.ui.PerforceUIPlugin;
+
 /**
  * @author Kevin Sawicki (ksawicki@perforce.com)
- * 
+ *
  */
 public abstract class DiffContentProvider extends PerforceContentProvider {
 
@@ -41,7 +41,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Creates a new content provider for a structured viewer
-     * 
+     *
      * @param viewer
      */
     public DiffContentProvider(StructuredViewer viewer) {
@@ -50,7 +50,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param async
      */
@@ -60,7 +60,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param context
      */
@@ -70,7 +70,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Creates a new content provider for a structured view
-     * 
+     *
      * @param viewer
      * @param async
      * @param context
@@ -82,7 +82,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Can this content provider generate child nodes for the specified file
-     * 
+     *
      * @param file
      * @return - true if can diff
      */
@@ -90,7 +90,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Get left diff side storage
-     * 
+     *
      * @param resource
      * @param file
      * @return - storage
@@ -99,7 +99,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Get right diff side storage
-     * 
+     *
      * @param resource
      * @param file
      * @return - storage
@@ -108,7 +108,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Generate the diff using the differ specified
-     * 
+     *
      * @param differ
      * @param resource
      * @param file
@@ -150,7 +150,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Update a resource after the diff elements load for it
-     * 
+     *
      * @param resource
      */
     protected void updateResource(IP4Resource resource) {
@@ -163,7 +163,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Get differ for specified resource
-     * 
+     *
      * @param resource
      * @return - file differ or null if none found
      */
@@ -201,7 +201,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
 
     /**
      * Get diffs from differ. Sub-classes may override.
-     * 
+     *
      * @param differ
      * @param resource
      * @return non-null but possibly empty array
@@ -215,7 +215,7 @@ public abstract class DiffContentProvider extends PerforceContentProvider {
      */
     @Override
     public Object[] getChildren(Object parentElement) {
-    	Tracing.printTrace(Policy.DEBUG,"SUBMIT", getClass().getSimpleName()+":getChildren() parentElement="+parentElement);//$NON-NLS-1$,$NON-NLS-2$
+    	Tracing.printTrace(Policy.DEBUG,"SUBMIT", getClass().getSimpleName()+":getChildren() parentElement={0}", parentElement);//$NON-NLS-1$,$NON-NLS-2$
         if (parentElement instanceof IP4Resource) {
             IP4Resource resource = (IP4Resource) parentElement;
             if (resource.isFile() && canDiff(resource)) {

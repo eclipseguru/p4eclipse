@@ -6,7 +6,6 @@ package com.perforce.team.ui.project;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -304,7 +303,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 					}
                 }
             	depotViewer.removeChildOnlyNode(element);
-            	Tracing.printTrace("ImportProjects",MessageFormat.format("removeChildOnlyNode {0}, childOnlySet={1}",element,depotViewer.getChildOnlySet()));//$NON-NLS-1$ //$NON-NLS-2$,$NON-NLS-2$
+            	Tracing.printTrace("ImportProjects", "removeChildOnlyNode {0}, childOnlySet={1}",element,depotViewer.getChildOnlySet());//$NON-NLS-1$ //$NON-NLS-2$,$NON-NLS-2$
             	Tracing.printExecTime(() -> updateSelectedFolders(event.getElement()), "ImportProjects", "TREE: collect children");
                 validateStreamDirectories(folders);
             }
@@ -402,7 +401,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
 
 			            	if(hasSubfolders((IP4Container) sel)){
 			            		depotViewer.addChildOnlyNode(sel);
-			            		Tracing.printTrace("ImportProjects",MessageFormat.format("addChildOnlyNode {0}, childOnlySet={1}",sel,depotViewer.getChildOnlySet()));//$NON-NLS-1$ //$NON-NLS-2$
+			            		Tracing.printTrace("ImportProjects", "addChildOnlyNode {0}, childOnlySet={1}",sel,depotViewer.getChildOnlySet());//$NON-NLS-1$ //$NON-NLS-2$
 			            		if(!checked)
 			            			depotViewer.setChecked(sel, true);
 			            		if(!grayed)
@@ -435,7 +434,7 @@ public class ImportProjectsWizardPage extends BaseConnectionWizardPage {
         projectsViewer.setInput(folders); // update projects viewer
         projectsViewer.setSelection(new StructuredSelection(sel));
 
-    	Tracing.printTrace("ImportProjects", "\n\nSELECTED:"+Arrays.toString(folders)); //$NON-NLS-1$ //$NON-NLS-2$
+    	Tracing.printTrace("ImportProjects", "\n\nSELECTED:{0}", (Object) folders); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void collectChildren(TreeItem item, List<IP4Folder> result) {
