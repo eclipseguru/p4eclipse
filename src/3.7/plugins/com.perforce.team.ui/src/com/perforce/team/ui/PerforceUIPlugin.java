@@ -179,24 +179,22 @@ public class PerforceUIPlugin extends AbstractUIPlugin implements IStartup{
      * @param event
      */
     private void updateDecorator(IResourceChangeEvent event) {
-        /**
-         * this handle case where project is opened
-         */
-        IResourceDelta[] resourceDelta = event.getDelta().getAffectedChildren();
-        for (int i = 0; i < resourceDelta.length; i++) {
-            IResourceDelta delta = resourceDelta[i];
-            int flags = delta.getFlags();
-            IResource resource = delta.getResource();
-            boolean fopened = (flags & IResourceDelta.OPEN) != 0;
-            if ((resource instanceof IProject) && fopened) {
-                PerforceDecorator decorator = PerforceDecorator
-                        .getActivePerforceDecorator();
-                if (decorator != null) {
-                    decorator
-                            .resourceStateChanged(new IResource[] { resource });
-                }
-            }
-        }
+		final PerforceDecorator decorator = PerforceDecorator.getActivePerforceDecorator();
+		if (decorator != null) {
+			/**
+			 * this handle case where project is opened
+			 */
+			IResourceDelta[] resourceDelta = event.getDelta().getAffectedChildren();
+			for (int i = 0; i < resourceDelta.length; i++) {
+				IResourceDelta delta = resourceDelta[i];
+				int flags = delta.getFlags();
+				IResource resource = delta.getResource();
+				boolean fopened = (flags & IResourceDelta.OPEN) != 0;
+				if ((resource instanceof IProject) && fopened) {
+					decorator.resourceStateChanged(new IResource[] { resource });
+				}
+			}
+		}
     }
 
     /**
