@@ -273,6 +273,44 @@
 	</build>
 
 	<profiles>
+
+        <profile>
+          <!-- default buildType when running in CI -->
+          <id>default-buildType</id>
+          <properties>
+            <buildType>${env.BUILD_TYPE}</buildType>
+          </properties>
+          <activation>
+            <property>
+              <name>env.BUILD_TYPE</name>
+            </property>
+          </activation>
+        </profile>
+        <profile>
+          <!-- default buildId when running in CI -->
+          <id>default-buildId</id>
+          <properties>
+            <buildId>${env.BUILD_ID}</buildId>
+          </properties>
+          <activation>
+            <property>
+              <name>env.BUILD_ID</name>
+            </property>
+          </activation>
+        </profile>
+        <profile>
+          <!-- default buildLabel when running in CI -->
+          <id>default-buildLabel</id>
+          <properties>
+            <buildLabel>${env.BUILD_LABEL}</buildLabel>
+          </properties>
+          <activation>
+            <property>
+              <name>env.BUILD_LABEL</name>
+            </property>
+          </activation>
+        </profile>
+
 		<profile>
 			<id>useExistingP2Repo</id>
 			<activation>
