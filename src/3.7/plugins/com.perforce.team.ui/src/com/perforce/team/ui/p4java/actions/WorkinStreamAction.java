@@ -43,7 +43,7 @@ import com.perforce.team.ui.streams.StreamUtil;
 
 
 public class WorkinStreamAction extends AbstractStreamAction {
-	
+
     public void workinStream(IP4Stream target){
         if (target != null) {
         	doRun(target);
@@ -59,7 +59,7 @@ public class WorkinStreamAction extends AbstractStreamAction {
 		}
 		if(info==null)
 			return null;
-		
+
 		// try to generate client name like: ali_ubuntn_hh_3232
 		String user = info.getUserName();
 		String host = info.getClientHost();
@@ -89,17 +89,17 @@ public class WorkinStreamAction extends AbstractStreamAction {
 				clientName=name;
 				break;
 			}
-		}		
-		
+		}
+
 		String clientRoot=getPrefStore().getString(IPerforceUIConstants.PREF_CLIENT_ROOT_PARENT_DEFAULT)+File.separator+clientName;
 		IClientOptions options=new ClientOptions();
 		IClientSubmitOptions submitOptions= new ClientSubmitOptions();
 		ClientView clientView=new ClientView();
-		
+
 		IClient candidate = new Client(clientName, new Date(), new Date(),
 				Messages.WorkinStreamAction_CreatedBy + user, host, user, clientRoot,
 				ClientLineEnd.LOCAL, options, submitOptions, null,
-				connection.getServer(), clientView, stream);
+				connection.getServer(), clientView, stream, null);
 		try {
 			NewClientDialog dialog = new NewClientDialog(getShell(),
 					connection, candidate);
@@ -121,18 +121,18 @@ public class WorkinStreamAction extends AbstractStreamAction {
 
         	if(isResourceInClientStream(target))
         		return;
-        	
+
         	// p4 client -f -s -S targetStream clientName
         	final String stream = getStreamFromResource(target);
         	if(stream==null||stream.isEmpty()||stream.equals(StreamUtil.DEFAULT_PARENT))
         		return;
-    		
+
         	final IP4Connection connection = target.getConnection();
-        	
+
         	final String jobTitle=MessageFormat.format(Messages.WorkinStreamAction_SwitchToStream, stream);
-        	
+
         	final Shell shell=getShell();
-        	
+
 	        P4Runner.schedule(new P4Runnable() {
 
 	            @Override
@@ -153,20 +153,20 @@ public class WorkinStreamAction extends AbstractStreamAction {
 	        		 * <li>switch client</li>
 	        		 * <li>refresh resource</li>
 	        		 * </ul>
-	        		 * 
+	        		 *
 	        		 */
 	            	GetClientsOptions opts = new GetClientsOptions();
 	            	opts.setUserName(connection.getUser());
 	            	opts.setStream(stream);
 	            	opts.setMaxResults(100);
 	            	final List<IClientSummary> clients = connection.getClients(opts);
-	            	
+
 	            	final IClientSummary[] clientToSwitch=new IClientSummary[1];
-	            	
+
 	            	final String switchStreamHow=getPrefStore().getString(IPerforceUIConstants.PREF_CLIENT_SWITCH_ON_STREAM_OPERATOIN);
 	            	final boolean noWarn = getPrefStore().getBoolean(IPerforceUIConstants.PREF_CLIENT_SWITCH_NO_WARN);
-	            	
-	            	
+
+
 	                PerforceUIPlugin.syncExec(new Runnable() {
 	                    public void run() {
 	                    	final String NO_WARN_TEXT=Messages.WorkinStreamAction_DontWarnWheSwitchStream;
@@ -193,7 +193,7 @@ public class WorkinStreamAction extends AbstractStreamAction {
 	                    		}else{ // maybe we should allow user to choose which one?
 	                    			IClientSummary c = clients.get(0);
 	                    			if(noWarn){
-    	                    			clientToSwitch[0] = c;	                    				
+    	                    			clientToSwitch[0] = c;
 	                    			}else{
 		                    			String message=MessageFormat.format(Messages.WorkinStreamAction_MustSwitchWorkspaceByCreateNew,stream, c.getName());
 	    	                    		int code=SwitchStreamDialog.open(MessageDialog.QUESTION, getShell(), Messages.WorkinStreamAction_SwitchStream, message, NO_WARN_TEXT, new String[]{Messages.WorkinStreamAction_SwitchWorkspace,Messages.WorkinStreamAction_NewWorkspace,IDialogConstants.CANCEL_LABEL}, new int[]{IDialogConstants.OK_ID, IDialogConstants.YES_ID, IDialogConstants.NO_ID}, 0);
@@ -219,7 +219,7 @@ public class WorkinStreamAction extends AbstractStreamAction {
 	                ConnectionParameters newParam = new ConnectionParameters(connection.getParameters().toString());
 	                newParam.setClient(clientToSwitch[0].getName());
 	                IP4Connection newConn = P4ConnectionManager.getManager().getConnection(newParam);
-	                
+
 	                newConn.refreshClient();
 	                P4TeamUtils.processClientChange(newConn, shell,true, MessageFormat.format(com.perforce.team.ui.p4java.actions.Messages.AbstractStreamAction_StreamSwitchedDesc, stream));
                     newConn.markForRefresh();
