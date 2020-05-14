@@ -59,8 +59,8 @@ Export-Package: com.perforce.p4java,
  org.apache.commons.lang3.time,
  org.apache.commons.lang3.tuple
 Bundle-ClassPath: .,
- libraries/p4java-2015.2.1312663.MAIN-TEST_ONLY-20151208.193116-1.jar,
- libraries/commons-lang3-3.1.jar
+ libraries/commons-lang3-3.1.jar,
+ libraries/p4java-2019.1.1939255.jar
 Require-Bundle: org.eclipse.team.core,
  org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
