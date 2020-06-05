@@ -1141,6 +1141,8 @@ public final class P4Workspace implements IEventObject, IErrorReporter {
 
 	public static IServer createServer(String serverUri, Properties props) throws ConnectionException, NoSuchObjectException, ConfigException, ResourceException, URISyntaxException{
 		props.put("enableProgress", "true"); // enable progress reporting
+		if(!props.containsKey("secureSocketEnabledProtocols"))
+		    props.put("secureSocketEnabledProtocols", "TLSv1.3,TLSv1.2,TLSv1.1,TLSv1"); // override TLSv1 default in p4java
 
 		UsageOptions opts=new UsageOptions(props);
         opts.setHostName(getP4HOST());
