@@ -32,7 +32,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<junit-version>4.8.1</junit-version>
+		<junit-version>4.13.1</junit-version>
 		<!-- jacoco.version>0.5.3.201107060350</jacoco.version -->
 		<jacoco.version>0.6.3.201306030806</jacoco.version>
 		<sonarHost>localhost</sonarHost>
