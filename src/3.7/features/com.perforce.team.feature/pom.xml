@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>com.perforce.team.feature</artifactId>
+  <version>2018.1.999-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

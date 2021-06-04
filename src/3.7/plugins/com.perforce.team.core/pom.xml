@@ -8,9 +8,8 @@
     <version>2018.1.0-SNAPSHOT</version>
     <relativePath>../../build/p4eclipse_parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.perforce</groupId>
   <artifactId>com.perforce.team.core</artifactId>
-  <version>2018.1.0-SNAPSHOT</version>
+  <version>2018.1.999-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 <!-- replaced with ../../build/p4eclipse_parent/replacep4java.xml
@@ -84,20 +83,20 @@
 										</delete>
 										<echo>copying ${project.build.directory}/dependency/${p4javaName} to ${basedir}/libraries/${p4javaName}</echo>
 										<copy file="${project.build.directory}/dependency/${p4javaName}" tofile="${basedir}/libraries/${p4javaName}"/>
-										<replaceregexp 
-											file="${basedir}/.classpath" 
+										<replaceregexp
+											file="${basedir}/.classpath"
 											match="p4java-.*\.jar"
-											flags="m" 
+											flags="m"
 											replace="${p4javaName}" />
-										<replaceregexp 
-											file="${basedir}/META-INF/MANIFEST.MF" 
+										<replaceregexp
+											file="${basedir}/META-INF/MANIFEST.MF"
 											match="p4java-.*\.jar"
-											flags="m" 
+											flags="m"
 											replace="${p4javaName}" />
-										<replaceregexp 
-											file="${basedir}/build.properties" 
+										<replaceregexp
+											file="${basedir}/build.properties"
 											match="p4java-.*\.jar"
-											flags="m" 
+											flags="m"
 											replace="${p4javaName}" />
 									</tasks>
 								</configuration>

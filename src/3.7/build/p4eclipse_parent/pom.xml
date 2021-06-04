@@ -116,7 +116,7 @@
 			            <artifact>
 			                <groupId>com.perforce</groupId>
 			                <artifactId>p4eclipse-target</artifactId>
-			                <version>${project.version}</version>
+			                <version>2018.1.0-SNAPSHOT</version>
 			                <classifier>${targetPlatform}</classifier>
 			            </artifact>
 			        </target>
