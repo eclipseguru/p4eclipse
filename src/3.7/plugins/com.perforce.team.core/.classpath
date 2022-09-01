@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libraries/jsr305-3.0.2.jar" sourcepath="libraries/jsr305-3.0.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-lang3-3.12.0.jar" sourcepath="libraries/commons-lang3-3.12.0-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -7,8 +9,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons-lang3-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/p4java-2020.1.1999383.jar" sourcepath="libraries/p4java-2020.1.1999383-sources.jar"/>
+	<classpathentry kind="src" path="p4java/src/main/java"/>
+	<classpathentry kind="src" path="p4java/src/main/resources"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jzlib-1.1.3.jar" sourcepath="libraries/jzlib-1.1.3-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
